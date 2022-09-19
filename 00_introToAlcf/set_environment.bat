@@ -4,4 +4,4 @@ set conda_root=D:/Anaconda3/
 call %conda_root%/Scripts/activate.bat %conda_root%
 
 :: Activate local environment.
-conda activate ./env
+conda activate MLEnv
