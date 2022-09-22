@@ -63,20 +63,17 @@ def get_label_accuracy(true_labels, current_labels):
     accuracy = 100*np.sum((true_labels == current_labels).astype(int)) / true_labels.shape[0]
     return accuracy
 
-def get_centroid_accuracy(true_centers, estimated_centers):
+def get_centroid_distance(true_centers, estimated_centers):
 
-    # For each cluster in current_centroids, calculate the euclidian distance to each true center. Then pick the smallest distance. Accuracy is defined as the average of 1 - 1/dist for all N clusters.
-    accuracy = []
+    # For each cluster in current_centroids, calculate the euclidian distance to each true center. Then pick the smallest distance.
+    all_distances = []
 
     for this_estimated in range(estimated_centers.shape[0]):
         this_center = estimated_centers[this_estimated,:]
         distances = np.sqrt(np.sum([np.power(this_center - true_centers[this_true, :], 2) for this_true in range(true_centers.shape[0])],axis=1))
-        # Find minimal distance.
-        min_index = np.argmin(distances)
-        accuracy.append(1/(1 + distances[min_index]))
-    
-    accuracy = 100*np.mean(accuracy)
-    return accuracy
+        all_distances.append(min(distances))
+
+    return all_distances
 
 # %% Initialize random centroids and labels.
 c = initialize_centroids(x,N)
@@ -115,7 +112,9 @@ for step in range(epochs):
     # accuracy = get_label_accuracy(true_labels, estimated_labels)
 
     # Perhaps a better way of defining accuracy is to determine the average of how far the N centroids are from the original values. To do this, find the closest true centroid for each of the estimated centroids, and take the average of all N centroids: as average distance goes to 0, accuracy goes to 100%.
-    accuracy = get_centroid_accuracy(true_centers, estimated_centroids)
+    all_distances = get_centroid_distance(true_centers, estimated_centroids)
+    .
+    accuracy = 100*(delta/np.mean(all_distances))
 
     plt.scatter(x[:, 0], x[:, 1], c=last_labels, s=40, cmap='viridis')
     plt.plot(estimated_centroids[:,0],estimated_centroids[:,1],'rx')
