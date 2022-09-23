@@ -7,11 +7,10 @@
 
 # %% 2. As described above, learning rates that grow smaller over time can help find and get closer to global minima. In the loop above, our `learning_rate_m` and `learning_rate_b` are constant through the process of minimizing our parameters. How could you change the loop to reduce the learning rates over loop iterations?
 
-# Answer: By changing the method of updating the learning rate. On each loop, scale the base learning rate by a normalization of the gradient to the maximal observed gradient thus far. This way, the initial learning rate is still taken into account, but if the current location on the gradient converges on a minimum, the step size is decreased.
+# Answer: By changing the method of updating the learning rate. On each loop, scale the base learning rate by a normalization of the gradient to the maximal observed gradient thus far. This way, the initial learning rate is still taken into account, but if the gradient approaches a minimum, the step size is decreased.
 
 # %% Homework
 # Follow the example from the previous notebook [Linear Regression using SGD](./01_linear_regression_sgd.ipynb) and build a loop that properly finds the centers of these 4 clusters using k-means.
-# Addendum: aim for an accuracy of > 90%.
 
 # %% Linear regression
 from random import randint, random, randrange
@@ -274,7 +273,162 @@ ax[1].set_xlabel('loop step')
 ax[1].set_ylabel('loss')
 ax[1].legend(["Loss"])
 
+
+
+
 # %% K-means clustering.
 
 
+
+# %% Imports.
+from sklearn.datasets import make_blobs
+import sys
+import matplotlib.pyplot as plt
+import numpy as np
+import time
+import IPython.display as ipydis
+
+# %% Defs.
+
+
+def initialize_centroids(x, N):
+    """Initialize centroids as a random selection of 4 points from all available cluster points."""
+    x_indices = np.random.choice(np.arange(0, x.shape[0]), N)
+    centroids = x[x_indices]
+    return centroids
+
+
+def get_new_centroids(x, labels, N_clusters):
+    """returns the new centroids assigned from the points closest to them"""
+    # Get the average x1 and x2 (axis=0 so vertical) coordinate of all cluster points with a given label.
+    centroids = [x[labels == this_cluster].mean(
+        axis=0) for this_cluster in range(N_clusters)]
+    # Cast centroids to an Nx2 array.
+    return np.array(centroids)
+
+
+def assign_labels(x, c):
+    """Assign labels based on datapoints x and centroids c."""
+    # Distance is sqrt( (x - x')**2 + (y - y')**2 )
+    # Centroids are shape [N,2]
+    # x is shape [npoints,2]
+    # Add middle index to centroids to properly broadcast in math operations.
+    c = c[:, np.newaxis, :]  # [N,1,2]
+
+    # Calculate (x - x')**2 and (y - y')**2
+    # x is shape [npoints,2], c is [N,1,2], results in an array of shape: [N,npoints,2]
+    dist2 = (x - c)**2
+
+    # Calculate (x - x')**2 + (y - y')**2
+    dist2 = dist2.sum(axis=2)  # [N,npoints]
+
+    # Out of the N distances, return the index (0-(N-1)) of the one that is the minimum distance away.
+    label = np.argmin(dist2, axis=0)  # [npoints]
+
+    return label
+
+
+def get_centroid_distance(true_centers, estimated_centers):
+    """Get distance from true centers to estimated centers."""
+    # For each cluster in estimated_centers, calculate the euclidian distance to each true center and pick the smallest. Returns an array of N shortest distances.
+    all_distances = []
+
+    for this_estimated in range(estimated_centers.shape[0]):
+        # Get coordinates of this estimated centroid.
+        this_center = estimated_centers[this_estimated, :]
+        distances = np.sqrt(np.sum([np.power(this_center - true_centers[this_true, :], 2)
+                            for this_true in range(true_centers.shape[0])], axis=1))
+        all_distances.append(min(distances))
+
+    return all_distances
+
+
+
+# %% Define clusters.
+# Create n points per cluster.
+npoints = 500
+# Create N clusters.
+N = 4
+# Use make_blobs from sklearn to create the cluster points. This returns a list of nx2 coordinates for the cluster points, nx1 labels, and Nx2 coordinates for centers.
+x, true_labels, true_centers = make_blobs(n_samples=npoints, centers=N,
+                                          cluster_std=0.60, random_state=0,
+                                          return_centers=True)
+
+# %% Show truth.
+# Show the original cluster and their centers.
+plt.scatter(x[:, 0], x[:, 1], c=true_labels, s=40, cmap='viridis')
+plt.plot(true_centers[:, 0], true_centers[:, 1], 'rx')
+plt.legend(["Points", "Centers"])
+plt.title('True labels.')
+if hasattr(sys, 'ps1'):  # True if interactive.
+    plt.show()
+else:
+    # Run from terminal.
+    plt.savefig('img/Truth.png', format='png')
+    plt.cla()  # Clear axes to avoid ghosting.
+
+# %% Initialize k-means estimate.
+# Initialize random centroids and labels.
+last_centroids = initialize_centroids(x, N)
+last_labels = assign_labels(x, last_centroids)
+plt.scatter(x[:, 0], x[:, 1], c=last_labels, s=40, cmap='viridis')
+plt.plot(last_centroids[:,0], last_centroids[:,1],'rx')
+plt.title("Initial state.")
+if hasattr(sys, 'ps1'):  # True if interactive.
+    plt.show()
+else:
+    # Run from terminal.
+    plt.savefig('img/Step_.png', format='png')
+    plt.cla()  # Clear axes to avoid ghosting.
+
+# %% Loop parameters
+delta = 0.001
+epochs = 20
+do_break = False
+
+# %% Estimation loop.
+# Make a loop that performs k-means clustering.
+
+for step in range(epochs):
+    # Get newest centroid positions, and re-calculate labels.
+    estimated_centroids = get_new_centroids(x, last_labels, N)  
+    estimated_labels = assign_labels(x, estimated_centroids)
+
+    # Test if centroids have stopped moving. If not, update the labels and plot one last time and break the loop.
+    dists = last_centroids - estimated_centroids
+    if np.all(dists < delta):
+        print('Centroids unchanged as of step %d.' % step)
+        estimated_labels = assign_labels(x, estimated_centroids)
+        if np.all(estimated_labels == last_labels):
+            do_break = True
+        
+    # Save labels and centroids for next run.
+    last_labels = estimated_labels
+    last_centroids = estimated_centroids
+
+    # Instead of defining accuracy by labels, determine the average distance between the estimated and the true centroids.
+    all_distances = get_centroid_distance(true_centers, estimated_centroids)
+
+    # Plot newest estimation.
+    plt.scatter(x[:, 0], x[:, 1], c=last_labels, s=40, cmap='viridis')
+    plt.plot(estimated_centroids[:, 0], estimated_centroids[:, 1], 'rx')
+    plt.title('Step %d, Centroid Dist %.2f' %
+              (step, np.mean(all_distances)))
+    if hasattr(sys, 'ps1'):  # True if interactive.
+        plt.show()
+    else:
+        # Run from terminal.
+        plt.savefig('img/Step_%d.png' % (step), format='png')
+        plt.cla()  # Clear axes to avoid ghosting.
+
+    # If centroids stopped moving, break.
+    if do_break:
+        break
+
+    time.sleep(0.5)
+    # Clears the terminal output when the next plot is ready to show.
+    if hasattr(sys, 'ps1'):  # True if interactive.
+        ipydis.clear_output(wait=True)
+
+# plt.show()
 # %%
