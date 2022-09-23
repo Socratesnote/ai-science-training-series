@@ -21,7 +21,7 @@ import IPython.display as ipydis
 import time
 
 # %% Load data.
-data = pd.read_csv('slimmed_realestate_data.csv')
+data = pd.read_csv('./data/slimmed_realestate_data.csv')
 print(data.columns)
 
 # %% Plot with Matplotlib.
