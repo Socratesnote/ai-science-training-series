@@ -1,0 +1,3 @@
+[submodule "common_py"]
+	path = common_py
+	url = https://bitbucket.org/Socratesnote/common_py/src/
