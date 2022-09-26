@@ -1,18 +1,23 @@
 
-# %% Homework description
-# In Class Exercises
-# %% 1. In AI, datasets are often very large and cannot be processed all at once as is done in the loop above. The data is instead randomly sampled in smaller _batches_ where each _batch_ contains `batch_size` inputs. How can you change the loop above to sample the dataset in smaller batches? Hint: Our `data` variable is a Pandas `DataFrame` object, search for "how to sample a DataFrame".
+# %% [markdown] 
+# # Homework
+# In class-homework
+# 1. In AI, datasets are often very large and cannot be processed all at once as is done in the loop above. The data is instead randomly sampled in smaller _batches_ where each _batch_ contains `batch_size` inputs. How can you change the loop above to sample the dataset in smaller batches? Hint: Our `data` variable is a Pandas `DataFrame` object, search for "how to sample a DataFrame".
 
 # Answer: By changing the data 'collection' in the epoch loop to collect a subsample, e.g. data_sample = data.sample(batch_size), a smaller batch can be obtained and used for the update of the linear fit parameters.
 
-# %% 2. As described above, learning rates that grow smaller over time can help find and get closer to global minima. In the loop above, our `learning_rate_m` and `learning_rate_b` are constant through the process of minimizing our parameters. How could you change the loop to reduce the learning rates over loop iterations?
+# 2. As described above, learning rates that grow smaller over time can help find and get closer to global minima. In the loop above, our `learning_rate_m` and `learning_rate_b` are constant through the process of minimizing our parameters. How could you change the loop to reduce the learning rates over loop iterations?
 
 # Answer: By changing the method of updating the learning rate. On each loop, scale the base learning rate by a normalization of the gradient to the maximal observed gradient thus far. This way, the initial learning rate is still taken into account, but if the gradient approaches a minimum, the step size is decreased.
 
-# %% Homework
-# Follow the example from the previous notebook [Linear Regression using SGD](./01_linear_regression_sgd.ipynb) and build a loop that properly finds the centers of these 4 clusters using k-means.
+# Home-homework
+# 3. Follow the example from the previous notebook [Linear Regression using SGD](./01_linear_regression_sgd.ipynb) and build a loop that properly finds the centers of these 4 clusters using k-means.
 
-# %% Linear regression
+# %% [markdown]
+# # Linear regression
+
+# %%
+# Imports.
 from random import randint, random, randrange
 import pandas as pd
 import numpy as np
@@ -20,11 +25,14 @@ import matplotlib.pyplot as plt
 import IPython.display as ipydis
 import time
 
-# %% Load data.
+# %% 
+# Load data.
 data = pd.read_csv('./data/slimmed_realestate_data.csv')
+print("Data columns:")
 print(data.columns)
 
-# %% Plot with Matplotlib.
+# %% 
+# Plot with Matplotlib.
 
 figure = plt.figure(figsize=(6, 3))
 ax = figure.add_axes([1, 1, 1, 1])
@@ -33,8 +41,10 @@ scatter = ax.plot(data.GrLivArea, data.SalePrice, '.b')
 ax.legend(scatter, ["Sale Price"])
 ax.set_xlabel("Ground Living Area")
 ax.set_ylabel("Sale Price")
+plt.show()
 
-# %% Manual regression.
+# %% 
+# Manual regression.
 n = len(data)
 x = data['GrLivArea'].to_numpy()
 y = data['SalePrice'].to_numpy()
@@ -52,7 +62,11 @@ print('Calculated linear fit: y = %f * x + %f' % (m, b))
 m_calc = m
 b_calc = b
 
-# %% Define a linear estimator.
+# %% [markdown]
+# Definitions
+
+# %%
+# Linear estimator.
 
 
 def get_lin_fit(x, m, b):
@@ -62,7 +76,7 @@ def get_lin_fit(x, m, b):
     linear_y = linear_x * m + b
     return linear_x, linear_y
 
-# %% Define a plotting function. This will plot the data points and manually calculated linear fit.
+# Plotting function. This will plot the data points and manually calculated linear fit.
 
 
 def plot_data(x, y, m, b, ax):
@@ -75,13 +89,13 @@ def plot_data(x, y, m, b, ax):
     lin_plot, = ax.plot(linear_x, linear_y, 'r-')
     return scatter_plot, lin_plot
 
-# %% Define model
+# Model.
 
 
 def model(x, m, b):
     return m * x + b
 
-# %% Define loss function
+# Loss function.
 
 
 def loss(x, y, m, b):
@@ -90,7 +104,7 @@ def loss(x, y, m, b):
     # Loss is the square of actual minus prediction, to obtain a smooth loss function.
     return np.power(y - y_predicted, 2)
 
-# %% Define update dunctions
+# Update functions.
 
 
 def updated_m(x, y, m, b, learning_rate, do_scale=False):
@@ -106,7 +120,7 @@ def updated_b(x, y, m, b, learning_rate, do_scale=False):
     new_b = b - learning_rate * dL_db
     return new_b, dL_db
 
-# %% Define GD loop.
+# GD loop.
 def gd_loop(loop_n, data, batch_size, m, b, learning_rate_m, learning_rate_b, do_plot, do_scale):
     # Track history of loss over time.
     loss_history = []
@@ -182,7 +196,10 @@ def gd_loop(loop_n, data, batch_size, m, b, learning_rate_m, learning_rate_b, do
     return loss_history, m, b
 
 
-# %% Unscaled Learning.
+# %% [markdown]
+# Unscaled Learning.
+
+# %%
 # Initialize with random slope and intercept.
 m = randrange(1, 25)
 b = randrange(100, 10000, 100)
@@ -202,7 +219,7 @@ do_scale = False
 loss_history, m, b = gd_loop(loop_n, data, batch_size, m, b, learning_rate_m, learning_rate_b, do_plot, do_scale)
 
 
-# %% Final
+# %% 
 # Plot final learned fit vs manual fit.
 # Create plot. Unfortunately, updating the plot isn't straightforward.
 # Create a 1 by 2 plot grid.
@@ -228,7 +245,10 @@ ax[1].set_ylabel('loss')
 ax[1].legend(["Loss"])
 
 
-# %% Scaled Learning.
+# %% [markdown]
+# Scaled Learning.
+
+# %%
 # Initialize with random slope and intercept.
 m = randrange(1, 25)
 b = randrange(100, 10000, 100)
@@ -248,7 +268,7 @@ do_scale = True
 loss_history, m, b = gd_loop(loop_n, data, batch_size, m, b, learning_rate_m, learning_rate_b, do_plot, do_scale)
 
 
-# %% Final
+# %%
 # Plot final learned fit vs manual fit.
 # Create plot. Unfortunately, updating the plot isn't straightforward.
 # Create a 1 by 2 plot grid.
@@ -276,11 +296,11 @@ ax[1].legend(["Loss"])
 
 
 
-# %% K-means clustering.
+# %% [markdown]
+# # K-means clustering.
 
-
-
-# %% Imports.
+# %% 
+# Imports.
 from sklearn.datasets import make_blobs
 import sys
 import matplotlib.pyplot as plt
@@ -288,7 +308,8 @@ import numpy as np
 import time
 import IPython.display as ipydis
 
-# %% Defs.
+# %% 
+# Definitions.
 
 
 def initialize_centroids(x, N):
@@ -299,7 +320,7 @@ def initialize_centroids(x, N):
 
 
 def get_new_centroids(x, labels, N_clusters):
-    """returns the new centroids assigned from the points closest to them"""
+    """Returns the new centroids assigned from the points closest to them"""
     # Get the average x1 and x2 (axis=0 so vertical) coordinate of all cluster points with a given label.
     centroids = [x[labels == this_cluster].mean(
         axis=0) for this_cluster in range(N_clusters)]
@@ -344,7 +365,8 @@ def get_centroid_distance(true_centers, estimated_centers):
 
 
 
-# %% Define clusters.
+# %%
+# Define clusters.
 # Create n points per cluster.
 npoints = 500
 # Create N clusters.
@@ -354,8 +376,8 @@ x, true_labels, true_centers = make_blobs(n_samples=npoints, centers=N,
                                           cluster_std=0.60, random_state=0,
                                           return_centers=True)
 
-# %% Show truth.
-# Show the original cluster and their centers.
+# %% 
+# Show the true cluster and their centers.
 plt.scatter(x[:, 0], x[:, 1], c=true_labels, s=40, cmap='viridis')
 plt.plot(true_centers[:, 0], true_centers[:, 1], 'rx')
 plt.legend(["Points", "Centers"])
@@ -367,7 +389,8 @@ else:
     plt.savefig('img/Truth.png', format='png')
     plt.cla()  # Clear axes to avoid ghosting.
 
-# %% Initialize k-means estimate.
+# %% 
+# Initialize k-means estimate.
 # Initialize random centroids and labels.
 last_centroids = initialize_centroids(x, N)
 last_labels = assign_labels(x, last_centroids)
@@ -381,12 +404,14 @@ else:
     plt.savefig('img/Step_.png', format='png')
     plt.cla()  # Clear axes to avoid ghosting.
 
-# %% Loop parameters
+# %% 
+# Loop parameters
 delta = 0.01
 epochs = 20
 do_break = False
 
-# %% Estimation loop.
+# %% 
+# Estimation loop.
 # Make a loop that performs k-means clustering.
 
 for step in range(epochs):
