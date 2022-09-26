@@ -382,7 +382,7 @@ else:
     plt.cla()  # Clear axes to avoid ghosting.
 
 # %% Loop parameters
-delta = 0.001
+delta = 0.01
 epochs = 20
 do_break = False
 
@@ -395,7 +395,7 @@ for step in range(epochs):
     estimated_labels = assign_labels(x, estimated_centroids)
 
     # Test if centroids have stopped moving. If not, update the labels and plot one last time and break the loop.
-    dists = last_centroids - estimated_centroids
+    dists = np.abs(last_centroids - estimated_centroids)
     if np.all(dists < delta):
         print('Centroids unchanged as of step %d.' % step)
         estimated_labels = assign_labels(x, estimated_centroids)
