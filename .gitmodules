@@ -1,3 +1,3 @@
-[submodule "common_py"]
-	path = common_py
+[submodule "01_machineLearning/01_homework/common_py"]
+	path = 01_machineLearning/01_homework/common_py
 	url = https://bitbucket.org/Socratesnote/common_py/src/
