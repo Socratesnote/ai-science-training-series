@@ -13,6 +13,16 @@
 # Home-homework
 # 3. Follow the example from the previous notebook [Linear Regression using SGD](./01_linear_regression_sgd.ipynb) and build a loop that properly finds the centers of these 4 clusters using k-means.
 
+# %% 
+# General imports.
+import logging
+import common_py.combilogger as clogger
+
+# %%
+# Configure combilogger.
+log = clogger.Combilogger(logLevel=logging.INFO, logPath=".", fileName="", writeMode="w")
+log.info("2022-09-20_ThomasPlaisier_Session01")
+
 # %% [markdown]
 # # Linear regression
 
@@ -28,8 +38,9 @@ import time
 # %% 
 # Load data.
 data = pd.read_csv('./data/slimmed_realestate_data.csv')
-print("Data columns:")
-print(data.columns)
+
+log.info("Data columns:")
+log.info(list(data.columns))
 
 # %% 
 # Plot with Matplotlib.
