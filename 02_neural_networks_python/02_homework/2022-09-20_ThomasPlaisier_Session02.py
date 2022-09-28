@@ -107,11 +107,18 @@ def model_trainer(model, x_train, y_train, y_train_onehot, num_epochs, batch_siz
     return t_acc, losses
 
 
-
 # %%
 
 # Load MNIST data from Keras.
-(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+try:
+    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+except:
+    # Or local file.
+    data = numpy.load('mnist.npz')
+    x_train = data['x_train']
+    x_test = data['x_test']
+    y_train = data['y_train']
+    y_test = data['y_test']
 log.info('MNIST data loaded. # Training elements: %i, # Testing elements: %i.' % (len(x_train), len(x_test)))
 
 # %%
