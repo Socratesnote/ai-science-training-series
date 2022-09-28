@@ -1,6 +1,6 @@
 
 # %% [markdown] 
-# # Homework
+# # Homework Session 1
 # In class-homework
 # 1. In AI, datasets are often very large and cannot be processed all at once as is done in the loop above. The data is instead randomly sampled in smaller _batches_ where each _batch_ contains `batch_size` inputs. How can you change the loop above to sample the dataset in smaller batches? Hint: Our `data` variable is a Pandas `DataFrame` object, search for "how to sample a DataFrame".
 

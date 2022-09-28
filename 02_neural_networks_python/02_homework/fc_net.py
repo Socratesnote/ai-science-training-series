@@ -1,5 +1,4 @@
-# this code is based on pieces of the first assignment from Stanford's CSE231n course, 
-# hosted at https://github.com/cs231n/cs231n.github.io with the MIT license
+# This code is based on pieces of the first assignment from Stanford's CSE231n course, hosted at https://github.com/cs231n/cs231n.github.io with the MIT license.
 
 from builtins import object
 import numpy as np
@@ -13,7 +12,7 @@ class TwoLayerNet(object):
     softmax loss (categorical cross-entropy) that uses a modular layer design. We assume an input dimension
     of D, a hidden dimension of H, and perform classification over C classes.
 
-    The architecure is affine - relu - affine - softmax.
+    The architecture is affine - relu - affine - softmax.
 
     The learnable parameters of the model are stored in the dictionary
     self.params that maps parameter names to numpy arrays.
@@ -31,9 +30,9 @@ class TwoLayerNet(object):
         Initialize a new network.
 
         Inputs:
-        - input_dim: An integer giving the size of the input
-        - hidden_dim: An integer giving the size of the hidden layer
-        - num_classes: An integer giving the number of classes to classify
+        - input_dim: An integer giving the size of the input.
+        - hidden_dim: An integer giving the size of the hidden layer.
+        - num_classes: An integer giving the number of classes to classify.
         - weight_scale: Scalar giving the standard deviation for random
           initialization of the weights.
         - reg: Scalar giving L2 regularization strength.
@@ -66,30 +65,28 @@ class TwoLayerNet(object):
           names to gradients of the loss with respect to those parameters.
         """
 
-        # forward pass, keeping intermediate values to avoid recomputing
+        # Forward pass, keeping intermediate values to avoid recomputing.
         out_layer1, cache_layer1 = affine_relu_forward(X, self.params["W1"], self.params["b1"])
         scores, cache_layer2 = affine_forward(out_layer1, self.params["W2"], self.params["b2"])
 
-        # If y is None then we are in test mode so just return scores
+        # If y is None then we are in test mode so just return scores.
         if y is None:
             return scores
 
         loss, grads = 0, {}
 
-        # L2 regularization is L2 norm of the weights (sum of squares)
+        # L2 regularization is L2 norm of the weights (sum of squares).
         regularization = np.sum(np.square(self.params["W1"])) + np.sum(np.square(self.params["W2"])) 
         loss_softmax, dx_softmax = softmax_loss(scores, y) 
 
-        # total loss is softmax loss plus regularization term. Can change balance between the two by
-        # changing self.reg
-        # the 0.5 term is sometimes included in order for convenience to cancel out a 2 in the gradient
+        # total loss is softmax loss plus regularization term. Can change balance between the two by changing self.reg. The 0.5 term is sometimes included in order for convenience to cancel out a 2 in the gradient.
         loss = loss_softmax + self.reg * 0.5 * regularization
 
-        # backward pass (computing gradients)
+        # Backward pass (computing gradients)
         dx_affine_backward, grads['W2'], grads['b2'] = affine_backward(dx_softmax, cache_layer2)
         dx, grads['W1'], grads['b1'] = affine_relu_backward(dx_affine_backward, cache_layer1) 
 
-        # adjusting W1 and W2 gradients to incorporate the L2 regularization
+        # Adjusting W1 and W2 gradients to incorporate the L2 regularization.
         grads['W2'] += self.reg * self.params['W2']
         grads['W1'] += self.reg * self.params['W1']
 

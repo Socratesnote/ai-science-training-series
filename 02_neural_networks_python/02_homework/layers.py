@@ -1,5 +1,4 @@
-# this code is based on pieces of the first assignment from Stanford's CSE231n course, 
-# hosted at https://github.com/cs231n/cs231n.github.io with the MIT license
+# This code is based on pieces of the first assignment from Stanford's CSE231n course, hosted at https://github.com/cs231n/cs231n.github.io with the MIT license.
 
 import numpy as np
 from scipy.special import logsumexp
@@ -88,7 +87,7 @@ def relu_backward(dout, cache):
 def softmax_loss(x, y):
     """
     Computes the loss and gradient for softmax classification.
-    More commonly known as categorical cross-entropy loss
+    More commonly known as categorical cross-entropy loss.
 
     Inputs:
     - x: Input data, of shape (N, C) where x[i, j] is the score for the jth
@@ -97,14 +96,14 @@ def softmax_loss(x, y):
       0 <= y[i] < C
 
     Returns a tuple of:
-    - loss: Scalar giving the loss
-    - dx: Gradient of the loss with respect to x
+    - loss: Scalar giving the loss.
+    - dx: Gradient of the loss with respect to x.
     """
     loss, dx = None, None
 
     def softmax(x):
-      # non-standard definition in order to have better numerical stability
-      # logsumexp function avoids some issues with overflow during sum of exponentials
+      # Non-standard definition in order to have better numerical stability.
+      # Logsumexp function avoids some issues with overflow during sum of exponentials.
       #normalization = np.sum(np.exp(x),axis=1) # (N, 1)
       #normalization = np.exp(logsumexp(x, axis=1)) 
       temp = logsumexp(x, axis=1)
@@ -114,18 +113,18 @@ def softmax_loss(x, y):
     
     q = softmax(x)
 
-    # some clipping to avoid log of 0 or negative number
+    # Some clipping to avoid log of 0 or negative number.
     epsilon = 1e-07
     q = np.clip(q, a_min = epsilon, a_max=1-epsilon)
 
     N = x.shape[0]
-    loss = -np.sum(y * np.log(q), axis=1) # sum over classes
-    loss = np.mean(loss) # average over examples
+    loss = -np.sum(y * np.log(q), axis=1) # Sum over classes.
+    loss = np.mean(loss) # Average over examples.
 
-    # calculating gradients
+    # Calculating gradients.
     dx = (1./N) * softmax(x) # (N, C)
-    # for each example, column for correct class needs another term: -(1/N)
-    extra_term = (-1./N) * y  # element-wise multiply, p acts as mask
+    # For each example, column for correct class needs another term: -(1/N).
+    extra_term = (-1./N) * y  # Element-wise multiply, p acts as mask.
     dx = dx + extra_term
 
     return loss, dx

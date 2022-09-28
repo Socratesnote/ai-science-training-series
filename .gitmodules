@@ -1,3 +1,6 @@
 [submodule "01_machineLearning/01_homework/common_py"]
 	path = 01_machineLearning/01_homework/common_py
 	url = https://bitbucket.org/Socratesnote/common_py/src/
+[submodule "02_neural_networks_python/02_homework/common_py"]
+	path = 02_neural_networks_python/02_homework/common_py
+	url = https://bitbucket.org/Socratesnote/common_py/src/
