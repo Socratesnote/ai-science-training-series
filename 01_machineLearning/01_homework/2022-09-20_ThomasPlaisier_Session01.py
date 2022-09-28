@@ -20,7 +20,11 @@ import common_py.combilogger as clogger
 
 # %%
 # Configure combilogger.
-log = clogger.Combilogger(logLevel=logging.INFO, logPath=".", fileName="", writeMode="w")
+log = clogger.Combilogger(logLevel=logging.DEBUG, logPath=".", fileName="", writeMode="w")
+log.set_format_console('%(message)s')
+log.set_format_file('%(asctime)s - %(levelname)s - %(message)s')
+log.set_level_console(logging.INFO)
+log.set_level_file(logging.DEBUG)
 log.info("2022-09-20_ThomasPlaisier_Session01")
 
 # %% [markdown]
@@ -38,7 +42,7 @@ import time
 # %% 
 # Load data.
 data = pd.read_csv('./data/slimmed_realestate_data.csv')
-
+log.debug("Data read from file.")
 log.info("Data columns:")
 log.info(list(data.columns))
 
@@ -53,6 +57,8 @@ ax.legend(scatter, ["Sale Price"])
 ax.set_xlabel("Ground Living Area")
 ax.set_ylabel("Sale Price")
 plt.show()
+plt.savefig('img/gla_vs_sp.png', format='png')
+log.debug("Created figure gla_vs_sp.png .")
 
 # %% 
 # Manual regression.
@@ -67,7 +73,7 @@ sum_x2 = np.sum(x*x)
 denominator = n * sum_x2 - sum_x * sum_x
 m = (n * sum_xy - sum_x * sum_y) / denominator
 b = (sum_y * sum_x2 - sum_x * sum_xy) / denominator
-print('Calculated linear fit: y = %f * x + %f' % (m, b))
+log.info('Calculated linear fit: y = %f * x + %f' % (m, b))
 
 # Saving these for later comparison.
 m_calc = m
@@ -152,30 +158,35 @@ def gd_loop(loop_n, data, batch_size, m, b, learning_rate_m, learning_rate_b, do
         data_y = data_sample['SalePrice'].to_numpy()
 
         # Update slope and intercept based on the current values.
-        m, dL_dm = updated_m(data_x, data_y, m, b, learning_rate_m)
+        log.debug("Loop %i, initial. m: %.2f, b: %.2f ." % (i, m, b))
+        m_new, dL_dm = updated_m(data_x, data_y, m, b, learning_rate_m)
         b, dL_db = updated_b(data_x, data_y, m, b, learning_rate_b)
+        m = m_new
+        log.debug("Loop %i, new. m: %.2f, b: %.2f ." % (i, m, b))
 
         if do_scale:
             # Update learning rates.
             dL_dm_max = max([dL_dm_max, abs(dL_dm)])
             dL_db_max = max([dL_db_max, abs(dL_db)])
+            log.debug("Loop %i, initial. LR_m: %.2f, LR_b: %.2f ." % (i, learning_rate_m, learning_rate_b))
             learning_scale_m = abs(dL_dm/dL_dm_max)
             learning_rate_m = learning_rate_m_base * learning_scale_m
             learning_scale_b = abs(dL_db/dL_db_max)
             learning_rate_b = learning_rate_b_base * learning_scale_b
+            log.debug("Loop %i, new. LR_m: %.2f, LR_b: %.2f ." % (i, learning_rate_m, learning_rate_b))
 
         # Calculate the loss value for the new parameters.
         loss_value = np.mean(loss(data_x, data_y, m, b))
+        log.debug("Loop %i. Loss: %.2f ." % (i, loss_value))
 
         # Store loss.
         loss_history.append(loss_value)
 
         if do_plot:
             # Print progress.
-            print('[%03d] dy_i = %.2f * x + %.2f . Loss: %.1f'
+            log.info('[%03d] dy_i = %.2f * x + %.2f . Loss: %.1f'
             % (i, m, b, loss_value))
         
-            # Create plot. Unfortunately, updating the plot isn't straightforward.
             # Create a 1 by 2 plot grid.
             fig, ax = plt.subplots(1, 2, figsize=(18, 6), dpi=80)
 
@@ -211,6 +222,9 @@ def gd_loop(loop_n, data, batch_size, m, b, learning_rate_m, learning_rate_b, do
 # Unscaled Learning.
 
 # %%
+
+log.info("Unscaled learning.")
+
 # Initialize with random slope and intercept.
 m = randrange(1, 25)
 b = randrange(100, 10000, 100)
@@ -260,6 +274,9 @@ ax[1].legend(["Loss"])
 # Scaled Learning.
 
 # %%
+
+log.info("Scaled learning.")
+
 # Initialize with random slope and intercept.
 m = randrange(1, 25)
 b = randrange(100, 10000, 100)
@@ -270,7 +287,7 @@ learning_rate_m = 1e-7
 learning_rate_b = 1e-1
 
 # Run for n epochs.
-loop_n = 500
+loop_n = 30
 
 # Set plotting and scaling toggles.
 do_plot = False
@@ -303,8 +320,6 @@ ax[1].set_yscale('log')
 ax[1].set_xlabel('loop step')
 ax[1].set_ylabel('loss')
 ax[1].legend(["Loss"])
-
-
 
 
 # %% [markdown]
@@ -398,6 +413,7 @@ if hasattr(sys, 'ps1'):  # True if interactive.
 else:
     # Run from terminal.
     plt.savefig('img/Truth.png', format='png')
+    log.debug("Saved Truth_.png .")
     plt.cla()  # Clear axes to avoid ghosting.
 
 # %% 
@@ -413,6 +429,7 @@ if hasattr(sys, 'ps1'):  # True if interactive.
 else:
     # Run from terminal.
     plt.savefig('img/Step_.png', format='png')
+    log.debug("Saved Step_.png .")
     plt.cla()  # Clear axes to avoid ghosting.
 
 # %% 
@@ -433,7 +450,7 @@ for step in range(epochs):
     # Test if centroids have stopped moving. If not, update the labels and plot one last time and break the loop.
     dists = np.abs(last_centroids - estimated_centroids)
     if np.all(dists < delta):
-        print('Centroids unchanged as of step %d.' % step)
+        log.info('Centroids unchanged as of step %d.' % step)
         estimated_labels = assign_labels(x, estimated_centroids)
         if np.all(estimated_labels == last_labels):
             do_break = True
@@ -455,6 +472,7 @@ for step in range(epochs):
     else:
         # Run from terminal.
         plt.savefig('img/Step_%d.png' % (step), format='png')
+        log.debug("Saved Step_%d.png ." % (step))
         plt.cla()  # Clear axes to avoid ghosting.
 
     # If centroids stopped moving, break.
