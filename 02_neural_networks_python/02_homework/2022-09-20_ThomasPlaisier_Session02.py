@@ -12,10 +12,14 @@
 # General imports.
 import logging
 import common_py.combilogger as clogger
+import datetime
 
 # %%
 # Configure combilogger.
-log = clogger.Combilogger(logLevel=logging.DEBUG, logPath=".", fileName="", writeMode="w")
+now = datetime.datetime.now()
+dt_string = now.strftime("%Y_%m_%d_%H_%M_%S")
+
+log = clogger.Combilogger(logLevel=logging.DEBUG, logPath=".", fileName=dt_string, writeMode="w")
 log.set_format_console('%(message)s')
 log.set_format_file('%(asctime)s - %(levelname)s - %(message)s')
 log.set_level_console(logging.INFO)
