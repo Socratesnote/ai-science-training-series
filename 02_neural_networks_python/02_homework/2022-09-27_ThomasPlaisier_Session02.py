@@ -82,6 +82,8 @@ def model_trainer(model, x_train, y_train, y_train_onehot, num_epochs, batch_siz
     losses = numpy.zeros(num_batches*num_epochs,)
     indices = numpy.arange(num_examples)
     i = 0 # Iteration.
+    acc_prev = 0
+    delta_acc = 0.1
 
     for epoch in range(0, num_epochs):
         # In each epoch, we loop over all of the training examples.
@@ -101,6 +103,13 @@ def model_trainer(model, x_train, y_train, y_train_onehot, num_epochs, batch_siz
         acc = accuracy(model, x_train, y_train)
         log.debug("Epoch: %d. Loss: %.2f. Accuracy %.1f." % (epoch, loss, 100*acc))
         
+        if (acc - acc_prev < delta_acc) & (epoch > 5):
+            log.info("Breaking at epoch %d due to stalling accuracy gains (< %.1f)." % (epoch, delta_acc))
+            break
+
+        # Store.
+        acc_prev = acc
+
         # Shuffle the data so that we get a new set of batches. Ensure that everything is shuffled the same way.
         numpy.random.shuffle(indices)
         x_train = x_train[indices,:]
@@ -111,7 +120,7 @@ def model_trainer(model, x_train, y_train, y_train_onehot, num_epochs, batch_siz
     return t_acc, losses
 
 # %%
-# Fix to avoid invalid SSL certificates on Theta?
+# Fix to avoid invalid SSL certificates on Theta.
 import requests
 requests.packages.urllib3.disable_warnings()
 import ssl
@@ -119,24 +128,16 @@ import ssl
 try:
     _create_unverified_https_context = ssl._create_unverified_context
 except AttributeError:
-    # Legacy Python that doesn't verify HTTPS certificates by default
+    # Legacy Python that doesn't verify HTTPS certificates by default.
     pass
 else:
-    # Handle target environment that doesn't support HTTPS verification
+    # Handle target environment that doesn't support HTTPS verification.
     ssl._create_default_https_context = _create_unverified_https_context
 
 # %%
 
 # Load MNIST data from Keras.
-# try:
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
-# except:
-#     # Or local file.
-#     data = numpy.load('mnist.npz')
-#     x_train = data['x_train']
-#     x_test = data['x_test']
-#     y_train = data['y_train']
-#     y_test = data['y_test']
 log.info('MNIST data loaded. # Training elements: %i, # Testing elements: %i.' % (len(x_train), len(x_test)))
 
 # %%
@@ -176,34 +177,46 @@ from fc_net import TwoLayerNet
 # %%
 # Hyperparameters
 # Number of units in hidden layers.
-hidden_layer_width = 300
+hidden_layer_width = 300 # Default, 98.2
+# hidden_layer_width = 3000 # 98.2, but takes ages.
+# hidden_layer_width = 30 # 96.5
+
 # Standard divation of normal distribution of weights.
-initial_weight_scale = 0.01
+initial_weight_scale = 0.01 # Default, 98.2
+# initial_weight_scale = 0.001 # 97.9
+# initial_weight_scale = 0.1 # 97.8
+# initial_weight_scale = 1.0 # 93.4
+
 # Learning rate of model.
-learning_rate = 0.01  
+# learning_rate = 5.0 # 10.3
+# learning_rate = 1.0 # 97.7
+# learning_rate = 0.7 # 98
+learning_rate = 0.5 # 98.2
+# learning_rate = 0.2 # 97.5
+# learning_rate = 0.1 # % 96.6
+# learning_rate = 0.06 # 95.4%
+# learning_rate = 0.04 # 94.2%
+# learning_rate = 0.01 # Default
+
 # Batch size for SGD.
-batch_size = 10000
+batch_size = 100 # Pretty good, 90% with the rest default.
+# batch_size = 10000 # Default
+
 # Number of epochs.
-# num_epochs = 10
-# num_epochs_range = numpy.round(numpy.linspace(5, 50, 5))
-num_epochs_range = numpy.round(numpy.linspace(5, 50, 6)).astype(numpy.int32)
+# In most cases you don't need to go higher than 30. The loop will automatically break when stalling.
+num_epochs = 50
+# num_epochs_range = numpy.round(numpy.linspace(15, 52, 6)).astype(numpy.int32)
 
 # %%
-# Let's start simple, and modulate number of epochs.
-for num_epochs in num_epochs_range:
-    model = model_builder(num_features, hidden_layer_width, nb_classes, initial_weight_scale)
+# Build, train, and test model.
 
-    t_acc, losses = model_trainer(model, x_train, y_train, y_train_onehot, num_epochs, batch_size, x_test, y_test)
+model = model_builder(num_features, hidden_layer_width, nb_classes, initial_weight_scale)
 
-    # Plot loss trajectory.
-    # plt.title('Loss trajectory')
-    # plt.xlabel('Iterations')
-    # plt.ylabel('Loss')
-    # plt.plot(losses)
+t_acc, losses = model_trainer(model, x_train, y_train, y_train_onehot, num_epochs, batch_size, x_test, y_test)
 
-    # Get accuracy from test.
-    log.info("Hyperparameters. HLW: %i. WS: %.3f. LR: %.3f. Batch: %.0f. Epochs: %i." % (hidden_layer_width, initial_weight_scale, learning_rate, batch_size, num_epochs))
-    log.info("Testing accuracy: %.1f." % (100*t_acc))
+log.info("Hyperparameters. HLW: %i. WS: %.3f. LR: %.3f. Batch: %.0f. Max epochs: %i." % (hidden_layer_width, initial_weight_scale, learning_rate, batch_size, num_epochs))
+log.info("Testing accuracy: %.1f." % (100*t_acc))
+
 
 # %% 
 # Show predictions for 10 random images.
@@ -220,35 +233,35 @@ for i in range(10):
 
 # %%
 
-# Now to optimize things, let's do a grid search.
-# We'll be tuning 
-from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import make_scorer
+# # Now to optimize things, let's do a grid search.
+# # We'll be tuning 
+# from sklearn.model_selection import GridSearchCV
+# from sklearn.metrics import make_scorer
 
-width_hidden_layer_range = numpy.round(numpy.linspace(50, 500, 5))
-initial_weight_scale_range = numpy.linspace(0.005, 0.100, 5)
-# Learning rate of model.
-learning_rate_range = numpy.linspace(0.001, 0.02, 5)
-# Batch size for SGD.
-batch_size_range = numpy.round(numpy.linspace(1000, 20000, 5))
-# Number of epochs.
-num_epochs_range = numpy.round(numpy.linspace(5,100, 5))
+# width_hidden_layer_range = numpy.round(numpy.linspace(50, 500, 5))
+# initial_weight_scale_range = numpy.linspace(0.005, 0.100, 5)
+# # Learning rate of model.
+# learning_rate_range = numpy.linspace(0.001, 0.02, 5)
+# # Batch size for SGD.
+# batch_size_range = numpy.round(numpy.linspace(1000, 20000, 5))
+# # Number of epochs.
+# num_epochs_range = numpy.round(numpy.linspace(5,100, 5))
 
-param_grid = dict(width_hidden_layer=width_hidden_layer_range, initial_weight_scale=initial_weight_scale_range, learning_rate=learning_rate_range, batch_size = batch_size_range, num_epochs = num_epochs_range)
+# param_grid = dict(width_hidden_layer=width_hidden_layer_range, initial_weight_scale=initial_weight_scale_range, learning_rate=learning_rate_range, batch_size = batch_size_range, num_epochs = num_epochs_range)
 
-# %%
-# Define custom scorer.
-def my_custom_score_func(model, x_test, y_test):
-     acc = accuracy(model, x_test, y_test)
-     return acc 
+# # %%
+# # Define custom scorer.
+# def my_custom_score_func(model, x_test, y_test):
+#      acc = accuracy(model, x_test, y_test)
+#      return acc 
 
-score = make_scorer(my_custom_score_func, greater_is_better=True)
+# score = make_scorer(my_custom_score_func, greater_is_better=True)
 
-grid = GridSearchCV(estimator = model, scoring = score, param_grid=param_grid, cv=5) # 5 iterations.
+# grid = GridSearchCV(estimator = model, scoring = score, param_grid=param_grid, cv=5) # 5 iterations.
 
-# %%
+# # %%
 
-grid.fit(x_train, y_train)
+# grid.fit(x_train, y_train)
 
-# %%
-log.info("Best parameters: %s. Best score: %.2f." % (grid.best_params_, grid.best_score_))
+# # %%
+# log.info("Best parameters: %s. Best score: %.2f." % (grid.best_params_, grid.best_score_))
