@@ -8,4 +8,4 @@ CWD="$(pwd)"
 export http_proxy=theta-proxy.tmi.alcf.anl.gov:3128
 export https_proxy=theta-proxy.tmi.alcf.anl.gov:3128
 
-/lus/theta-fs0/software/datascience/conda/2021-09-22/mconda3/bin/python 2022-09-20_ThomasPlaisier_Session02.py
+/lus/theta-fs0/software/datascience/conda/2021-09-22/mconda3/bin/python 2022-09-27_ThomasPlaisier_Session02.py
