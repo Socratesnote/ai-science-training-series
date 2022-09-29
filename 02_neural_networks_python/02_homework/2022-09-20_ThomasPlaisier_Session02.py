@@ -110,19 +110,33 @@ def model_trainer(model, x_train, y_train, y_train_onehot, num_epochs, batch_siz
     t_acc = accuracy(model, x_test, y_test)
     return t_acc, losses
 
+# %%
+# Fix to avoid invalid SSL certificates on Theta?
+import requests
+requests.packages.urllib3.disable_warnings()
+import ssl
+
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    # Legacy Python that doesn't verify HTTPS certificates by default
+    pass
+else:
+    # Handle target environment that doesn't support HTTPS verification
+    ssl._create_default_https_context = _create_unverified_https_context
 
 # %%
 
 # Load MNIST data from Keras.
-try:
-    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
-except:
-    # Or local file.
-    data = numpy.load('mnist.npz')
-    x_train = data['x_train']
-    x_test = data['x_test']
-    y_train = data['y_train']
-    y_test = data['y_test']
+# try:
+(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+# except:
+#     # Or local file.
+#     data = numpy.load('mnist.npz')
+#     x_train = data['x_train']
+#     x_test = data['x_test']
+#     y_train = data['y_train']
+#     y_test = data['y_test']
 log.info('MNIST data loaded. # Training elements: %i, # Testing elements: %i.' % (len(x_train), len(x_test)))
 
 # %%
