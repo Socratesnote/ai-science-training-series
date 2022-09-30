@@ -1,8 +1,8 @@
 #!/bin/sh
 #COBALT -A ALCFAITP 
-#COBALT -q single-gpu
-#COBALT -n 1
-#COBALT -t 59 
+#COBALT -q full-node
+#COBALT -n 8
+#COBALT -t 400 
 #COBALT -M tp@u.northwestern.edu
 #COBALT --attrs filesystems=home
 

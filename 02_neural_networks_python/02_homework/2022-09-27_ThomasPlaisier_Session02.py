@@ -220,7 +220,7 @@ y_test_onehot = tf.keras.utils.to_categorical(y_test, nb_classes)
 hidden_layer_width = 300  # Default, 98.2
 # hidden_layer_width = 3000 # 98.2, but takes ages.
 # hidden_layer_width = 30 # 96.5
-hlw_range = [3, 30, 100, 250, 300, 1000, 2000, 3000]
+hlw_range = [3, 30, 100, 300, 1000]
 # hlw_range = [3, 30]
 
 # Standard divation of normal distribution of weights.
@@ -228,7 +228,7 @@ initial_weight_scale = 0.01  # Default, 98.2
 # initial_weight_scale = 0.001 # 97.9
 # initial_weight_scale = 0.1 # 97.8
 # initial_weight_scale = 1.0 # 93.4
-iws_range = [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0, 2.0]
+iws_range = [0.001, 0.005, 0.01, 0.1, 1.0]
 # iws_range = [0.01, 0.05]
 
 # Learning rate of model.
@@ -241,13 +241,13 @@ learning_rate = 0.5  # 98.2
 # learning_rate = 0.06 # 95.4%
 # learning_rate = 0.04 # 94.2%
 # learning_rate = 0.01 # Default
-lr_range = [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0, 2.0, 5.0]
+lr_range = [0.001, 0.01, 0.1, 0.5, 1.0, 2.0]
 # lr_range = [0.1, 0.5]
 
 # Batch size for SGD.
 batch_size = 100  # Pretty good, 90% with the rest default.
 # batch_size = 10000 # Default
-bs_range = [10, 50, 100, 500, 1000, 5000, 10000, 20000, 30000]
+bs_range = [100, 1000, 5000, 10000, 30000]
 # bs_range = [100, 10000]
 
 # Number of epochs.
@@ -263,17 +263,21 @@ param_grid = {'HLW': hlw_range, 'IWS': iws_range,
 # %%
 # Store all accuracies to find out which set was best.
 t_acc_all = []
+
 # %%
 # Build, train, and test model across all sets in the parameter grid.
+i = -1
+i_max = len(list(ParameterGrid(param_grid)))
 
 for set in list(ParameterGrid(param_grid)):
+    i += 1
     hidden_layer_width = set['HLW']
     initial_weight_scale = set['IWS']
     learning_rate = set['LR']
     batch_size = set['BS']
 
-    log.info("Hyperparameters. HLW: %i. WS: %.3f. LR: %.3f. BS: %.0f. ME: %i." % (
-        hidden_layer_width, initial_weight_scale, learning_rate, batch_size, max_epochs))
+    log.info("Hyperparameters set %i of %i. HLW: %i. WS: %.3f. LR: %.3f. BS: %.0f. ME: %i." % (
+        i, i_max, hidden_layer_width, initial_weight_scale, learning_rate, batch_size, max_epochs))
     model = model_builder(num_features, hidden_layer_width,
                           nb_classes, initial_weight_scale)
 
