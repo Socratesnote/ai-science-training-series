@@ -232,36 +232,7 @@ for i in range(10):
     plt.title('%.0f' % predictions[i])
 
 # %%
+# Save model.
+params = model.get_params
 
-# # Now to optimize things, let's do a grid search.
-# # We'll be tuning 
-# from sklearn.model_selection import GridSearchCV
-# from sklearn.metrics import make_scorer
 
-# width_hidden_layer_range = numpy.round(numpy.linspace(50, 500, 5))
-# initial_weight_scale_range = numpy.linspace(0.005, 0.100, 5)
-# # Learning rate of model.
-# learning_rate_range = numpy.linspace(0.001, 0.02, 5)
-# # Batch size for SGD.
-# batch_size_range = numpy.round(numpy.linspace(1000, 20000, 5))
-# # Number of epochs.
-# num_epochs_range = numpy.round(numpy.linspace(5,100, 5))
-
-# param_grid = dict(width_hidden_layer=width_hidden_layer_range, initial_weight_scale=initial_weight_scale_range, learning_rate=learning_rate_range, batch_size = batch_size_range, num_epochs = num_epochs_range)
-
-# # %%
-# # Define custom scorer.
-# def my_custom_score_func(model, x_test, y_test):
-#      acc = accuracy(model, x_test, y_test)
-#      return acc 
-
-# score = make_scorer(my_custom_score_func, greater_is_better=True)
-
-# grid = GridSearchCV(estimator = model, scoring = score, param_grid=param_grid, cv=5) # 5 iterations.
-
-# # %%
-
-# grid.fit(x_train, y_train)
-
-# # %%
-# log.info("Best parameters: %s. Best score: %.2f." % (grid.best_params_, grid.best_score_))
