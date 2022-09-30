@@ -16,8 +16,7 @@ import datetime
 
 # %%
 # Configure combilogger.
-now = datetime.datetime.now()
-dt_string = now.strftime("%Y_%m_%d_%H_%M_%S")
+dt_string = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
 
 log = clogger.Combilogger(logLevel=logging.DEBUG, logPath=".", fileName=dt_string, writeMode="w")
 log.set_format_console('%(message)s')
@@ -27,6 +26,7 @@ log.set_level_file(logging.DEBUG)
 log.info("2022-09-27_ThomasPlaisier_Session02")
 
 # %%
+# Special settings for running in interactive mode.
 from IPython import get_ipython
 ipython = get_ipython()
 
@@ -38,9 +38,9 @@ if '__IPYTHON__' in globals():
 # %%
 # Imports.
 import tensorflow as tf
-
 import numpy
 import matplotlib.pyplot as plt
+import pickle
 
 # %%
 # Definitions.
@@ -232,7 +232,12 @@ for i in range(10):
     plt.title('%.0f' % predictions[i])
 
 # %%
-# Save model.
-params = model.get_params
+# Save model to file.
+dt_string = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+params = model.get_params()
+file_name = "model_acc_%.1f_HLW_%i_WS_%.3f_LR_%.3f_Batch_%.0f_Max epochs_%i_%s.pkl" % (t_acc, hidden_layer_width, initial_weight_scale, learning_rate, batch_size, num_epochs, dt_string)
+file_handle = open(file_name, "wb")
+pickle.dump(params, file_handle)
+file_handle.close()
 
-
+# %%

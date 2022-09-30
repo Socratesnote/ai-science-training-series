@@ -45,8 +45,13 @@ class TwoLayerNet(object):
         self.params['b1'] = np.zeros((hidden_dim,))
         self.params['b2'] = np.zeros((num_classes,))
 
-    def get_params(self)
-      return self.params
+    def get_params(self):
+      all_params = self.params
+      return all_params
+
+    def set_params(self, new_params):
+      self.params = new_params
+
 
     def loss(self, X, y=None):
         """
