@@ -92,19 +92,19 @@ def model_builder(num_features, hidden_layer_width, nb_classes, initial_weight_s
 # Model trainer.
 
 
-def model_trainer(model, x_train, y_train, y_train_onehot, num_epochs, batch_size, x_test, y_test):
+def model_trainer(model, x_train, y_train, y_train_onehot, max_epochs, batch_size, x_test, y_test):
     num_examples = x_train.shape[0]
     num_batches = int(num_examples / batch_size)
     # Pre-allocate.
-    losses = numpy.zeros(num_batches*num_epochs,)
+    losses = numpy.zeros(num_batches*max_epochs,)
     indices = numpy.arange(num_examples)
     i = 0  # Iteration.
     acc_prev = 0
-    delta_acc = 0.1
+    delta_acc = 5*10**-3 # Stop when gain is less than 0.5 %.
 
     start_time = time.time()
 
-    for epoch in range(0, num_epochs):
+    for epoch in range(0, max_epochs):
         # In each epoch, we loop over all of the training examples.
         for step in range(0, num_batches):
             # Create this training batch.
@@ -127,8 +127,8 @@ def model_trainer(model, x_train, y_train, y_train_onehot, num_epochs, batch_siz
 
         # When accuracy stalls, stop the training loop: no point in performing 50 epochs when 7 will get you most of the way there.
         if (acc - acc_prev < delta_acc) & (epoch > 5):
-            log.info("Breaking at epoch %d due to stalling accuracy gains (< %.1f)." % (
-                epoch, delta_acc))
+            log.info("Breaking at epoch %d of %d due to stalling accuracy gains (%.1f < %.1f)." % (
+                epoch, max_epochs, (acc - acc_prev), delta_acc))
             break
 
         # Store.
@@ -304,9 +304,5 @@ for i in range(10):
     plt.axis('off')
     plt.imshow(numpy.reshape(x_disp[i, :], (28, 28)), cmap="gray")
     plt.title('%.0f' % predictions[i])
-
-# %%
-# Close the log file when done.
-del(log)
 
 # %%
