@@ -128,7 +128,7 @@ def model_trainer(model, x_train, y_train, y_train_onehot, max_epochs, batch_siz
         # When accuracy stalls, stop the training loop: no point in performing 50 epochs when 7 will get you most of the way there.
         if (acc - acc_prev < delta_acc) & (epoch > 5):
             log.info("Breaking at epoch %d of %d due to stalling accuracy gains (%.1f < %.1f)." % (
-                epoch, max_epochs, (acc - acc_prev), delta_acc))
+                epoch, max_epochs, 100*(acc - acc_prev), 100*delta_acc))
             break
 
         # Store.
@@ -220,16 +220,16 @@ y_test_onehot = tf.keras.utils.to_categorical(y_test, nb_classes)
 hidden_layer_width = 300  # Default, 98.2
 # hidden_layer_width = 3000 # 98.2, but takes ages.
 # hidden_layer_width = 30 # 96.5
-hlw_range = [3, 30]
-# hlw_range = [3, 30, 100, 250, 300, 1000, 2000, 3000]
+hlw_range = [3, 30, 100, 250, 300, 1000, 2000, 3000]
+# hlw_range = [3, 30]
 
 # Standard divation of normal distribution of weights.
 initial_weight_scale = 0.01  # Default, 98.2
 # initial_weight_scale = 0.001 # 97.9
 # initial_weight_scale = 0.1 # 97.8
 # initial_weight_scale = 1.0 # 93.4
-# iws_range = [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0, 2.0]
-iws_range = [0.01, 0.05]
+iws_range = [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0, 2.0]
+# iws_range = [0.01, 0.05]
 
 # Learning rate of model.
 # learning_rate = 5.0 # 10.3
@@ -241,14 +241,14 @@ learning_rate = 0.5  # 98.2
 # learning_rate = 0.06 # 95.4%
 # learning_rate = 0.04 # 94.2%
 # learning_rate = 0.01 # Default
-# lr_range = [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0, 2.0, 5.0]
-lr_range = [0.1, 0.5]
+lr_range = [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0, 2.0, 5.0]
+# lr_range = [0.1, 0.5]
 
 # Batch size for SGD.
 batch_size = 100  # Pretty good, 90% with the rest default.
 # batch_size = 10000 # Default
-# bs_range = [10, 50, 100, 500, 1000, 5000, 10000, 20000, 30000]
-bs_range = [100, 10000]
+bs_range = [10, 50, 100, 500, 1000, 5000, 10000, 20000, 30000]
+# bs_range = [100, 10000]
 
 # Number of epochs.
 # In most cases you don't need to go higher than 30. The loop will automatically break when stalling.

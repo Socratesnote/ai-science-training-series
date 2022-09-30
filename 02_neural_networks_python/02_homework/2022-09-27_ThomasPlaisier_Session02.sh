@@ -1,4 +1,13 @@
 #!/bin/sh
+#COBALT -A ALCFAITP 
+#COBALT -q single-gpu
+#COBALT -n 1
+#COBALT -t 59 
+#COBALT -M tp@u.northwestern.edu
+#COBALT --attrs filesystems=home
+
+# Submit with
+# qsub-gpu 2022-09-27_ThomasPlaisier_Session02.sh
 
 module load /lus/theta-fs0/software/datascience/conda/2021-09-22
 
