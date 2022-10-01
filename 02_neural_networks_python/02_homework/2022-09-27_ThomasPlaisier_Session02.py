@@ -126,8 +126,8 @@ def model_trainer(model, x_train, y_train, y_train_onehot, max_epochs, batch_siz
                   (epoch, loss, 100*acc))
 
         # When accuracy stalls, stop the training loop: no point in performing 50 epochs when 7 will get you most of the way there.
-        if (acc - acc_prev < delta_acc) & (epoch > 5):
-            log.info("Breaking at epoch %d of %d due to stalling accuracy gains (%.1f < %.1f)." % (
+        if (numpy.abs(acc - acc_prev) < delta_acc) & (epoch > 5):
+            log.info("Breaking at epoch %d of %d due to stalling accuracy gains (|%.1f| < %.1f)." % (
                 epoch, max_epochs, 100*(acc - acc_prev), 100*delta_acc))
             break
 
@@ -288,15 +288,15 @@ i_max = len(grid_list)
 t_acc_all = numpy.zeros(i_max)
 
 # %%
-# t2 = time.time()
+t2 = time.time()
 
 # Parallel
 import multiprocessing
 if __name__ == '__main__': # Only main thread can spawn these.
     with multiprocessing.Pool() as pool:
-        t_acc_all = pool.imap(run_set, grid_list)
+        t_acc_all = pool.map(run_set, grid_list)
 
-# log.info('Parallel took %.1f s.' % (time.time() - t2))
+log.info('Parallel took %.1f s.' % (time.time() - t2))
 
 # %%
 
