@@ -150,7 +150,7 @@ def model_trainer(model, x_train, y_train, y_train_onehot, max_epochs, batch_siz
 # Save model to file.
 
 
-def save_model(model):
+def save_model(model, t_acc):
     dt_string = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     params = model.get_params()
     file_name = "model_acc_%.1f_HLW_%i_WS_%.3f_LR_%.3f_BS_%.0f_ME_%i_%s.pkl" % (
@@ -220,16 +220,16 @@ y_test_onehot = tf.keras.utils.to_categorical(y_test, nb_classes)
 hidden_layer_width = 300  # Default, 98.2
 # hidden_layer_width = 3000 # 98.2, but takes ages.
 # hidden_layer_width = 30 # 96.5
-hlw_range = [3, 30, 100, 300, 1000]
-# hlw_range = [3, 30]
+# hlw_range = [3, 30, 100, 300, 1000]
+hlw_range = [3, 30]
 
 # Standard divation of normal distribution of weights.
 initial_weight_scale = 0.01  # Default, 98.2
 # initial_weight_scale = 0.001 # 97.9
 # initial_weight_scale = 0.1 # 97.8
 # initial_weight_scale = 1.0 # 93.4
-iws_range = [0.001, 0.005, 0.01, 0.1, 1.0]
-# iws_range = [0.01, 0.05]
+# iws_range = [0.001, 0.005, 0.01, 0.1, 1.0]
+iws_range = [0.01, 0.05]
 
 # Learning rate of model.
 # learning_rate = 5.0 # 10.3
@@ -241,14 +241,14 @@ learning_rate = 0.5  # 98.2
 # learning_rate = 0.06 # 95.4%
 # learning_rate = 0.04 # 94.2%
 # learning_rate = 0.01 # Default
-lr_range = [0.001, 0.01, 0.1, 0.5, 1.0, 2.0]
-# lr_range = [0.1, 0.5]
+# lr_range = [0.001, 0.01, 0.1, 0.5, 1.0, 2.0]
+lr_range = [0.1, 0.5]
 
 # Batch size for SGD.
 batch_size = 100  # Pretty good, 90% with the rest default.
 # batch_size = 10000 # Default
-bs_range = [100, 1000, 5000, 10000, 30000]
-# bs_range = [100, 10000]
+# bs_range = [100, 1000, 5000, 10000, 30000]
+bs_range = [100, 10000]
 
 # Number of epochs.
 # In most cases you don't need to go higher than 30. The loop will automatically break when stalling.
@@ -260,33 +260,68 @@ max_epochs = 50
 param_grid = {'HLW': hlw_range, 'IWS': iws_range,
               'LR': lr_range, 'BS': bs_range}
 
-# %%
-# Store all accuracies to find out which set was best.
-t_acc_all = []
 
-# %%
-# Build, train, and test model across all sets in the parameter grid.
-i = -1
-i_max = len(list(ParameterGrid(param_grid)))
+# %% Parallel?
+import asyncio
+def background(f):
+    def wrapped(*args, **kwargs):
+        return asyncio.get_event_loop().run_in_executor(None, f, *args, **kwargs)
 
-for set in list(ParameterGrid(param_grid)):
-    i += 1
+    return wrapped
+
+def run_model(set):
     hidden_layer_width = set['HLW']
     initial_weight_scale = set['IWS']
     learning_rate = set['LR']
     batch_size = set['BS']
 
-    log.info("Hyperparameters set %i of %i. HLW: %i. WS: %.3f. LR: %.3f. BS: %.0f. ME: %i." % (
-        i, i_max, hidden_layer_width, initial_weight_scale, learning_rate, batch_size, max_epochs))
+    log.info("Hyperparameters set %i. HLW: %i. WS: %.3f. LR: %.3f. BS: %.0f. ME: %i." % (
+        i, hidden_layer_width, initial_weight_scale, learning_rate, batch_size, max_epochs))
     model = model_builder(num_features, hidden_layer_width,
-                          nb_classes, initial_weight_scale)
+                        nb_classes, initial_weight_scale)
 
     t_acc, losses = model_trainer(
         model, x_train, y_train, y_train_onehot, max_epochs, batch_size, x_test, y_test)
     log.info("Testing accuracy: %.1f." % (100*t_acc))
+    return model, t_acc
 
-    save_model(model)
-    t_acc_all.append(t_acc)
+# %%
+# Build, train, and test model across all sets in the parameter grid.
+grid_list = list(ParameterGrid(param_grid))
+
+async def grid_search(grid_list):
+    i_max = len(grid_list)
+    # Store all accuracies to find out which set was best.
+    t_acc_all = numpy.zeros(i_max)
+    async for set in grid_list:
+        i = grid_list.index(set)
+        model, t_acc = await run_model(set)
+
+        save_model(model, t_acc)
+        t_acc_all[i] = t_acc
+    return t_acc_all
+
+# %%
+t_acc_all = asyncio.run(grid_search(grid_list))
+
+# %%
+try:
+    loop = asyncio.get_running_loop()
+except RuntimeError:  # 'RuntimeError: There is no current event loop...'
+    loop = None
+
+if loop and loop.is_running():
+    print('Async event loop already running. Adding coroutine to the event loop.')
+    tsk = loop.create_task(grid_search(grid_list))
+    # ^-- https://docs.python.org/3/library/asyncio-task.html#task-object
+    # Optionally, a callback function can be executed when the coroutine completes
+    tsk.add_done_callback(
+        lambda t: print(f'Task done with result={t.result()}  << return val of grid_search(grid_list)'))
+else:
+    print('Starting new event loop')
+    t_acc_all = asyncio.run(grid_search(grid_list))
+
+# t_acc_all = asyncio.run(grid_search(grid_list))
 
 # %%
 # Show best model.
