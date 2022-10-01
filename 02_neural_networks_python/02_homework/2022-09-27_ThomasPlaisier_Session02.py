@@ -255,6 +255,13 @@ bs_range = [100, 1000, 5000, 10000, 30000]
 max_epochs = 50
 # num_epochs_range = numpy.round(numpy.linspace(15, 52, 6)).astype(numpy.int32)
 
+# %% Best set:
+# Scored 98.2% on the testing set, and 99.9% on the training set after 7 iterations.
+hidden_layer_width_best = 1000
+learning_rate_best = 1.0
+initial_weight_scale_best = 0.1
+batch_size_best = 100
+
 # %%
 # Build a parameter grid.
 param_grid = {'HLW': hlw_range, 'IWS': iws_range,
@@ -287,6 +294,11 @@ for set in list(ParameterGrid(param_grid)):
 
     save_model(model)
     t_acc_all.append(t_acc)
+
+# %%
+# Find all stored models, load the best.
+import glob
+glob.glob('./*.txt')
 
 # %%
 # Show best model.
