@@ -9,7 +9,10 @@
 # To submit: just submit your version of the full_net notebook.
 
 # %%
-# General imports.
+# Imports.
+import re
+import glob
+import multiprocessing
 from fc_net import TwoLayerNet
 import ssl
 import requests
@@ -46,7 +49,9 @@ if '__IPYTHON__' in globals():
     ipython.magic('matplotlib inline')
 
 # %%
-# Imports.
+# Import neural network from fc_net.py.
+# This implementation is a two-layer neural network. Credit: Stanford's CSE231n course,
+# hosted at https://github.com/cs231n/cs231n.github.io with the MIT license.
 
 # %%
 # Definitions.
@@ -100,7 +105,7 @@ def model_trainer(model, x_train, y_train, y_train_onehot, max_epochs, batch_siz
     indices = numpy.arange(num_examples)
     i = 0  # Iteration.
     acc_prev = 0
-    delta_acc = 5*10**-3 # Stop when gain is less than 0.5 %.
+    delta_acc = 5*10**-3  # Stop when gain is less than 0.5 %.
 
     start_time = time.time()
 
@@ -161,6 +166,38 @@ def save_model(model, t_acc):
     log.info("Model saved to '%s'." % (file_name))
 
 
+def load_model(file_name):
+    # From filename, regexp the HLW and IWS.
+    HLW = int(re.findall("HLW_(\d+)", y)[0])
+    IWS = float(re.findall("WS_(\d+.\d+)", y)[0])
+    model = model_builder(num_features, HLW,
+                          nb_classes, IWS)
+    with open(file_name, "rb") as input_file:
+        params = pickle.load(input_file)
+        model.set_params(params)
+        return model
+
+
+def run_set(set):
+    hidden_layer_width = set['HLW']
+    initial_weight_scale = set['IWS']
+    learning_rate = set['LR']
+    batch_size = set['BS']
+
+    log.info("Hyperparameters set %i of %i. HLW: %i. WS: %.3f. LR: %.3f. BS: %.0f. ME: %i." % (
+        i, i_max, hidden_layer_width, initial_weight_scale, learning_rate, batch_size, max_epochs))
+
+    model = model_builder(num_features, hidden_layer_width,
+                          nb_classes, initial_weight_scale)
+
+    t_acc, losses = model_trainer(
+        model, x_train, y_train, y_train_onehot, max_epochs, batch_size, x_test, y_test)
+    log.info("Testing accuracy: %.1f." % (100*t_acc))
+
+    save_model(model, t_acc)
+    return t_acc
+
+
 # %%
 # Fix to avoid invalid SSL certificates on Theta.
 requests.packages.urllib3.disable_warnings()
@@ -208,11 +245,6 @@ num_features = x_train.shape[1]  # Number of pixels
 nb_classes = 10
 y_train_onehot = tf.keras.utils.to_categorical(y_train, nb_classes)
 y_test_onehot = tf.keras.utils.to_categorical(y_test, nb_classes)
-
-# %%
-# Import neural network.
-# This implementation is a two-layer neural network. Credit: Stanford's CSE231n course,
-# hosted at https://github.com/cs231n/cs231n.github.io with the MIT license.
 
 # %%
 # Hyperparameters
@@ -268,23 +300,12 @@ param_grid = {'HLW': hlw_range, 'IWS': iws_range,
               'LR': lr_range, 'BS': bs_range}
 
 # %%
-def run_set(set):
-    hidden_layer_width = set['HLW']
-    initial_weight_scale = set['IWS']
-    learning_rate = set['LR']
-    batch_size = set['BS']
-
-    log.info("Hyperparameters set %i of %i. HLW: %i. WS: %.3f. LR: %.3f. BS: %.0f. ME: %i." % (
-        i, i_max, hidden_layer_width, initial_weight_scale, learning_rate, batch_size, max_epochs))
-    
-    model = model_builder(num_features, hidden_layer_width,
-                        nb_classes, initial_weight_scale)
-
-    t_acc, losses = model_trainer(
-        model, x_train, y_train, y_train_onehot, max_epochs, batch_size, x_test, y_test)
-    log.info("Testing accuracy: %.1f." % (100*t_acc))
-
-    save_model(model, t_acc)
+# Check if a model is saved. If yes, load. If no, train a new one with the parameter grid.
+pkl_files = glob.glob('./*.pkl')
+do_train = (len(pkl_files) == 0)
+do_train = True # Temp
+if do_train:
+    log.info("No model found. Training new model...")
 
 # %%
 # Build, train, and test model across all sets in the parameter grid.
@@ -295,52 +316,60 @@ i_max = len(grid_list)
 t_acc_all = numpy.zeros(i_max)
 
 # %%
-t2 = time.time()
+# Parallel.
 
+t2 = time.time()
+from multiprocessing import util
+import threading
+
+util.log_to_stderr(level=logging.DEBUG) 
 # Parallel
-import multiprocessing
-if __name__ == '__main__': # Only main thread can spawn these.
+if do_train & (__name__ == '__main__'):  # Only main thread can spawn these.
     with multiprocessing.Pool() as pool:
         t_acc_all = pool.map(run_set, grid_list)
 
 log.info('Parallel took %.1f s.' % (time.time() - t2))
 
 # %%
+# Sequential.
 
 t1 = time.time()
 # Sequential.
-for set in grid_list:
-    i = grid_list.index(set)
-    t_acc = run_set(set)
-    t_acc_all[i] = t_acc
+if do_train:
+    for set in grid_list:
+        i = grid_list.index(set)
+        t_acc = run_set(set)
+        t_acc_all[i] = t_acc
 
 log.info('Sequential took %.1f s.' % (time.time() - t1))
 
-
 # %%
 # Find all stored models, load the best.
-import glob
-glob.glob('./*.txt')
+
+pkl_files = glob.glob('./*.pkl')
+y = pkl_files[-1]
+model = load_model(y)
+log.info("Loaded model from file %s." % (y))
+
 
 # %%
+
 # Show best model.
 log.warning("Best model:")
-best_acc_index = numpy.argmax(t_acc_all)
-log.warning("Testing accuracy: %.1f" % (100*t_acc_all[best_acc_index]))
-best_set = ParameterGrid(param_grid)[best_acc_index]
-log.warning("Model: %s" % (best_set))
+t_acc = accuracy(model, x_test, y_test)
+log.warning("Testing accuracy: %.1f" % (100*t_acc))
 
-# %%
-# # Show predictions for 10 random images for last model.
-# indices = numpy.random.randint(0, x_train.shape[0], 10)
-# x_disp = x_train[indices, :]
-# scores = model.loss(x_disp)
-# predictions = numpy.argmax(scores, axis=1)
+# Show predictions for 10 random images for last model.
+log.info("Testing predictions:")
+indices = numpy.random.randint(0, x_train.shape[0], 10)
+x_disp = x_train[indices, :]
+scores = model.loss(x_disp)
+predictions = numpy.argmax(scores, axis=1)
 
-# for i in range(10):
-#     plt.subplot(1, 10, i+1)
-#     plt.axis('off')
-#     plt.imshow(numpy.reshape(x_disp[i, :], (28, 28)), cmap="gray")
-#     plt.title('%.0f' % predictions[i])
+for i in range(10):
+    plt.subplot(1, 10, i+1)
+    plt.axis('off')
+    plt.imshow(numpy.reshape(x_disp[i, :], (28, 28)), cmap="gray")
+    plt.title('%.0f' % predictions[i])
 
 # %%

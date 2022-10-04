@@ -6,6 +6,7 @@ import numpy as np
 from layers import *
 from layer_utils import *
 
+
 class TwoLayerNet(object):
     """
     A two-layer fully-connected neural network with ReLU nonlinearity and
@@ -40,18 +41,19 @@ class TwoLayerNet(object):
         self.params = {}
         self.reg = reg
 
-        self.params['W1'] = np.random.normal(scale=weight_scale, size=(input_dim, hidden_dim))
-        self.params['W2'] = np.random.normal(scale=weight_scale, size=(hidden_dim, num_classes))
+        self.params['W1'] = np.random.normal(
+            scale=weight_scale, size=(input_dim, hidden_dim))
+        self.params['W2'] = np.random.normal(
+            scale=weight_scale, size=(hidden_dim, num_classes))
         self.params['b1'] = np.zeros((hidden_dim,))
         self.params['b2'] = np.zeros((num_classes,))
 
     def get_params(self):
-      all_params = self.params
-      return all_params
+        all_params = self.params
+        return all_params
 
     def set_params(self, new_params):
-      self.params = new_params
-
+        self.params = new_params
 
     def loss(self, X, y=None):
         """
@@ -74,8 +76,10 @@ class TwoLayerNet(object):
         """
 
         # Forward pass, keeping intermediate values to avoid recomputing.
-        out_layer1, cache_layer1 = affine_relu_forward(X, self.params["W1"], self.params["b1"])
-        scores, cache_layer2 = affine_forward(out_layer1, self.params["W2"], self.params["b2"])
+        out_layer1, cache_layer1 = affine_relu_forward(
+            X, self.params["W1"], self.params["b1"])
+        scores, cache_layer2 = affine_forward(
+            out_layer1, self.params["W2"], self.params["b2"])
 
         # If y is None then we are in test mode so just return scores.
         if y is None:
@@ -84,15 +88,18 @@ class TwoLayerNet(object):
         loss, grads = 0, {}
 
         # L2 regularization is L2 norm of the weights (sum of squares).
-        regularization = np.sum(np.square(self.params["W1"])) + np.sum(np.square(self.params["W2"])) 
-        loss_softmax, dx_softmax = softmax_loss(scores, y) 
+        regularization = np.sum(
+            np.square(self.params["W1"])) + np.sum(np.square(self.params["W2"]))
+        loss_softmax, dx_softmax = softmax_loss(scores, y)
 
         # total loss is softmax loss plus regularization term. Can change balance between the two by changing self.reg. The 0.5 term is sometimes included in order for convenience to cancel out a 2 in the gradient.
         loss = loss_softmax + self.reg * 0.5 * regularization
 
         # Backward pass (computing gradients)
-        dx_affine_backward, grads['W2'], grads['b2'] = affine_backward(dx_softmax, cache_layer2)
-        dx, grads['W1'], grads['b1'] = affine_relu_backward(dx_affine_backward, cache_layer1) 
+        dx_affine_backward, grads['W2'], grads['b2'] = affine_backward(
+            dx_softmax, cache_layer2)
+        dx, grads['W1'], grads['b1'] = affine_relu_backward(
+            dx_affine_backward, cache_layer1)
 
         # Adjusting W1 and W2 gradients to incorporate the L2 regularization.
         grads['W2'] += self.reg * self.params['W2']
