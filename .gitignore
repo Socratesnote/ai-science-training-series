@@ -77,3 +77,5 @@ scratch/
 .DS_Store
 01_machineLearning/01_homework/img/
 01_machineLearning/01_homework/data/
+02_neural_networks_python/02_homework/models/
+02_neural_networks_python/02_homework/*.pkl
