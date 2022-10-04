@@ -26,7 +26,13 @@ os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 # Again we'll load the cifar10 data set. CIFAR-10 dataset contains 32x32 color images from 10 classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck. If you haven't downloaded it already, it could take a while.
 
 # %%
-(x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
+os.system("https_proxy=http://proxy.tmi.alcf.anl.gov:3128  pip install image-dataset-loader")
+os.system("https_proxy=http://proxy.tmi.alcf.anl.gov:3128  wget https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz")
+os.system("tar -xf cifar10.tgz")
+
+from image_dataset_loader import load
+(x_train, y_train), (x_test, y_test) = load('cifar10', ['train', 'test'])
+
 x_train = x_train.astype(numpy.float32)
 x_test  = x_test.astype(numpy.float32)
 

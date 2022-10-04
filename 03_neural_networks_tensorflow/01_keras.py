@@ -8,7 +8,6 @@
 # First, the needed imports.
 
 # %%
-%matplotlib inline
 
 import tensorflow as tf
 
@@ -29,7 +28,51 @@ os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 # <img src="images/CIFAR-10.png"  align="left"/>
 
 # %%
-(x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
+# Home based.
+# (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
+# x_train = x_train.astype(numpy.float32)
+# x_test  = x_test.astype(numpy.float32)
+
+# x_train /= 255.
+# x_test  /= 255.
+
+# y_train = y_train.astype(numpy.int32)
+# y_test  = y_test.astype(numpy.int32)
+
+# print()
+# print('CIFAR-10 data loaded: train:',len(x_train),'test:',len(x_test))
+# print('X_train:', x_train.shape)
+# print('y_train:', y_train.shape)
+
+# %% [markdown]
+# ### Download the dataset and load
+
+# %%
+# Alternative download and unzipping.
+# !pip install image-dataset-loader
+# !wget https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz
+# !tar -xf cifar10.tgz
+
+# %%
+    # %pip install image-dataset-loader
+    # %pip install wget
+    # import wget
+    # wget.download('https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz')
+    # # !tar -xf cifar10.tgz
+
+#     # Or
+import glob
+folder = glob.glob('./cifar10')
+if len(folder) == 0:
+    os.system("https_proxy=http://proxy.tmi.alcf.anl.gov:3128  wget https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz")
+    os.system("tar -xf cifar10.tgz")
+
+# %%
+# Show alternative data.
+os.system("https_proxy=http://proxy.tmi.alcf.anl.gov:3128  pip install image-dataset-loader")
+from image_dataset_loader import load
+(x_train, y_train), (x_test, y_test) = load('cifar10', ['train', 'test'])
+
 x_train = x_train.astype(numpy.float32)
 x_test  = x_test.astype(numpy.float32)
 
@@ -43,49 +86,6 @@ print()
 print('CIFAR-10 data loaded: train:',len(x_train),'test:',len(x_test))
 print('X_train:', x_train.shape)
 print('y_train:', y_train.shape)
-
-# %% [markdown]
-# ### Download the dataset and load
-
-# %%
-# Alternative download and unzipping.
-# !pip install image-dataset-loader
-# !wget https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz
-# !tar -xf cifar10.tgz
-
-# %%
-if False:
-    %pip install image-dataset-loader
-    %pip install wget
-    import wget
-    wget.download('https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz')
-    # !tar -xf cifar10.tgz
-
-    # Or
-    !https_proxy=http://proxy.tmi.alcf.anl.gov:3128  pip install image-dataset-loader
-    !https_proxy=http://proxy.tmi.alcf.anl.gov:3128  wget https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz
-    !tar -xf cifar10.tgz
-
-
-# %%
-# Show alternative data.
-if False:
-    from image_dataset_loader import load
-    (x_train, y_train), (x_test, y_test) = load('cifar10', ['train', 'test'])
-
-    x_train = x_train.astype(numpy.float32)
-    x_test  = x_test.astype(numpy.float32)
-
-    x_train /= 255.
-    x_test  /= 255.
-
-    y_train = y_train.astype(numpy.int32)
-    y_test  = y_test.astype(numpy.int32)
-
-    print()
-    print('CIFAR-10 data loaded: train:',len(x_train),'test:',len(x_test))
-    print('X_train:', x_train.shape)
-    print('y_train:', y_train.shape)
 
 # %% [markdown]
 # This time we won't flatten the images upfront. 
