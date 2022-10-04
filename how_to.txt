@@ -1,0 +1,72 @@
+Regular terminal: ~>
+Python terminal: >>
+
+######### Terminal:
+How to make a script executable?
+~> chmod +x <fileName>.sh
+
+How to run a script?
+~> ./<fileName>.sh
+
+######### Theta Jobs
+How to release a job hold?
+~> qrls(-gpu) <ID>
+
+How to delete a job from queue?
+~> qdel(-gpu) <ID>
+
+How to submit a job to system?
+# -A sets project name (node allocation): in our case, training project ALCFAITP.
+# -q sets the queue to submit the job to: here a single GPU of a DGX node is requested. Usual options: -single-gpu or -full-node
+# -n sets number of nodes. Stick to 1 unless not sure.
+# -t sets the walltime (runtime) in minutes. 0 sets max.
+# some toggle sets the file system.
+# -I sets the script to interactive.
+# -M sets a notification e-mail address.
+# -o sets the output file path.
+# -e sets the error file path.
+# --attrs sets attributes. Specifically, you can set --attrs filesystems=home,eagle,theta-fs0
+~> qsub(-gpu) -A ALCFAITP -q single-gpu -n 1 -t 15 --attrs filesystems=home,eagle,theta-fs0 <fileName>.sh (-I)
+
+ex. (from homework folder) ~>  qsub-gpu -A ALCFAITP -q single-gpu -n 1 -t 15 -M tp@u.northwestern.edu --attrs filesystems=home 2022-09-20_ThomasPlaisier_Session02.sh
+
+How to check a job queue?
+~> qstat(-gpu) (-u <user>)
+
+How to submit a random python file for submission?
+1. Create .sh file containing this:
+"
+#!/bin/sh
+
+module load /lus/theta-fs0/software/datascience/conda/2021-09-22
+
+CWD="$(pwd)"
+
+/lus/theta-fs0/software/datascience/conda/2021-09-22/mconda3/bin/python <path_to_.py>
+"
+2. Make script executable.
+3. Submit shell like normal.
+
+######### EMACS:
+(C- = Ctrl+)
+Save: C-x C-s
+Close: C-x C-c
+
+How to make a file bash-able?
+    Add "#!/bin/bash -l" on the first line of a file.
+
+How to add COBALT parameters?
+    Add things like "-A ALCFAITP" right below the magic comment for bash-ing. These will be added to the call to the module executing the shell.
+
+######### GIT:
+How to set up git?
+from $HOME/
+~> git clone https://github.com/Socratesnote/ai-science-training-series
+
+Other useful commands:
+git fetch <remote>
+git branch -r # for remotes
+git checkout --track <remote branch>
+git switch <branch>
+
+On first time cloning with submodules, don't forget to git submodule update --init.
