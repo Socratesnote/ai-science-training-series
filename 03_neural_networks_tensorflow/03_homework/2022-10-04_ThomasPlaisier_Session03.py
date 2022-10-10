@@ -26,8 +26,22 @@ os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 # 
 # `y_train` is a 50000-dimensional vector containing the correct classes ('airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck') for each training sample.
 
+# %% Load from file.
+import glob
+folder = glob.glob('./cifar10')
+if len(folder) == 0:
+    print("Downloading CIFAR10.")
+    os.system("https_proxy=http://proxy.tmi.alcf.anl.gov:3128  wget https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz")
+    os.system("tar -xf cifar10.tgz")
+else:
+    print("Folder found.")
+
 # %%
+# Download from Keras.
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
+
+# %%
+# Shape data.
 x_train = x_train.astype(numpy.float32)
 x_test  = x_test.astype(numpy.float32)
 
