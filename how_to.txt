@@ -86,3 +86,10 @@ Other useful commands:
 
 On first time cloning with submodules, don't forget to 
 ~> git submodule update --init.
+
+######### Python:
+Best practice is to set the python interpreter to the mconda3 executable.
+In VSCode command pallette:
+> Python: set interpreter.
+Path: /lus/theta-fs0/software/datascience/conda/2021-09-22/mconda3/bin/python
+Then click the python interpreter in the interactive window, and set it there.

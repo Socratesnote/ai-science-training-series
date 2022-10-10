@@ -12,10 +12,15 @@ import numpy
 import matplotlib.pyplot as plt
 import time
 from sklearn.metrics import confusion_matrix
+import glob
 
 # Fixes issue with Tensorflow crashing?
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
+
+# Image loader for importing from folder.
+os.system("https_proxy=http://proxy.tmi.alcf.anl.gov:3128  pip install image-dataset-loader")
+from image_dataset_loader import load
 
 # %% [markdown]
 # ## CIFAR-10 data set
@@ -26,40 +31,45 @@ os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 # 
 # `y_train` is a 50000-dimensional vector containing the correct classes ('airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck') for each training sample.
 
-# %% Load from file.
-import glob
-folder = glob.glob('./cifar10')
-if len(folder) == 0:
-    print("Downloading CIFAR10.")
-    os.system("https_proxy=http://proxy.tmi.alcf.anl.gov:3128  wget https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz")
-    os.system("tar -xf cifar10.tgz")
+# %%
+
+# If the dataset has already been pre-processed, just load it from a stored Numpy array.
+file = glob.glob('./cifar_store.npz')
+if len(file) != 0:
+    print("Found pre-shaped data. Loading from Numpy...")
+    this_file = numpy.load(file[0])
+    x_train = this_file["x_train"]
+    x_test = this_file["x_test"]
+    y_train = this_file["y_train"]
+    y_test = this_file["y_test"]
+    print("Data loaded.")
 else:
-    print("Folder found.")
+    # No stored Numpy. Check if the cifar folder exists.
+    folder = glob.glob('./cifar10')
+    if len(folder) == 0:
+        # Folder does not exist. Download from source.
+        print("Downloading CIFAR10.")
+        os.system("pip install wget")
+        import wget
+        os.system("https_proxy=http://proxy.tmi.alcf.anl.gov:3128  wget https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz")
+        os.system("tar -xf cifar10.tgz")
+    else:
+        print("Folder found. Loading with image_dataset_loader...")
+        # Use image-dataset-loader to import the data. If this doesn't work, restart the kernel to refresh the package. If it does work, it takes _ages_.
+        (x_train, y_train), (x_test, y_test) = load('cifar10', ['train', 'test'])
+        print("Data loaded.")
+    # Shape data.
+    x_train = x_train.astype(numpy.float32)
+    x_test  = x_test.astype(numpy.float32)
 
-# %%
-import glob
-folder = glob.glob('./cifar10')
-if len(folder) == 0:
-    print("Downloading CIFAR10.")
-    os.system("https_proxy=http://proxy.tmi.alcf.anl.gov:3128  wget https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz")
-    os.system("tar -xf cifar10.tgz")
-else:
-    print("Folder found.")
+    x_train /= 255.
+    x_test  /= 255.
 
-# %%
-# Download from Keras.
-(x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
-
-# %%
-# Shape data.
-x_train = x_train.astype(numpy.float32)
-x_test  = x_test.astype(numpy.float32)
-
-x_train /= 255.
-x_test  /= 255.
-
-y_train = y_train.astype(numpy.int32)
-y_test  = y_test.astype(numpy.int32)
+    y_train = y_train.astype(numpy.int32)
+    y_test  = y_test.astype(numpy.int32)
+    # Save to file.
+    with open("cifar_store.npz", "wb") as f:
+        numpy.savez(f, x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test)
 
 # %%
 # Definitions
@@ -135,7 +145,7 @@ def train_loop(dataset, batch_size, n_training_epochs, model, opt):
         return loss
 
     for i_epoch in range(n_training_epochs):
-        print("beginning epoch %d" % i_epoch)
+        print("Epoch %d" % i_epoch)
         start = time.time()
 
         epoch_steps = int(50000/batch_size)
@@ -147,7 +157,7 @@ def train_loop(dataset, batch_size, n_training_epochs, model, opt):
             loss = train_iteration(batch_data, y_true, model, opt)
             
         end = time.time()
-        print("took %1.1f seconds for epoch #%d" % (end-start, i_epoch))
+        print("Took %1.1f seconds for epoch #%d." % (end-start, i_epoch))
 
 # Training function.
 def train_network(dataset, _batch_size, _n_training_epochs, _lr):

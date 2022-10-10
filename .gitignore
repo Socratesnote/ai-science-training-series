@@ -82,3 +82,4 @@ scratch/
 03_neural_networks_tensorflow/cifar10/
 03_neural_networks_tensorflow/cifar10.tgz
 03_neural_networks_tensorflow/03_homework/cifar10/
+03_neural_networks_tensorflow/03_homework/cifar_store.npz
