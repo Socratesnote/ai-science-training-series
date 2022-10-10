@@ -8,6 +8,16 @@ How to make a script executable?
 How to run a script?
 ~> ./<fileName>.sh
 
+Rename folder/file?
+~> mv <source> <destination>
+
+Folder details?
+~> ls -l <folder>
+~> du -hc <folder>
+
+Search command history?
+Ctrl-r
+
 ######### Theta Jobs
 How to release a job hold?
 ~> qrls(-gpu) <ID>
