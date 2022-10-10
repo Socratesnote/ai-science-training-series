@@ -81,3 +81,4 @@ scratch/
 02_neural_networks_python/02_homework/*.pkl
 03_neural_networks_tensorflow/cifar10/
 03_neural_networks_tensorflow/cifar10.tgz
+03_neural_networks_tensorflow/03_homework/cifar10/
