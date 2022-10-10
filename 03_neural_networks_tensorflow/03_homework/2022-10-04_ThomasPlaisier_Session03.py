@@ -13,6 +13,8 @@ import matplotlib.pyplot as plt
 import time
 from sklearn.metrics import confusion_matrix
 import glob
+import getopt
+import sys
 
 # Fixes issue with Tensorflow crashing?
 import os
@@ -21,15 +23,6 @@ os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 # Image loader for importing from folder.
 os.system("https_proxy=http://proxy.tmi.alcf.anl.gov:3128  pip install image-dataset-loader")
 from image_dataset_loader import load
-
-# %% [markdown]
-# ## CIFAR-10 data set
-# 
-# Again we'll load the cifar10 data set. CIFAR-10 dataset contains 32x32 color images from 10 classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck.
-
-# The training data (`X_train`) is a 3rd-order tensor of size (50000, 32, 32), i.e. it consists of 50000 images of size 32x32 pixels. 
-# 
-# `y_train` is a 50000-dimensional vector containing the correct classes ('airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck') for each training sample.
 
 # %%
 
@@ -115,11 +108,10 @@ def train_network_concise(_batch_size, _n_training_epochs, _lr):
 
 # Loss function of model.
 def compute_loss(y_true, y_pred):
-    # if labels are integers, use sparse categorical crossentropy
-    # network's final layer is softmax, so from_logtis=False
+    # If labels are integers, use sparse categorical cross-entropy. 
+    # The network's final layer is softmax, so from_logtis=False
     scce = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False)
-    # if labels are one-hot encoded, use standard crossentropy
-
+    # If labels were one-hot encoded, use standard crossentropy
     return scce(y_true, y_pred)  
 
 # Forward pass of model.
@@ -129,10 +121,11 @@ def forward_pass(model, batch_data, y_true):
     return loss
 
 # Training loop manager.
-def train_loop(dataset, batch_size, n_training_epochs, model, opt):
+def train_loop(dataset, batch_size, n_training_epochs, model, optimizer, silent = False):
     
     @tf.function()
     def train_iteration(data, y_true, model, opt):
+        # What is tape?
         with tf.GradientTape() as tape:
             loss = forward_pass(model, data, y_true)
 
@@ -144,8 +137,11 @@ def train_loop(dataset, batch_size, n_training_epochs, model, opt):
         opt.apply_gradients(zip(grads, trainable_vars))
         return loss
 
+    avg_time = 0
+    total_time = 0
     for i_epoch in range(n_training_epochs):
-        print("Epoch %d" % i_epoch)
+        if not silent:
+            print("Epoch %d" % i_epoch)
         start = time.time()
 
         epoch_steps = int(50000/batch_size)
@@ -154,37 +150,76 @@ def train_loop(dataset, batch_size, n_training_epochs, model, opt):
         
         for i_batch, (batch_data, y_true) in enumerate(batches):
             batch_data = tf.reshape(batch_data, [-1, 32, 32, 3])
-            loss = train_iteration(batch_data, y_true, model, opt)
+            loss = train_iteration(batch_data, y_true, model, optimizer)
             
         end = time.time()
-        print("Took %1.1f seconds for epoch #%d." % (end-start, i_epoch))
+        total_time += (end-start)
+        avg_time = total_time / (i_epoch + 1)
+        if not silent:
+            print("Took %1.1f seconds for epoch #%d." % (end-start, i_epoch))
+
+    print("Took %.1f s in total. (avg: %.3f / epoch)" % (total_time, avg_time))
 
 # Training function.
-def train_network(dataset, _batch_size, _n_training_epochs, _lr):
+def train_network(dataset, _batch_size, _n_training_epochs, _lr, _silent = False):
 
     mnist_model = CIFAR10Classifier()
 
     optimizer = tf.keras.optimizers.Adam(_lr)
 
-    train_loop(dataset, _batch_size, _n_training_epochs, mnist_model, optimizer)
+    train_loop(dataset, _batch_size, _n_training_epochs, mnist_model, optimizer, _silent)
     return mnist_model
+
 
 # %%
 # Hyperparameters.
-batch_size = 512
-epochs = 3
-lr = .01
+# %%
+# Argument parser
+batch_size = 128
+epochs = 100
+learning_rate = .0001
+silent = True
+arg_help = "{0} -b <batch_size> -e <epochs> -l <learning_rate> -s <silent>".format(sys.argv[0])
+
+try:
+    opts, args = getopt.getopt(sys.argv[1:], "hb:e:l:s:", ["help", "batch_size=", 
+    "epochs=", "learning_rate=", "silent="])
+except:
+    print("Invalid input.")
+    print(sys.argv)
+    print(arg_help)
+    sys.exit()
+
+for opt, arg in opts:
+    if opt in ("-h", "--help"):
+        print(arg_help)
+        sys.exit()
+    elif opt in ("-b", "--batch_size"):
+        batch_size = int(arg)
+    elif opt in ("-e", "--epochs"):
+        epochs = int(arg)
+    elif opt in ("-l", "--learning_rate"):
+        learning_rate = float(arg)
+    elif opt in ("-s", "--silent"):
+        silent = arg.lower() == 'true'
+
+# %% [markdown]
+
+# BS: 128. Epochs: 100. LR: 0.001 = 65.8400 %
+# BS: 1024. Epochs: 100. LR: 0.01 = 50.9800 %
+# BS: 128. Epochs: 500. LR: 0.001. Avg accuracy: 65.4300 %.
 
 # %%
 # Train model on training data.
+print("Training model with hyperparameters:")
+print("BS: %i. Epochs: %i. LR: %f." % (batch_size, epochs, learning_rate))
 dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
 dataset.shuffle(50000)
-model = train_network(dataset, batch_size, epochs, lr)
+model = train_network(dataset, batch_size, epochs, learning_rate, silent)
 
 # %%
 # Print confusion matrix and accuracy for the testing data.
 print('Confusion matrix (rows: true classes; columns: predicted classes):')
-print()
 predictions = model.predict(x_test)
 cm=confusion_matrix(y_test, numpy.argmax(predictions, axis=1), labels=list(range(10)))
 print(cm)
@@ -192,11 +227,10 @@ print()
 
 j_sum = 0
 print('Classification accuracy for each class:')
-print()
 for i,j in enumerate(cm.diagonal()/cm.sum(axis=1)): 
     print("%d: %.4f" % (i,j))
     j_sum += j
-print('Average accuracy: %.4f %%' % (j_sum*10))
+print("BS: %i. Epochs: %i. LR: %f. Avg accuracy: %.4f %%." % (batch_size, epochs, learning_rate, j_sum*10))
 
 # %% [markdown]
 # Update this notebook to ensure more accuracy. How high can it be raised? Changes like increasing the number of epochs, altering the learning weight, altering the number of neurons the hidden layer, changing the optimizer, etc. could be made directly in the notebook. You can also change the model specification by expanding the network's layer. The current notebook's training accuracy is roughly 58.69%, although it varies randomly.
