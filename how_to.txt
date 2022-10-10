@@ -63,10 +63,16 @@ How to set up git?
 from $HOME/
 ~> git clone https://github.com/Socratesnote/ai-science-training-series
 
-Other useful commands:
-git fetch <remote>
-git branch -r # for remotes
-git checkout --track <remote branch>
-git switch <branch>
+Exiting out of a git bash view:
+~> :q
 
-On first time cloning with submodules, don't forget to git submodule update --init.
+Other useful commands:
+~> git fetch <remote>
+~> git pull
+~> git branch -r # for remotes
+~> git checkout --track <remote branch>
+~> git switch <branch>
+~> git diff (filename)
+
+On first time cloning with submodules, don't forget to 
+~> git submodule update --init.

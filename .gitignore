@@ -79,3 +79,5 @@ scratch/
 01_machineLearning/01_homework/data/
 02_neural_networks_python/02_homework/models/
 02_neural_networks_python/02_homework/*.pkl
+03_neural_networks_tensorflow/cifar10/
+03_neural_networks_tensorflow/cifar10.tgz
