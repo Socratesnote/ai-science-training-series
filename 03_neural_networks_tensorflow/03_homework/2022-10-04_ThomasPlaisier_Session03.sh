@@ -20,4 +20,4 @@ CWD="$(pwd)"
 export http_proxy=theta-proxy.tmi.alcf.anl.gov:3128
 export https_proxy=theta-proxy.tmi.alcf.anl.gov:3128
 
-/lus/theta-fs0/software/datascience/conda/2021-09-22/mconda3/bin/python 2022-10-04_ThomasPlaisier_Session03.py -b 128 -e 100 -l 0.0001 -s True
+/lus/theta-fs0/software/datascience/conda/2021-09-22/mconda3/bin/python 2022-10-04_ThomasPlaisier_Session03.py -m adhd -o rmsprop -b 128 -e 100 -l 0.001 -s True
