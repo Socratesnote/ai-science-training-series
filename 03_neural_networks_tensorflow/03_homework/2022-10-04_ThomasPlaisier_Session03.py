@@ -51,11 +51,31 @@ else:
     folder = glob.glob('./cifar10')
     if len(folder) == 0:
         # Folder does not exist. Download from source.
-        print("Downloading CIFAR10.")
-        os.system("pip install wget")
-        import wget
-        os.system("https_proxy=http://proxy.tmi.alcf.anl.gov:3128  wget https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz")
-        os.system("tar -xf cifar10.tgz")
+
+        # Fix to avoid invalid SSL certificates on Theta.
+        import requests
+        import ssl
+        try:
+            print("Downloading CIFAR10 with alternative SSL setup...")
+            requests.packages.urllib3.disable_warnings()
+
+            try:
+                _create_unverified_https_context = ssl._create_unverified_context
+            except AttributeError:
+                # Legacy Python that doesn't verify HTTPS certificates by default.
+                pass
+            else:
+                # Handle target environment that doesn't support HTTPS verification.
+                ssl._create_default_https_context = _create_unverified_https_context
+
+            (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+
+        except:
+            print("Downloading CIFAR10 with WGet...")
+            os.system("pip install wget")
+            import wget
+            os.system("https_proxy=http://proxy.tmi.alcf.anl.gov:3128  wget https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz")
+            os.system("tar -xf cifar10.tgz")
     else:
         print("Folder found. Loading with image_dataset_loader...")
         # Use image-dataset-loader to import the data. If this doesn't work, restart the kernel to refresh the package. If it does work, it takes _ages_.
@@ -186,14 +206,14 @@ def forward_pass(model, batch_data, y_true):
     return loss
 
 # Training loop manager.
-def train_loop(dataset, batch_size, n_training_epochs, model, optimizer, silent = False):
+def train_loop(dataset_train, dataset_test, batch_size, n_training_epochs, model, optimizer, silent = False):
     
     # Decorate the training iteration. Is this needed? --> Yes it is, otherwise the training loop can't calculate gradients properly. That is, it throws a whole bunch of warnings.
     @tf.function()
-    def train_iteration(data, y_true, model, optimizer):
+    def train_iteration(batch_data, y_true, model, optimizer):
         # GradientTape keeps track of the gradients as they are calculated in the iterations. This lets you define a custom training loop.
         with tf.GradientTape() as tape:
-            loss = forward_pass(model, data, y_true)
+            loss = forward_pass(model, batch_data, y_true)
 
         # In the Keras.io examples, they use trainable_weights?
         trainable_vars = model.trainable_variables
@@ -205,23 +225,47 @@ def train_loop(dataset, batch_size, n_training_epochs, model, optimizer, silent 
         optimizer.apply_gradients(zip(grads, trainable_vars))
         return loss
 
+    def validation_iteration(batch_data, y_true, model, optimizer):
+        with tf.GradientTape() as tape:
+            loss = forward_pass(model, batch_data, y_true)
+        return loss
+
     # Initialize.
     avg_time = 0
     total_time = 0
+    loss_train = numpy.zeros([n_training_epochs, 1])
+    loss_test = numpy.zeros([n_training_epochs, 1])
+    acc_train = numpy.zeros([n_training_epochs, 1])
+    acc_test = numpy.zeros([n_training_epochs, 1])
+
     for i_epoch in range(n_training_epochs):
         start = time.time()
         if not silent:
             print("Epoch %d" % i_epoch)
         
         # Shuffle the whole dataset.
-        dataset.shuffle(50000) 
+        dataset_train.shuffle(50000) 
         # Create a list of batches to iterate through.
-        batches = dataset.batch(batch_size=batch_size, drop_remainder=True)
-        
+        batches = dataset_train.batch(batch_size=batch_size, drop_remainder=True)
+        loss_batch = numpy.zeros([len(batches), 1])
+        acc_batch = numpy.zeros([len(batches), 1])
         for i_batch, (batch_data, y_true) in enumerate(batches):
             batch_data = tf.reshape(batch_data, [-1, 32, 32, 3])
-            loss = train_iteration(batch_data, y_true, model, optimizer)
-            
+            loss_batch[i_batch] = train_iteration(batch_data, y_true, model, optimizer)
+            acc_batch[i_batch] = get_accuracy(model, batch_data, y_true, 10)[0]
+        
+        # Average loss across all batches.
+        loss_train[i_epoch] = numpy.mean(loss_batch)
+        # Get classification accuracy of training set.
+        acc_train[i_epoch] = numpy.mean(acc_batch)
+
+        # How do I "unslice" this dataset into the component x and y values?
+        (x_test, y_test) = dataset_test.batch(batch_size=len(dataset_test),drop_remainder=True)
+        # Get classification accuracy of validation set.
+        acc_test[i_epoch] = get_accuracy(model, x_test, y_test, 10)[0]
+        # Get loss of validation set.
+        loss_test[i_epoch] = validation_iteration(x_test, y_test, model, optimizer)
+
         end = time.time()
         total_time += (end-start)
         avg_time = total_time / (i_epoch + 1)
@@ -230,8 +274,12 @@ def train_loop(dataset, batch_size, n_training_epochs, model, optimizer, silent 
 
     print("Took %.1f s in total. (avg: %.3f / epoch)" % (total_time, avg_time))
 
+    history = {'acc_train', acc_train, 'acc_test', acc_test, 'loss_train', loss_train, 'loss_test', loss_test}
+
+    return history
+
 # Training function.
-def train_network(dataset, _model_type, _optimizer, _batch_size, _n_training_epochs, _lr, _silent = False):
+def train_network(dataset_train, dataset_test, _model_type, _optimizer, _batch_size, _n_training_epochs, _lr, _silent = False):
 
     # Instantiate model.
     if _model_type == "base":
@@ -252,22 +300,35 @@ def train_network(dataset, _model_type, _optimizer, _batch_size, _n_training_epo
         optimizer = tf.keras.optimizers.Adam(_lr)
 
     # Train model with given hyperparameters.
-    train_loop(dataset, _batch_size, _n_training_epochs, mnist_model, optimizer, _silent)
-    return mnist_model
+    history = train_loop(dataset_train, dataset_test, _batch_size, _n_training_epochs, mnist_model, optimizer, _silent)
 
+    return mnist_model, history
+
+def get_accuracy(model, batch_data, batch_labels, n_classes):
+    predictions = model.predict(batch_data)
+    cm = confusion_matrix(batch_labels, numpy.argmax(predictions, axis=1), labels=list(range(n_classes)))
+
+    j_sum = 0
+    for i,j in enumerate(cm.diagonal()/cm.sum(axis=1)): 
+        j_sum += j
+    acc = 100*j_sum/n_classes
+    return acc, cm
 
 # %%
 # Hyperparameters.
 # %%
 # Argument parser
+
+# Default values.
 batch_size = 128
-epochs = 100
+epochs = 10
 learning_rate = 0.001
 model_type = "base"
 optimizer_type = "adam"
 silent = True
 arg_help = "{0} -m <model_type> -o <optimizer_type> -b <batch_size> -e <epochs> -l <learning_rate> -s <silent>".format(sys.argv[0])
 
+# Validate input.
 try:
     opts, args = getopt.getopt(sys.argv[1:], "hm:o:b:e:l:s:", ["help", "model_type=", "optimizer_type=" "batch_size=", 
     "epochs=", "learning_rate=", "silent="])
@@ -277,6 +338,7 @@ except:
     print(arg_help)
     opts = []
 
+# Assign arguments.
 for opt, arg in opts:
     if opt in ("-h", "--help"):
         print(arg_help)
@@ -301,33 +363,62 @@ for opt, arg in opts:
 # BS: 128. Epochs: 500. LR: 0.001. Avg accuracy: 65.4300 %.
 # BS: 128. Epochs: 100. LR: 0.000100. Avg accuracy: 65.4500 %.
 
+# Model: adhd. Optimizer: rmsprop. BS: 128. Epochs: 100. LR: 0.001000.
+# Model saved to 'model_adhd_opt_rmsprop_acc_76.8_BS_128_LR_0.tf'.
+
 # %%
-# Train model on training data.
+# Create datasets.
+dataset_train = tf.data.Dataset.from_tensor_slices((x_train, y_train))
+dataset_test = tf.data.Dataset.from_tensor_slices((x_test, y_test))
+
+# %%
+# Train model.
 print("Training model with hyperparameters:")
-print("Model: %s. Optimizer: %s. BS: %i. Epochs: %i. LR: %f." % (model_type, optimizer_type, batch_size, epochs, learning_rate))
-dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
-model = train_network(dataset, model_type, optimizer_type, batch_size, epochs, learning_rate, silent)
+print("Model: %s. Optimizer: %s. BS: %i. Epochs: %i. LR: %f." % (model_type, 
+optimizer_type, batch_size, epochs, learning_rate))
+
+model, history = train_network(dataset_train, dataset_test, model_type, optimizer_type, batch_size, epochs, learning_rate, silent)
 
 # %%
 # Print confusion matrix and accuracy for the testing data.
+acc, cm = get_accuracy(model, x_test, y_test, 10)
+print()
 print('Confusion matrix (rows: true classes; columns: predicted classes):')
-predictions = model.predict(x_test)
-cm=confusion_matrix(y_test, numpy.argmax(predictions, axis=1), labels=list(range(10)))
 print(cm)
 print()
 
-j_sum = 0
-print('Classification accuracy for each class:')
-for i,j in enumerate(cm.diagonal()/cm.sum(axis=1)): 
-    print("%d: %.4f" % (i,j))
-    j_sum += j
-print("Model: %s. Optimizer: %s. BS: %i. Epochs: %i. LR: %f." % (model_type, optimizer_type, batch_size, epochs, learning_rate))
+print("Model: %s. Optimizer: %s. Acc: %.1f. BS: %i. Epochs: %i. LR: %f." % (model_type, optimizer_type, acc, batch_size, epochs, learning_rate))
+
+# Get datestring of now.
+dt_string = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+
+# %%
+# Create accuracy and loss figures.
+# plot loss
+plt.subplot(211)
+plt.plot(history["loss_train"], color='blue', label='train')
+plt.plot(history["loss_test"], color='red', label='test')
+plt.title('Loss')
+plt.xlabel("Epochs")
+plt.ylabel("Loss Value")
+plt.legend(["Training", "Testing"])
+# plot accuracy
+plt.subplot(212)
+plt.plot(history["acc_train"], color='blue', label='train')
+plt.plot(history["acc_test"], color='red', label='test')
+plt.title('Classification Accuracy')
+plt.xlabel("Epochs")
+plt.ylabel("Accuracy %")
+plt.legend(["Training", "Testing"])
+# save plot to file
+filename = sys.argv[0].split('/')[-1]
+plt.savefig(dt_string + '_plot.png')
+plt.close()
 
 # %%
 # Save model.
-dt_string = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
-file_name = "model_%s_opt_%s_acc_%.1f_BS_%i_LR_%i.tf" % (
-    model_type, optimizer_type, j_sum*10, batch_size, learning_rate)
+file_name = "%s_model_%s_opt_%s_acc_%.1f_BS_%i_LR_%.4f.tf" % (
+    dt_string, model_type, optimizer_type, acc, batch_size, learning_rate)
 model.save(file_name)
 print("Model saved to '%s'." % (file_name))
 
