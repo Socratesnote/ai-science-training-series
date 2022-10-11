@@ -6,12 +6,11 @@
 #PBS -A datascience
 #PBS -l filesystems=home:eagle
 
-
 # Set up software deps:
 module load conda/2022-09-08
 conda activate
 
-cd /home/cadams/Polaris/ai-science-training-series/04_modern_neural_networks
+cd /home/soc/ai-science-training-series/04_modern_neural_networks
 
 export TF_XLA_FLAGS="--tf_xla_auto_jit=2"
 python train_resnet34.py

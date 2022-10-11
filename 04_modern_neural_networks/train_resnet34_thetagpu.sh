@@ -1,17 +1,21 @@
 #!/bin/bash -l
 #COBALT -t 60
-#COBALT -q single-gpu
-#COBALT -A datascience
+#COBALT -q full-node
+#COBALT -A ALCFAITP
 #COBALT -n 1
+#COBALT --attrs filesystems=home:grand
 
-#  #########3#COBALT --attrs filesystems=home:eagle
+# Data is stored on Grand for the purposes of this class.
 
 # Set up software deps:
 module load conda/2022-07-01
 conda activate
 
 # You have to point this to YOUR local copy of ai-science-training-series
-cd /home/cadams/ThetaGPU/ai-science-training-series/04_modern_neural_networks
+cd /home/soc/ai-science-training-series/04_modern_neural_networks/
 
+# Makes things run faster on a GPU.
 export TF_XLA_FLAGS="--tf_xla_auto_jit=2"
-python train_resnet34.py
+python train_resnet34_self.py
+
+# Instead of through the interactive 'notebook', this has to run in interactive terminal mode with qsub-gpu -I. Or use the Jupyter environment.
