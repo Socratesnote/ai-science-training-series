@@ -18,14 +18,17 @@
 # In the 2010s, there was one dataset to rule them all: [ImageNet](https://www.image-net.org/).  We will use this dataset for the rest of this series since it's the territory of "Big Data."  The dataset is just about 200GB on disk, and contains 1.4M images to classify spread over 1000 classes.  Modern datasets from science are actually growing even bigger!  For today, we will use the data loading as a *black box*, paying no heed to how we're loading the data or what it's doing.  We will circle back next week, however, to get into this.
 
 # %%
+
+# Fixes issue with Tensorflow crashing?
+import os
+os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
+
 import tensorflow as tf
 import json
 
 # %%
 # What's in this function?  Tune in next week ...
 from ilsvrc_dataset import get_datasets
-
-# We don't have to worry about the dataloader for now: that's next week's problem.
 
 # %%
 class FakeHvd:
@@ -55,6 +58,8 @@ images, labels = next(iter(train_ds.take(1)))
 print(images.shape)
 print(labels.shape)
 
+# 256x256 pixels now, so much bigger set.
+
 # %%
 first_image = images[0]
 
@@ -63,7 +68,8 @@ import matplotlib.pyplot as plt
 # %matplotlib inline
 
 # %%
-# Divide by 255 to put this in the range of 0-1 for floating point colors
+# Divide by 255 to put this in the range of 0-1 for floating point colors.
+# Note that this is only needed for the plotting library, not for the actual model training!
 plt.imshow(first_image/255.) 
 
 # %% [markdown]
@@ -76,11 +82,19 @@ plt.imshow(first_image/255.)
 # 
 # That's a **single** convolution.  Convolutional Layers are learning multiple filters:
 # 
+# (Note: pictures have annotations)
+# 
 # ![Convolution Layer](https://miro.medium.com/max/1400/1*u2el-HrqRPVk7x0xlvs_CA.png)
 
 # %%
 # Using 3 output filters here to simulate RGB.  
-# You can - and SHOULD - use more for bigger networks
+# You can - and SHOULD - use more for bigger networks.
+
+# The CCN learns the filter paramaters plus the biases in the Relu layer.
+
+# Note that the 3 filters do not represent the three color layers, but just 3 kernels that are later merged together into.
+# Note that the kernel size is 1, so just applies to single pixels.
+# Note that the 3x3 that comes out of the 4x4x3 is due to being able to fit 3 strides in the input.
 sample_conv_layer = tf.keras.layers.Conv2D(filters=3, kernel_size=1)
 
 # %%
@@ -90,6 +104,7 @@ modified_output = sample_conv_layer(images)
 # %%
 first_image = modified_output[0]
 # Divide by 255 to put this in the range of 0-1 for floating point colors
+# Note that the output layers of the convolution doesn't put any restrictions on the size of the number, so could be beyond 0-255 on either side.
 plt.imshow(first_image/255.) 
 
 # %% [markdown]
@@ -123,14 +138,17 @@ plt.imshow(first_image/255.)
 # 
 # - **Padding** represents the operation of handling the corner and edge cases so the output image is the same size as the input image.  Often you will see "valid" (apply the kernel only in valid locations) or "same" (add padding to make sure the output is the same size).
 # 
-# - **Stride** represents how many pixels are skipped between applications of the convolution.
+# - **Stride** represents how many pixels are skipped between applications of the convolution. Strides reduce input space, to reduce necessary computation.
 # 
-# - **Bottleneck** Layers are special convolution layers that have kernel size = 1, stride = 1 that preserve the output size and only look at single pixels at at time - though they look at all filters on a pixel.  A bottleneck layer is mathematically the same as applying the same MLP to each individual pixel's filters.
+# - **Bottleneck** Layers are special convolution layers that have kernel size = 1, stride = 1 that preserve the output size and only look at single pixels at at time - though they look at all filters on a pixel.  A bottleneck layer is mathematically the same as applying the same MLP to each individual pixel's filters. Bottlenecks reduce feature space, saves computational resources without degrading performance.
 
 # %% [markdown]
 # ## The case for ResNet: Vanishing Gradients
 # 
 # One of the motivations for the network we'll develop in the second half is the so-called "vanishing gradient problem":  The gradient of each layer depends on the gradient of each layer after it (remember the gradients flow backwards through the network).  Deeper and deeper networks that stack convolutions end up with smaller and smaller gradients in early layers.
+# 
+# Note: this is especially true when you use activation functions like sigmoids which scale all outputs between 0 and 1.
+# To overcome this, people came up with the residual layer: this paper has over 130k citations by now. Instead of applying the _call_ to just the output of the last layer, you apply it to output2 + x (essentially a residual).
 
 # %%
 class DenseLayer(tf.keras.Model):
@@ -221,6 +239,7 @@ residual_gradients = tape.gradient(residual_loss, residual_params)
 
 # %%
 # Compute the ratio of the gradient to the weights for each layer:
+# Note that the weights are also in grad/layer, but they're on the second index and thus not plotted. We use the ratio because the scales between layers are nonsencical and this way we avoid artificially blowing up one layer over the other.
 regular_mean_ratio = []
 for layer, grad in zip(regular_params, gradients):
     regular_mean_ratio.append(tf.reduce_max(grad[0]) / tf.reduce_max(layer[0]))
@@ -228,6 +247,8 @@ for layer, grad in zip(regular_params, gradients):
 plt.plot(range(len(regular_mean_ratio)), regular_mean_ratio)
 plt.grid()
 plt.yscale("log")
+
+# The fact that this drops off before layer ~60 shows that half of your network isn't actually being trained!
 
 # %%
 # Compute the ratio of the gradient to the weights for each layer:
@@ -240,6 +261,8 @@ for layer, grad in zip(residual_params, residual_gradients):
 plt.plot(range(len(residual_mean_ratio)), residual_mean_ratio)
 plt.yscale("log")
 plt.grid()
+
+# Note that this model makes it a lot further before the gradient becomes minute.
 
 # %% [markdown]
 # The difference in the magnitude of the gradients is striking.  Yes, there are ways to keep the magnitude of the gradients more reasonable through normalization layers (and that helps in residual networks too!), but most cases that use residual connections show significant benefits compared to regular convolutional neural networks, especially as the networks get deeper.
