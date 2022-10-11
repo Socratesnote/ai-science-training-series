@@ -55,6 +55,8 @@ images, labels = next(iter(train_ds.take(1)))
 print(images.shape)
 print(labels.shape)
 
+# We will now be working with 256x256 pictures.
+
 # %%
 first_image = images[0]
 
