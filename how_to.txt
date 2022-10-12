@@ -57,6 +57,17 @@ CWD="$(pwd)"
 2. Make script executable.
 3. Submit shell like normal.
 
+How to use interactive mode?
+Submit a job with qsub-gpu <settings> -I
+Then accept any network certificates, and use 
+~> module load <python environment> 
+and 
+~>conda activate
+to actually set the interpreter.
+To exit interactive mode, type 
+~> exit
+This will put you back to the login node.
+
 ######### EMACS:
 (C- = Ctrl+)
 Save: C-x C-s

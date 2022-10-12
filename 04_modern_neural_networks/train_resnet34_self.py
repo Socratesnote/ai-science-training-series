@@ -8,6 +8,7 @@ os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
 os.environ["TF_XLA_FLAGS"] = "--tf_xla_auto_jit=2"
 
 import tensorflow as tf
+import glob
 
 # %%
 #########################################################################
@@ -238,7 +239,8 @@ def train_epoch(i_epoch, step_in_epoch, train_ds, val_ds, network, optimizer, BA
         loss, acc = training_step(network, optimizer, train_images, train_labels)
         end = time.time()
         images_per_second = BATCH_SIZE / (end - start)
-        print(f"Finished step {step_in_epoch.numpy()} of {steps_per_epoch} in epoch {i_epoch.numpy()},loss={loss:.3f}, acc={acc:.3f} ({images_per_second:.3f} img/s).")
+        # Convenient sanity check: if this line fails to compile, you forgot to activate the conda 2022-07-01 environment (and python3).
+        print(f'Finished step {step_in_epoch.numpy()} of {steps_per_epoch} in epoch {i_epoch.numpy()}, loss={loss:.3f}, acc={acc:.3f} ({images_per_second:.3f} img/s).')
         start = time.time()
 
     # Save the network after every epoch:
@@ -282,8 +284,28 @@ def prepare_data_loader(BATCH_SIZE):
 
         def rank(self): return 0
 
+    # Add this to find the ilsvrc file from session 4.
+    print('Looking for ilsvrc.json.')
+    json_files = glob.glob("**/ilsvrc.json", recursive=True) 
+    if len(json_files) > 1:
+        print('Found candidates:')
+        print(json_files)
+        print('Filtering...')
+        this_file = list(filter(lambda element: '04_modern' in element, json_files))
+        if len(this_file) > 1:
+            print('Error: more than 1 match for filter.')
+            print(this_file)
+            sys.exit()
+    else:
+        print('Found 1 file:')
+        this_file = json_files
+        print(this_file)
 
-    with open("ilsvrc.json", 'r') as f:
+    this_file = this_file[0]
+    print('Using file:')
+    print(this_file)
+
+    with open(this_file, 'r') as f:
         config = json.load(f)
 
     print(json.dumps(config, indent=4))
@@ -305,7 +327,7 @@ def main():
     # Here's some configuration:
     #########################################################################
     BATCH_SIZE = 256
-    N_EPOCHS = 10
+    N_EPOCHS = 1
 
     train_ds, val_ds = prepare_data_loader(BATCH_SIZE)
 
@@ -320,9 +342,6 @@ def main():
     print("output shape:", output.shape)
 
     print(network.summary())
-
-
-
 
     epoch = tf.Variable(initial_value=tf.constant(0, dtype=tf.dtypes.int64), name='epoch')
     step_in_epoch = tf.Variable(
