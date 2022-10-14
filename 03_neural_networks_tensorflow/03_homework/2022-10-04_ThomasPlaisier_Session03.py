@@ -422,9 +422,6 @@ file_name = "%s_model_%s_opt_%s_acc_%.1f_BS_%i_LR_%.4f.tf" % (
 model.save(file_name)
 print("Model saved to '%s'." % (file_name))
 
-# %% [markdown]
-# Update this notebook to ensure more accuracy. How high can it be raised? Changes like increasing the number of epochs, altering the learning weight, altering the number of neurons the hidden layer, changing the optimizer, etc. could be made directly in the notebook. You can also change the model specification by expanding the network's layer. The current notebook's training accuracy is roughly 58.69%, although it varies randomly.
-
 # %%
 
 
