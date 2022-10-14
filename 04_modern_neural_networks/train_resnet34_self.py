@@ -368,7 +368,7 @@ def train_epoch(i_epoch, step_in_epoch, train_ds, val_ds, network, optimizer, BA
     for val_images, val_labels in val_ds.take(steps_validation):
         logits = network(val_images)
         accuracy = calculate_accuracy(logits, val_labels)
-        print(accuracy)
+        # print(accuracy)
         if mean_accuracy is None:
             mean_accuracy = accuracy
         else:
@@ -382,10 +382,10 @@ def train_epoch(i_epoch, step_in_epoch, train_ds, val_ds, network, optimizer, BA
 def plot_figure(i_epoch,loss_history, acc_history):
     dt_string = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     # Plot.
-    print('Loss history')
-    print(loss_history)
-    print('Acc history')
-    print(acc_history)
+    # print('Loss history')
+    # print(loss_history)
+    # print('Acc history')
+    # print(acc_history)
 
     plt.subplot(211)
     plt.plot(loss_history[i_epoch,:], color='blue')
@@ -410,7 +410,8 @@ def main():
     #########################################################################
     BATCH_SIZE = 256
     # BATCH_SIZE = 1024 # Causes OOM.
-    N_EPOCHS = 3
+    N_EPOCHS = 20
+    LEARNING_RATE = 0.0001
 
     # Get datasets.
     train_ds, val_ds = prepare_data_loader(BATCH_SIZE)
@@ -427,16 +428,15 @@ def main():
     # Print network parameters.
     print(network.summary())
 
-    # Define epoch and steps as state variables: this allows all TF operations on these variables..
+    # Define epoch and steps as state variables: this allows all TF operations on these variables.
     epoch = tf.Variable(initial_value=tf.constant(0, dtype=tf.dtypes.int64), name='epoch')
     step_in_epoch = tf.Variable(
         initial_value=tf.constant(0, dtype=tf.dtypes.int64),
         name='step_in_epoch')
 
     # We need an optimizer. Let's use Adam:
-    learning_rate = 0.0001
-    print(f'Optimizing with ADAM, LR = {learning_rate:.5f}.')
-    optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
+    print(f'Optimizing with ADAM, LR = {LEARNING_RATE:.5f}.')
+    optimizer = tf.keras.optimizers.Adam(learning_rate=LEARNING_RATE)
 
     # Define a checkpoint manager.
     checkpoint = tf.train.Checkpoint(

@@ -90,4 +90,7 @@ scratch/
 03_neural_networks_tensorflow/03_homework/model_*/
 03_neural_networks_tensorflow/03_homework/*.png
 04_modern_neural_networks/core
-04_modern_neural_networks/resnet34/
+04_modern_neural_networks/resnet34*/
+04_modern_neural_networks/*.png
+04_modern_neural_networks/04_homework/resnet34*/
+04_modern_neural_networks/04_homework/core
