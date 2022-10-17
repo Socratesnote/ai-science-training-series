@@ -22,3 +22,4 @@ export http_proxy=theta-proxy.tmi.alcf.anl.gov:3128
 export https_proxy=theta-proxy.tmi.alcf.anl.gov:3128
 
 python 2022-10-04_ThomasPlaisier_Session03.py -m aug -o rmsprop -b 128 -e 100 -l 0.001 -s True
+
