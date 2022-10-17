@@ -7,8 +7,11 @@
 # Changed:
 # Batch size: 512 --> 128
 # Epochs: 3 --> 100
-# Learning rate: 0.1 --> 0.01
-# Accuracy 58% --> 65%. 
+# Learning rate: 0.1 --> 0.001
+# Optimizer: ADAM --> RMSprop
+# Model: base CIFAR10Classifier --> CIFAR10ClassifierAug (more filters and dense layers, no dropout).
+
+# Validation accuracy 58% --> 65.8%. 
 
 # %%
 # Imports.
@@ -133,13 +136,12 @@ class CIFAR10Classifier(tf.keras.models.Model):
 
         return x
 
-# CIFAR classifier based on https://github.com/adhishthite/cifar10-optimizers and https://machinelearningmastery.com/how-to-develop-a-cnn-from-scratch-for-cifar-10-photo-classification/
-class CIFAR10ClassifierADHD(tf.keras.models.Model):
+# CIFAR classifier with more filter layers, more dense layers, and no dropout.
+class CIFAR10ClassifierAug(tf.keras.models.Model):
 
     def __init__(self, activation=tf.nn.tanh):
         tf.keras.models.Model.__init__(self)
 
-        # Useful insight from MLM: typically, when stacking convolutional layers, you start with e.g. 32 in the first set, and then double the kernel size for each additional set.
         # Filter layer: 32 3x3 kernels.
         self.conv_1 = tf.keras.layers.Conv2D(32, [3, 3], padding="same", activation='relu')
         # Filter layer: 32 3x3 kernels.
@@ -208,7 +210,6 @@ def forward_pass(model, batch_data, y_true):
 # Training loop manager.
 def train_loop(dataset_train, dataset_test, batch_size, n_training_epochs, model, optimizer, silent = False):
     
-    # Decorate the training iteration. Is this needed? --> Yes it is, otherwise the training loop can't calculate gradients properly. That is, it throws a whole bunch of warnings.
     @tf.function()
     def train_iteration(batch_data, y_true, model, optimizer):
         # GradientTape keeps track of the gradients as they are calculated in the iterations. This lets you define a custom training loop.
@@ -285,7 +286,7 @@ def train_network(dataset_train, dataset_test, _model_type, _optimizer, _batch_s
     if _model_type == "base":
         mnist_model = CIFAR10Classifier()
     elif _model_type == "adhd":
-        mnist_model = CIFAR10ClassifierADHD()
+        mnist_model = CIFAR10ClassifierAug()
     else:
         mnist_model = CIFAR10Classifier()
 
@@ -313,9 +314,6 @@ def get_accuracy(model, batch_data, batch_labels, n_classes):
         j_sum += j
     acc = 100*j_sum/n_classes
     return acc, cm
-
-# %%
-# Hyperparameters.
 # %%
 # Argument parser
 
@@ -355,16 +353,6 @@ for opt, arg in opts:
         learning_rate = float(arg)
     elif opt in ("-s", "--silent"):
         silent = arg.lower() == 'true'
-
-# %% [markdown]
-
-# BS: 128. Epochs: 100. LR: 0.001 = 65.8400 %
-# BS: 1024. Epochs: 100. LR: 0.01 = 50.9800 %
-# BS: 128. Epochs: 500. LR: 0.001. Avg accuracy: 65.4300 %.
-# BS: 128. Epochs: 100. LR: 0.000100. Avg accuracy: 65.4500 %.
-
-# Model: adhd. Optimizer: rmsprop. BS: 128. Epochs: 100. LR: 0.001000.
-# Model saved to 'model_adhd_opt_rmsprop_acc_76.8_BS_128_LR_0.tf'.
 
 # %%
 # Create datasets.
