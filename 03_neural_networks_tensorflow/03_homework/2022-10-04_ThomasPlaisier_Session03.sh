@@ -2,7 +2,7 @@
 #COBALT -A ALCFAITP 
 #COBALT -q full-node
 #COBALT -n 1
-#COBALT -t 60 
+#COBALT -t 120 
 #COBALT -M tp@u.northwestern.edu
 #COBALT --attrs filesystems=home
 
@@ -12,7 +12,8 @@
 # Submit with
 # qsub-gpu 2022-10-04_ThomasPlaisier_Session03.sh
 
-module load /lus/theta-fs0/software/datascience/conda/2021-09-22
+module load conda/2022-07-01
+conda activate
 
 CWD="$(pwd)"
 
@@ -20,4 +21,4 @@ CWD="$(pwd)"
 export http_proxy=theta-proxy.tmi.alcf.anl.gov:3128
 export https_proxy=theta-proxy.tmi.alcf.anl.gov:3128
 
-/lus/theta-fs0/software/datascience/conda/2021-09-22/mconda3/bin/python 2022-10-04_ThomasPlaisier_Session03.py -m adhd -o rmsprop -b 128 -e 100 -l 0.001 -s True
+python 2022-10-04_ThomasPlaisier_Session03.py -m aug -o rmsprop -b 128 -e 100 -l 0.001 -s True
