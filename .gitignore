@@ -95,3 +95,5 @@ scratch/
 04_modern_neural_networks/04_homework/resnet34*/
 04_modern_neural_networks/04_homework/core
 04_modern_neural_networks/04_homework/*.png
+03_neural_networks_tensorflow/03_homework/2022_10_18_11_57_31_model_aug_opt_rmsprop_acc_66.2_BS_128_LR_0.0010.tf/
+03_neural_networks_tensorflow/03_homework/2022_10_18_12_23_08_model_aug_opt_rmsprop_acc_66.5_BS_128_LR_0.0010.tf/
