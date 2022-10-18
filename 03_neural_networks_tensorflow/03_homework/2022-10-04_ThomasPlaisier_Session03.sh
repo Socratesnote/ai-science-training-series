@@ -24,5 +24,7 @@ export https_proxy=theta-proxy.tmi.alcf.anl.gov:3128
 
 # qsub-gpu -q single-gpu -t 60 -I -n 1 -A ALCFAITP --attrs filesystems=home
 
-python 2022-10-04_ThomasPlaisier_Session03.py -m aug -o rmsprop -b 128 -e 100 -l 0.001 -s True
+/lus/theta-fs0/software/datascience/conda/2021-09-22/mconda3/bin/python 2022-10-04_ThomasPlaisier_Session03.py -m aug -o rmsprop -b 128 -e 100 -l 0.001 -s True
+
+# python 2022-10-04_ThomasPlaisier_Session03.py -m aug -o rmsprop -b 128 -e 100 -l 0.001 -s True
 

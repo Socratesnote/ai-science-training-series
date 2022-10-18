@@ -273,14 +273,11 @@ def train_loop(dataset_train, dataset_test, batch_size, n_training_epochs, model
             batch_data = tf.reshape(batch_data, [-1, 32, 32, 3])
             loss_batch[i_batch] = validation_iteration(batch_data, y_true, model, optimizer)
             acc_batch[i_batch] = get_accuracy(model, batch_data, y_true, 10)[0]
-        ##
-        # # How do I "unslice" this dataset into the component x and y values?
-        # (x_test, y_test) = dataset_test.batch(batch_size=len(dataset_test),drop_remainder=True)
-        # # Get classification accuracy of validation set.
-        # acc_test[i_epoch] = get_accuracy(model, x_test, y_test, 10)[0]
-        # # Get loss of validation set.
-        # loss_test[i_epoch] = validation_iteration(x_test, y_test, model, optimizer)
-        # ##
+      
+        # Average loss across all batches.
+        loss_test[i_epoch] = numpy.mean(loss_batch)
+        # Get classification accuracy of training set.
+        acc_test[i_epoch] = numpy.mean(acc_batch)
 
         end = time.time()
         total_time += (end-start)
@@ -290,9 +287,7 @@ def train_loop(dataset_train, dataset_test, batch_size, n_training_epochs, model
 
     print("Took %.1f s in total. (avg: %.3f / epoch)" % (total_time, avg_time))
 
-    history = {'acc_train', acc_train, 'acc_test', acc_test, 'loss_train', loss_train, 'loss_test', loss_test}
-
-    return history
+    return acc_train, acc_test, loss_train, loss_test
 
 # Training function.
 def train_network(dataset_train, dataset_test, _model_type, _optimizer, _batch_size, _n_training_epochs, _lr, _silent = False):
@@ -316,9 +311,9 @@ def train_network(dataset_train, dataset_test, _model_type, _optimizer, _batch_s
         optimizer = tf.keras.optimizers.Adam(_lr)
 
     # Train model with given hyperparameters.
-    history = train_loop(dataset_train, dataset_test, _batch_size, _n_training_epochs, mnist_model, optimizer, _silent)
+    acc_train, acc_test, loss_train, loss_test = train_loop(dataset_train, dataset_test, _batch_size, _n_training_epochs, mnist_model, optimizer, _silent)
 
-    return mnist_model, history
+    return mnist_model, acc_train, acc_test, loss_train, loss_test
 
 def get_accuracy(model, batch_data, batch_labels, n_classes):
     predictions = model.predict(batch_data)
@@ -329,6 +324,7 @@ def get_accuracy(model, batch_data, batch_labels, n_classes):
         j_sum += j
     acc = 100*j_sum/n_classes
     return acc, cm
+
 # %%
 # Argument parser
 
@@ -380,7 +376,7 @@ print("Training model with hyperparameters:")
 print("Model: %s. Optimizer: %s. BS: %i. Epochs: %i. LR: %f." % (model_type, 
 optimizer_type, batch_size, epochs, learning_rate))
 
-model, history = train_network(dataset_train, dataset_test, model_type, optimizer_type, batch_size, epochs, learning_rate, silent)
+model, acc_train, acc_test, loss_train, loss_test = train_network(dataset_train, dataset_test, model_type, optimizer_type, batch_size, epochs, learning_rate, silent)
 
 # %%
 # Print confusion matrix and accuracy for the testing data.
@@ -398,17 +394,18 @@ dt_string = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
 # %%
 # Create accuracy and loss figures.
 # plot loss
+plt.tight_layout()
 plt.subplot(211)
-plt.plot(history["loss_train"], color='blue', label='train')
-plt.plot(history["loss_test"], color='red', label='test')
+plt.plot(loss_train, color='blue', label='train')
+plt.plot(loss_test, color='red', label='test')
 plt.title('Loss')
 plt.xlabel("Epochs")
 plt.ylabel("Loss Value")
 plt.legend(["Training", "Testing"])
 # plot accuracy
 plt.subplot(212)
-plt.plot(history["acc_train"], color='blue', label='train')
-plt.plot(history["acc_test"], color='red', label='test')
+plt.plot(acc_train, color='blue', label='train')
+plt.plot(acc_test, color='red', label='test')
 plt.title('Classification Accuracy')
 plt.xlabel("Epochs")
 plt.ylabel("Accuracy %")
