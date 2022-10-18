@@ -16,7 +16,6 @@
 # %%
 # Imports.
 import tensorflow as tf
-
 import numpy
 import matplotlib.pyplot as plt
 import time
@@ -29,6 +28,10 @@ import datetime
 # Fixes issue with Tensorflow crashing?
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
+
+# This limits the amount of memory used:
+os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
+os.environ["TF_XLA_FLAGS"] = "--tf_xla_auto_jit=2"
 
 # Image loader for importing from folder.
 try:
@@ -260,12 +263,24 @@ def train_loop(dataset_train, dataset_test, batch_size, n_training_epochs, model
         # Get classification accuracy of training set.
         acc_train[i_epoch] = numpy.mean(acc_batch)
 
-        # How do I "unslice" this dataset into the component x and y values?
-        (x_test, y_test) = dataset_test.batch(batch_size=len(dataset_test),drop_remainder=True)
-        # Get classification accuracy of validation set.
-        acc_test[i_epoch] = get_accuracy(model, x_test, y_test, 10)[0]
-        # Get loss of validation set.
-        loss_test[i_epoch] = validation_iteration(x_test, y_test, model, optimizer)
+        # Shuffle the whole dataset.
+        dataset_test.shuffle(10000) 
+        # Create a list of batches to iterate through.
+        batches = dataset_test.batch(batch_size=10000, drop_remainder=True)
+        loss_batch = numpy.zeros([len(batches), 1])
+        acc_batch = numpy.zeros([len(batches), 1])
+        for i_batch, (batch_data, y_true) in enumerate(batches):
+            batch_data = tf.reshape(batch_data, [-1, 32, 32, 3])
+            loss_batch[i_batch] = validation_iteration(batch_data, y_true, model, optimizer)
+            acc_batch[i_batch] = get_accuracy(model, batch_data, y_true, 10)[0]
+        ##
+        # # How do I "unslice" this dataset into the component x and y values?
+        # (x_test, y_test) = dataset_test.batch(batch_size=len(dataset_test),drop_remainder=True)
+        # # Get classification accuracy of validation set.
+        # acc_test[i_epoch] = get_accuracy(model, x_test, y_test, 10)[0]
+        # # Get loss of validation set.
+        # loss_test[i_epoch] = validation_iteration(x_test, y_test, model, optimizer)
+        # ##
 
         end = time.time()
         total_time += (end-start)
