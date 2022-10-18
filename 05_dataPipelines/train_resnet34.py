@@ -4,7 +4,7 @@ import time
 # This limits the amount of memory used:
 os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
 os.environ["TF_XLA_FLAGS"] = "--tf_xla_auto_jit=2"
-# os.environ['OMP_NUM_THREADS'] = '32'
+os.environ['OMP_NUM_THREADS'] = '32'
 # prefetch_buffer_size = 0
 
 import tensorflow as tf
