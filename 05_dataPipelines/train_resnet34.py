@@ -12,7 +12,7 @@ os.environ['OMP_NUM_THREADS'] = str(parallel_threads)
 num_parallel_readers = parallel_threads
 
 # how many training steps to take during profiling
-num_steps = 10
+num_steps = 49
 use_profiler = True
 
 import tensorflow as tf
