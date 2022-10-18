@@ -28,7 +28,7 @@ python train_resnet34_self.py
 # Instead of through the interactive 'notebook', this has to run in interactive terminal mode with
 # qsub-gpu -q single-gpu -t 60 -I -n 1 -A ALCFAITP --attrs filesystems=home,grand
 # or
-# qsub-gpu -q full-node -t 60 -I -n 1 -A ALCFAITP --attrs filesystems=home,grand
+# qsub-gpu -q full-node -t 150 -I -n 1 -A ALCFAITP --attrs filesystems=home,grand
 # module load conda/2022-07-01
 # conda activate
 # clear; python ./ai-science-training-series/05_dataPipelines/train_resnet34_self.py
