@@ -16,7 +16,10 @@ Folder details?
 ~> du -hc <folder>
 
 Search command history?
-Ctrl-r
+~> Ctrl-r
+
+Print content of file to terminal?
+~> cat <filename>
 
 ######### Theta Jobs
 How to release a job hold?

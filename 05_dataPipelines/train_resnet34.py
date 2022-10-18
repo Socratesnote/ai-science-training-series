@@ -5,14 +5,16 @@ import time,math
 os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
 os.environ["TF_XLA_FLAGS"] = "--tf_xla_auto_jit=2"
 # This control parallelism in Tensorflow
-parallel_threads = 128
+parallel_threads = 128 ## Mod this.
 # This controls how many batches to prefetch
-prefetch_buffer_size = 8 # tf.data.AUTOTUNE
+prefetch_buffer_size = 8 # tf.data.AUTOTUNE ## Mod this.
+# This line is primarily to force TF to not use _too many_ threads when more are available.
 os.environ['OMP_NUM_THREADS'] = str(parallel_threads)
 num_parallel_readers = parallel_threads
 
-# how many training steps to take during profiling
-num_steps = 49
+# how many training steps to take during profiling.
+# This is because profiling is quite memory intensive and steadily grows with iterations.
+num_steps = 24
 use_profiler = True
 
 import tensorflow as tf
@@ -238,7 +240,7 @@ def train_epoch(i_epoch, step_in_epoch, train_ds, val_ds, network, optimizer, BA
     # added for profiling
     if use_profiler:
         print('start profiler')
-        tf.profiler.experimental.start('logdir/m%03d_w%02d_p%02d' % (parallel_threads,num_parallel_readers,prefetch_buffer_size))
+        tf.profiler.experimental.start('logdir/m%03d_w%02d_p%02d' % (parallel_threads, num_parallel_readers, prefetch_buffer_size))
     
     start = time.time()
     i = 0

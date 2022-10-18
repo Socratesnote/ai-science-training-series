@@ -33,3 +33,6 @@ python train_resnet34_self.py
 # conda activate
 # clear; python ./ai-science-training-series/05_dataPipelines/train_resnet34_self.py
 # Note that on the interactive thetaGPU, you need to enter both 'module load conda/2022-07-01' AND 'conda activate' to set the environment.
+
+# Start tensorboard to visualize data flow between GPU and CPU.
+tensorboard --logdir /home/soc/ai-science_training_series/05_dataPipelines/logdir/ --port 9993 --bind_all
