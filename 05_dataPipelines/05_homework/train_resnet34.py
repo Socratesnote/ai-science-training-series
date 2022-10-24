@@ -1,13 +1,42 @@
 import sys, os
 import time,math
+import getopt
 
-# This limits the amount of memory used:
-os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
-os.environ["TF_XLA_FLAGS"] = "--tf_xla_auto_jit=2"
+# Hyperparameters.
 # This control parallelism in Tensorflow
 parallel_threads = 128 ## Mod this.
 # This controls how many batches to prefetch
 prefetch_buffer_size = 8 # tf.data.AUTOTUNE ## Mod this.
+name = ""
+# Parse command line arguments.
+arg_help = "{0} -t <thread_count> -b <buffer_size> -n <name> ".format(sys.argv[0])
+
+# Validate input.
+try:
+    opts, args = getopt.getopt(sys.argv[1:], "ht:b:n:", ["help", "thread_count=", "buffer_size=", "name="])
+except:
+    print("Invalid input.")
+    print(sys.argv)
+    print(arg_help)
+    opts = []
+
+# Assign arguments.
+for opt, arg in opts:
+    if opt in ("-h", "--help"):
+        print(arg_help)
+        sys.exit()
+    elif opt in ("-t", "--thread_count"):
+        parallel_threads = int(arg)
+        num_parallel_readers = parallel_threads
+    elif opt in ("-b", "--buffer_size"):
+        prefetch_buffer_size = int(arg)
+    elif opt in ("-n", "--name"):
+        name = arg
+
+# This limits the amount of memory used:
+os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
+os.environ["TF_XLA_FLAGS"] = "--tf_xla_auto_jit=2"
+
 # This line is primarily to force TF to not use _too many_ threads when more are available.
 os.environ['OMP_NUM_THREADS'] = str(parallel_threads)
 num_parallel_readers = parallel_threads
@@ -240,7 +269,7 @@ def train_epoch(i_epoch, step_in_epoch, train_ds, val_ds, network, optimizer, BA
     # added for profiling
     if use_profiler:
         print('start profiler')
-        log_path = f'logdir/m{parallel_threads:03d}_w{num_parallel_readers:02d}_p{prefetch_buffer_size:02d}/'
+        log_path = f'logdir/m{parallel_threads:03d}_w{num_parallel_readers:02d}_p{prefetch_buffer_size:02d}_n{name}/'
         print(f'Profiling to {log_path}')
         tf.profiler.experimental.start(log_path)
     
@@ -259,7 +288,7 @@ def train_epoch(i_epoch, step_in_epoch, train_ds, val_ds, network, optimizer, BA
         if i > 0: # skip the first measurement because it includes compile time
             sum += images_per_second
             sum2 += images_per_second * images_per_second
-        print(f"Finished step {step_in_epoch.numpy()} of {steps_per_epoch} in epoch {i_epoch.numpy()},loss={loss:.3f}, acc={acc:.3f} ({images_per_second:.3f} img/s).")
+        print(f"Finished step {step_in_epoch.numpy()} of {steps_per_epoch} in epoch {i_epoch.numpy()}, loss={loss:.3f}, acc={acc:.3f} ({images_per_second:.3f} img/s).")
         start = time.time()
         # added for profiling to stop after some steps
         i += 1
@@ -271,7 +300,7 @@ def train_epoch(i_epoch, step_in_epoch, train_ds, val_ds, network, optimizer, BA
         i = i - 1
         mean_rate = sum / i
         stddev_rate = math.sqrt( sum2/i - mean_rate * mean_rate )
-        print(f'mean image/s = {mean_rate:8.2f}   standard deviation: {stddev_rate:8.2f}')
+        print(f'mean image_s = {mean_rate:8.2f}, standard deviation: {stddev_rate:8.2f}')
         tf.profiler.experimental.stop()
         sys.exit(0)
 
