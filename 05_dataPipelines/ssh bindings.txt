@@ -1,0 +1,29 @@
+PORT0=9991 
+PORT1=9992 
+PORT3=9993 
+# Select a theta login node N where N=[1-6] 
+# ssh -L 9991:localhost:9992 soc@thetaloginN.alcf.anl.gov 
+ssh -L 9991:localhost:9992 soc@thetalogin1.alcf.anl.gov 
+
+# after reaching thetaloginN 
+
+# Replace NN with your thetagpu worker node 
+# ssh -L 9992:thetagpuNN:9993 soc@thetagpusn1 
+ssh -L 9992:thetagpu06:9993 soc@thetagpusn1 
+
+# after reaching thetagpusn1 
+# login to worker node 
+# ssh thetagpuNN 
+ssh thetagpu06 
+
+# now setup your tensorflow environment 
+# for instance run the conda setup.sh script created during the install_tensorflow.sh script 
+module load conda/2022-07-01
+conda activate
+
+# now run tensorboard 
+cd ./ai-science-training-series/05_dataPipelines/05_homework
+tensorboard --logdir ./logdir/ --port 9993 --bind_all --load_fast false
+
+then
+http://localhost:9991
