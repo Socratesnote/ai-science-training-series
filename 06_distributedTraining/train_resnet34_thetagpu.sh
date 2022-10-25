@@ -24,4 +24,7 @@ conda activate
 cd /home/soc/ai-science-training-series/06_distributedTraining/
 
 export TF_XLA_FLAGS="--tf_xla_auto_jit=2"
-mpirun -np 8 python train_resnet34_hvd.py --num_steps 1000000
+mpirun -np 1 python train_resnet34_hvd.py --num_steps 10
+mpirun -np 2 python train_resnet34_hvd.py --num_steps 10
+mpirun -np 4 python train_resnet34_hvd.py --num_steps 10
+mpirun -np 8 python train_resnet34_hvd.py --num_steps 10
