@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#COBALT -q full-node
+#COBALT -q single-gpu
 #COBALT -t 60
 #COBALT -n 1
 #COBALT -A ALCFAITP
@@ -19,6 +19,8 @@
 # qsub-gpu -q single-gpu -t 60 -I -n 1 -A ALCFAITP --attrs filesystems=home,grand
 # or
 # qsub-gpu -q full-node -t 120 -I -n 1 -A ALCFAITP --attrs filesystems=home,grand
+# or
+# qsub-gpu -q training-gpu -t 60 -I -n 1 -A ALCFAITP --attrs filesystems=home,grand
 
 # Set up software deps:
 module load conda/2022-07-01
@@ -32,3 +34,4 @@ mpirun -np 1 python train_resnet34_hvd.py --num_steps 10
 mpirun -np 2 python train_resnet34_hvd.py --num_steps 10
 mpirun -np 4 python train_resnet34_hvd.py --num_steps 10
 mpirun -np 8 python train_resnet34_hvd.py --num_steps 10
+mpirun -np 16 python train_resnet34_hvd.py --num_steps 10
