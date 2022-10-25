@@ -26,10 +26,12 @@ use_profiler = True
 import tensorflow as tf
 from tensorflow.python.profiler import trace
 
+# These numbers correspond to the 8-step plan of the README.
 # HVD-1 - initialize Horovd
 import horovod.tensorflow as hvd
 hvd.init()
 print("# I am rank %d of %d" %(hvd.rank(), hvd.size()))
+# Hint: be sure not to oversubscribe the number of available threads. Devide by number of threads/node, not just nodes (= hvd.size).
 parallel_threads = parallel_threads//hvd.size()
 os.environ['OMP_NUM_THREADS'] = str(parallel_threads)
 num_parallel_readers = parallel_threads
@@ -343,7 +345,7 @@ def prepare_data_loader(BATCH_SIZE):
     # Here's the part where we load datasets:
     import json
 
-
+    # True horovod now.
     # What's in this function?  Tune in next week ...
     from ilsvrc_dataset import get_datasets
 
