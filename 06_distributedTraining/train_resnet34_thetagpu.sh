@@ -6,6 +6,10 @@
 #COBALT -M tp@u.northwestern.edu
 #COBALT --attrs filesystems=home,grand
 
+# Alternative queues:
+# -q single-gpu
+# -q training-gpu
+
 # Make executable with 
 # chmod +x train_resnet34_thetagpu.sh
 
