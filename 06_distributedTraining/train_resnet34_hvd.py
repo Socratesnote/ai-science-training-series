@@ -18,7 +18,6 @@ parallel_threads = 128
 # This controls how many batches to prefetch
 prefetch_buffer_size = 8 # tf.data.AUTOTUNE
 
-
 # how many training steps to take during profiling
 num_steps = args.num_steps
 use_profiler = True
@@ -221,6 +220,9 @@ class ResNet34(tf.keras.Model):
         return logits
 
 
+#########################################################################
+# Network functions.
+#########################################################################
 
 
 @tf.function()
@@ -277,13 +279,13 @@ def train_epoch(i_epoch, step_in_epoch, train_ds, val_ds, network, optimizer, BA
 
         # Peform the training step for this batch
         loss, acc = training_step(network, optimizer, train_images, train_labels)
-        HVD - 8 average the metrics 
+        # HVD - 8 average the metrics 
         total_loss = hvd.allreduce(loss, average=True)
         total_acc = hvd.allreduce(acc, average=True)
         loss = total_loss
         acc = total_acc
         # HVD - 5 broadcast model and parameters from rank 0 to the other ranksx
-        if (step_in_epoch==0 and epoch == 0):
+        if (step_in_epoch==0 and i_epoch == 0):
             hvd.broadcast_variables(network.variables, root_rank=0)
             hvd.broadcast_variables(optimizer.variables(), root_rank=0)
         end = time.time()
