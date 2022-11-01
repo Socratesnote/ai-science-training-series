@@ -99,3 +99,8 @@ scratch/
 03_neural_networks_tensorflow/03_homework/2022_10_18_12_23_08_model_aug_opt_rmsprop_acc_66.5_BS_128_LR_0.0010.tf/
 06_distributedTraining/homework/checkpoints/
 06_distributedTraining/homework/metrics.dat
+07_largeScaleTraining/outputs/
+07_largeScaleTraining/src/ai4sci/logs/
+07_largeScaleTraining/venv/
+07_largeScaleTraining/src/ai4sci/checkpoints/
+07_largeScaleTraining/src/ai4sci/outputs/
