@@ -28,6 +28,9 @@ How to release a job hold?
 How to delete a job from queue?
 ~> qdel(-gpu) <ID>
 
+Get overview of jobs?
+~> jobs
+
 How to submit a job to system?
 # -A sets project name (node allocation): in our case, training project ALCFAITP.
 # -q sets the queue to submit the job to: here a single GPU of a DGX node is requested. Usual options: -single-gpu or -full-node
