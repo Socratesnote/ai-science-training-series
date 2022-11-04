@@ -47,15 +47,10 @@ else:
     gpus = tf.config.experimental.list_physical_devices('GPU')
     # Pin GPU to the rank
     tf.config.experimental.set_visible_devices(gpus[hvd.local_rank()], 'GPU')
-    print(f'Created {hvd.local_rank()} GPU(s) according to local rank.')
+    print(f'Pinned GPU {hvd.local_rank()} to local rank.')
     # Memory growth setting may not be necessary here.
     for gpu in gpus:
         tf.config.experimental.set_memory_growth(gpu, True)
-
-    # Original:
-    # gpus = tf.config.experimental.list_physical_devices('GPU')
-    # for gpu in gpus:
-    #     tf.config.experimental.set_memory_growth(gpu, True)
 
 #---------------------------------------------------
 # Dataset
@@ -98,10 +93,9 @@ mnist_model = tf.keras.Sequential([
 ])
 loss = tf.losses.SparseCategoricalCrossentropy()
 
-# opt = tf.optimizers.Adam(args.lr)
 ### 3. Set optimizer and scale learning to workers.
-# opt = tf.keras.optimizers.Adagrad(args.lr*hvd.size())
-opt = tf.keras.optimizers.Adam(args.lr*hvd.size())
+base_lr = args.lr*hvd.size()
+opt = tf.keras.optimizers.Adam(base_lr)
 
 checkpoint_dir = './checkpoints/tf2_mnist_hvd'
 checkpoint = tf.train.Checkpoint(model=mnist_model, optimizer=opt)
@@ -152,18 +146,23 @@ metrics['time_per_epochs'] = []
 
 # Restore the model, if possible:
 
-latest_checkpoint = tf.train.latest_checkpoint(checkpoint_dir)
-if latest_checkpoint:
-    checkpoint.restore(latest_checkpoint)
-    print("Restored checkpoint.")
-
-# if (hvd.rank()==0):
-#     print("Initial Image size: ", dataset.shape)
+# latest_checkpoint = tf.train.latest_checkpoint(checkpoint_dir)
+# if latest_checkpoint:
+#     checkpoint.restore(latest_checkpoint)
+#     print("Restored checkpoint.")
 
 for ep in range(args.epochs):
     training_loss = 0.0
     training_acc = 0.0
     tt0 = time.time()
+
+    ### Bonus: warmup epochs.
+    warmup_epochs = 6
+    if ep < warmup_epochs:
+        ep_lr = 0.1*base_lr
+        opt.learning_rate = ep_lr
+    else:
+        opt.learning_rate = base_lr
 
     # Training
     for batch, (images, labels) in enumerate(dataset.take(nstep)):
@@ -184,9 +183,6 @@ for ep in range(args.epochs):
         if (batch % 100 == 0) and (hvd.rank() == 0): 
             checkpoint.save(checkpoint_dir)
             print('Epoch - %d, step #%06d/%06d\tLoss: %.6f' % (ep, batch, nstep, loss_value))
-
-
-
 
     # Testing
     test_acc = 0.0
