@@ -74,7 +74,8 @@ if [[ $(hostname) == theta* ]]; then
     -x https_proxy \
     -x PATH \
     -x LD_LIBRARY_PATH"
-  VENV_DIR="${ROOT}/venvs/thetaGPU/2022-07-01"
+#  VENV_DIR="${ROOT}/venvs/thetaGPU/2022-07-01"
+  VENV_DIR="${ROOT}/venv"
 
 # ---- Check if running on Polaris -----------------------------
 elif [[ $(hostname) == x* ]]; then
