@@ -201,7 +201,8 @@ for ep in range(args.epochs):
     acc = hvd.allreduce(acc, average=True)
 
     tt1 = time.time()
-    print('E[%d], train Loss: %.6f, training Acc: %.3f, val loss: %.3f, val Acc: %.3f\t Time: %.3f seconds' % (ep, training_loss, training_acc, test_loss, test_acc, tt1 - tt0))
+    if hvd.rank() == 0:
+        print('E[%d], train Loss: %.6f, training Acc: %.3f, val loss: %.3f, val Acc: %.3f\t Time: %.3f seconds' % (ep, training_loss, training_acc, test_loss, test_acc, tt1 - tt0))
 
     metrics['train_acc'].append(training_acc.numpy())
     metrics['train_loss'].append(training_loss.numpy())
@@ -215,4 +216,5 @@ if hvd.rank() == 0:
 
 t1 = time.time()
 
-print("Total training time: %s seconds" %(t1 - t0))
+if hvd.rank() == 0:
+    print("Total training time: %s seconds" %(t1 - t0))
