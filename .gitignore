@@ -98,6 +98,7 @@ scratch/
 04_modern_neural_networks/04_homework/core
 04_modern_neural_networks/04_homework/*.png
 !05_dataPipelines/05_homework/10111420.output
+!05_dataPipelines/05_homework/10111422.output
 06_distributedTraining/homework/checkpoints/
 06_distributedTraining/homework/metrics.dat
 07_largeScaleTraining/outputs/

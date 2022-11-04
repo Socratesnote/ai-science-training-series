@@ -1,0 +1,3255 @@
+threading set:  1 1
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 1,
+        "prefetch_buffer_size": 1,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m001_w01_p01_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=163.293, acc=0.000 (14.195 img/s).
+Finished step 2 of 5004 in epoch 0, loss=145.744, acc=0.000 (1173.482 img/s).
+Finished step 3 of 5004 in epoch 0, loss=71.236, acc=0.000 (68.459 img/s).
+Finished step 4 of 5004 in epoch 0, loss=42.328, acc=0.004 (71.451 img/s).
+Finished step 5 of 5004 in epoch 0, loss=32.329, acc=0.000 (67.436 img/s).
+Finished step 6 of 5004 in epoch 0, loss=23.080, acc=0.000 (69.535 img/s).
+Finished step 7 of 5004 in epoch 0, loss=16.094, acc=0.000 (64.532 img/s).
+Finished step 8 of 5004 in epoch 0, loss=13.095, acc=0.000 (64.646 img/s).
+Finished step 9 of 5004 in epoch 0, loss=10.907, acc=0.000 (69.731 img/s).
+Finished step 10 of 5004 in epoch 0, loss=9.576, acc=0.008 (67.268 img/s).
+Finished step 11 of 5004 in epoch 0, loss=8.233, acc=0.004 (69.838 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.557, acc=0.012 (65.395 img/s).
+Finished step 13 of 5004 in epoch 0, loss=7.202, acc=0.008 (64.158 img/s).
+Finished step 14 of 5004 in epoch 0, loss=7.055, acc=0.004 (64.762 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.805, acc=0.004 (61.806 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.727, acc=0.008 (65.583 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.708, acc=0.008 (64.395 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.650, acc=0.000 (58.082 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.560, acc=0.004 (57.529 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.524, acc=0.004 (60.793 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.442, acc=0.004 (64.265 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.457, acc=0.004 (56.842 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.471, acc=0.004 (60.536 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.285, acc=0.012 (54.805 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.323, acc=0.000 (61.679 img/s).
+stop profiler
+mean image_s =   110.29, standard deviation:   221.73
+threading set:  1 1
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 1,
+        "prefetch_buffer_size": 4,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m001_w01_p04_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=145.472, acc=0.000 (13.809 img/s).
+Finished step 2 of 5004 in epoch 0, loss=90.543, acc=0.000 (1172.065 img/s).
+Finished step 3 of 5004 in epoch 0, loss=63.693, acc=0.000 (1352.037 img/s).
+Finished step 4 of 5004 in epoch 0, loss=39.724, acc=0.023 (246.605 img/s).
+Finished step 5 of 5004 in epoch 0, loss=27.029, acc=0.004 (60.913 img/s).
+Finished step 6 of 5004 in epoch 0, loss=18.209, acc=0.004 (59.515 img/s).
+Finished step 7 of 5004 in epoch 0, loss=12.416, acc=0.004 (63.518 img/s).
+Finished step 8 of 5004 in epoch 0, loss=10.851, acc=0.000 (59.681 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.842, acc=0.020 (59.019 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.997, acc=0.008 (56.130 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.510, acc=0.000 (59.883 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.294, acc=0.008 (62.913 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.899, acc=0.000 (60.913 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.764, acc=0.008 (69.378 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.602, acc=0.008 (63.093 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.649, acc=0.000 (66.900 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.609, acc=0.016 (66.288 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.534, acc=0.004 (64.701 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.529, acc=0.012 (61.529 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.465, acc=0.000 (57.640 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.462, acc=0.008 (60.987 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.395, acc=0.004 (66.628 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.258, acc=0.016 (61.454 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.261, acc=0.000 (62.003 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.147, acc=0.008 (57.986 img/s).
+stop profiler
+mean image_s =   169.66, standard deviation:   332.45
+threading set:  1 1
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 1,
+        "prefetch_buffer_size": 8,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m001_w01_p08_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=142.264, acc=0.000 (13.816 img/s).
+Finished step 2 of 5004 in epoch 0, loss=54.347, acc=0.000 (1163.781 img/s).
+Finished step 3 of 5004 in epoch 0, loss=35.909, acc=0.000 (1350.507 img/s).
+Finished step 4 of 5004 in epoch 0, loss=21.439, acc=0.000 (620.618 img/s).
+Finished step 5 of 5004 in epoch 0, loss=15.544, acc=0.000 (60.931 img/s).
+Finished step 6 of 5004 in epoch 0, loss=12.115, acc=0.000 (60.509 img/s).
+Finished step 7 of 5004 in epoch 0, loss=9.630, acc=0.000 (62.641 img/s).
+Finished step 8 of 5004 in epoch 0, loss=8.710, acc=0.000 (59.314 img/s).
+Finished step 9 of 5004 in epoch 0, loss=7.883, acc=0.008 (62.137 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.354, acc=0.000 (62.051 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.132, acc=0.008 (62.404 img/s).
+Finished step 12 of 5004 in epoch 0, loss=6.938, acc=0.016 (56.252 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.689, acc=0.008 (59.326 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.571, acc=0.000 (57.917 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.526, acc=0.004 (61.656 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.434, acc=0.000 (62.814 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.424, acc=0.008 (64.786 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.413, acc=0.004 (61.116 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.288, acc=0.016 (65.034 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.358, acc=0.004 (61.661 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.337, acc=0.004 (60.878 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.241, acc=0.000 (62.222 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.194, acc=0.000 (63.495 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.174, acc=0.004 (54.642 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.192, acc=0.000 (58.129 img/s).
+stop profiler
+mean image_s =   183.95, standard deviation:   343.36
+threading set:  1 1
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 1,
+        "prefetch_buffer_size": 16,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m001_w01_p16_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=135.100, acc=0.000 (13.690 img/s).
+Finished step 2 of 5004 in epoch 0, loss=87.334, acc=0.000 (1178.488 img/s).
+Finished step 3 of 5004 in epoch 0, loss=49.657, acc=0.000 (1350.507 img/s).
+Finished step 4 of 5004 in epoch 0, loss=33.927, acc=0.000 (1354.286 img/s).
+Finished step 5 of 5004 in epoch 0, loss=23.358, acc=0.000 (90.494 img/s).
+Finished step 6 of 5004 in epoch 0, loss=16.764, acc=0.000 (60.487 img/s).
+Finished step 7 of 5004 in epoch 0, loss=12.300, acc=0.004 (68.011 img/s).
+Finished step 8 of 5004 in epoch 0, loss=10.284, acc=0.020 (67.068 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.800, acc=0.020 (60.892 img/s).
+Finished step 10 of 5004 in epoch 0, loss=8.018, acc=0.000 (70.331 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.277, acc=0.004 (69.045 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.221, acc=0.000 (70.743 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.938, acc=0.000 (74.150 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.756, acc=0.004 (73.957 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.714, acc=0.004 (69.224 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.606, acc=0.004 (68.899 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.567, acc=0.000 (70.238 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.527, acc=0.008 (78.578 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.408, acc=0.008 (75.034 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.413, acc=0.008 (85.716 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.304, acc=0.020 (81.943 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.345, acc=0.004 (85.999 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.216, acc=0.004 (79.164 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.250, acc=0.000 (88.803 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.182, acc=0.012 (86.886 img/s).
+stop profiler
+mean image_s =   227.46, standard deviation:   404.40
+threading set:  1 1
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 1,
+        "prefetch_buffer_size": 32,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m001_w01_p32_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=164.237, acc=0.000 (15.274 img/s).
+Finished step 2 of 5004 in epoch 0, loss=102.849, acc=0.000 (1149.779 img/s).
+Finished step 3 of 5004 in epoch 0, loss=61.536, acc=0.000 (1174.005 img/s).
+Finished step 4 of 5004 in epoch 0, loss=36.049, acc=0.004 (1353.805 img/s).
+Finished step 5 of 5004 in epoch 0, loss=24.592, acc=0.000 (1351.901 img/s).
+Finished step 6 of 5004 in epoch 0, loss=17.868, acc=0.000 (1350.281 img/s).
+Finished step 7 of 5004 in epoch 0, loss=12.381, acc=0.004 (227.418 img/s).
+Finished step 8 of 5004 in epoch 0, loss=10.119, acc=0.000 (134.013 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.798, acc=0.004 (116.685 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.762, acc=0.004 (136.255 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.340, acc=0.004 (136.769 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.015, acc=0.020 (122.324 img/s).
+Finished step 13 of 5004 in epoch 0, loss=7.090, acc=0.020 (126.356 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.769, acc=0.000 (126.159 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.718, acc=0.012 (133.399 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.613, acc=0.004 (131.229 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.586, acc=0.012 (131.598 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.558, acc=0.000 (119.869 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.508, acc=0.012 (119.464 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.396, acc=0.004 (145.700 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.424, acc=0.000 (116.037 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.403, acc=0.000 (124.388 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.352, acc=0.000 (134.809 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.369, acc=0.000 (138.772 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.225, acc=0.008 (135.808 img/s).
+stop profiler
+mean image_s =   372.37, standard deviation:   465.95
+threading set:  4 4
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 4,
+        "prefetch_buffer_size": 1,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m004_w04_p01_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=150.432, acc=0.004 (16.658 img/s).
+Finished step 2 of 5004 in epoch 0, loss=105.087, acc=0.000 (1269.709 img/s).
+Finished step 3 of 5004 in epoch 0, loss=53.619, acc=0.008 (377.910 img/s).
+Finished step 4 of 5004 in epoch 0, loss=38.136, acc=0.000 (379.411 img/s).
+Finished step 5 of 5004 in epoch 0, loss=22.872, acc=0.000 (397.596 img/s).
+Finished step 6 of 5004 in epoch 0, loss=14.665, acc=0.000 (399.217 img/s).
+Finished step 7 of 5004 in epoch 0, loss=10.751, acc=0.008 (333.668 img/s).
+Finished step 8 of 5004 in epoch 0, loss=9.720, acc=0.000 (393.977 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.361, acc=0.004 (385.218 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.459, acc=0.008 (373.971 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.129, acc=0.016 (342.324 img/s).
+Finished step 12 of 5004 in epoch 0, loss=6.884, acc=0.008 (413.841 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.998, acc=0.008 (358.832 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.860, acc=0.012 (364.634 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.763, acc=0.004 (363.206 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.604, acc=0.008 (384.832 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.472, acc=0.008 (379.447 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.553, acc=0.004 (414.419 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.349, acc=0.004 (320.866 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.511, acc=0.016 (390.831 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.524, acc=0.000 (334.790 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.389, acc=0.004 (417.003 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.269, acc=0.008 (378.143 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.261, acc=0.012 (355.290 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.315, acc=0.004 (393.786 img/s).
+stop profiler
+mean image_s =   413.46, standard deviation:   180.32
+threading set:  4 4
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 4,
+        "prefetch_buffer_size": 4,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m004_w04_p04_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=155.906, acc=0.000 (16.748 img/s).
+Finished step 2 of 5004 in epoch 0, loss=91.151, acc=0.008 (1299.237 img/s).
+Finished step 3 of 5004 in epoch 0, loss=61.210, acc=0.000 (1325.254 img/s).
+Finished step 4 of 5004 in epoch 0, loss=38.291, acc=0.000 (1327.064 img/s).
+Finished step 5 of 5004 in epoch 0, loss=23.639, acc=0.000 (1336.045 img/s).
+Finished step 6 of 5004 in epoch 0, loss=16.337, acc=0.000 (488.437 img/s).
+Finished step 7 of 5004 in epoch 0, loss=12.800, acc=0.004 (428.317 img/s).
+Finished step 8 of 5004 in epoch 0, loss=10.260, acc=0.008 (370.238 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.594, acc=0.008 (420.789 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.918, acc=0.000 (424.773 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.741, acc=0.008 (419.796 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.190, acc=0.000 (435.730 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.957, acc=0.008 (482.320 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.692, acc=0.008 (427.804 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.629, acc=0.004 (375.382 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.675, acc=0.004 (342.453 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.442, acc=0.012 (469.824 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.475, acc=0.008 (423.560 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.427, acc=0.004 (396.283 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.454, acc=0.004 (371.840 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.328, acc=0.020 (407.721 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.346, acc=0.004 (411.019 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.230, acc=0.004 (419.589 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.297, acc=0.016 (385.364 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.315, acc=0.008 (412.548 img/s).
+stop profiler
+mean image_s =   566.72, standard deviation:   339.37
+threading set:  4 4
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 4,
+        "prefetch_buffer_size": 8,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m004_w04_p08_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=193.214, acc=0.000 (16.354 img/s).
+Finished step 2 of 5004 in epoch 0, loss=98.967, acc=0.000 (1296.538 img/s).
+Finished step 3 of 5004 in epoch 0, loss=54.169, acc=0.000 (1312.250 img/s).
+Finished step 4 of 5004 in epoch 0, loss=37.206, acc=0.012 (1322.903 img/s).
+Finished step 5 of 5004 in epoch 0, loss=22.515, acc=0.016 (1313.269 img/s).
+Finished step 6 of 5004 in epoch 0, loss=15.965, acc=0.000 (1339.104 img/s).
+Finished step 7 of 5004 in epoch 0, loss=11.281, acc=0.000 (1314.991 img/s).
+Finished step 8 of 5004 in epoch 0, loss=10.144, acc=0.004 (1317.986 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.607, acc=0.004 (1324.724 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.712, acc=0.012 (507.103 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.653, acc=0.004 (407.848 img/s).
+Finished step 12 of 5004 in epoch 0, loss=6.986, acc=0.008 (380.564 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.904, acc=0.012 (338.617 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.719, acc=0.000 (412.937 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.689, acc=0.000 (330.328 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.547, acc=0.000 (422.510 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.555, acc=0.000 (388.437 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.580, acc=0.000 (383.026 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.509, acc=0.000 (357.225 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.421, acc=0.000 (384.821 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.413, acc=0.004 (403.406 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.447, acc=0.008 (389.831 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.416, acc=0.008 (364.664 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.266, acc=0.004 (394.367 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.384, acc=0.008 (333.268 img/s).
+stop profiler
+mean image_s =   697.53, standard deviation:   439.87
+threading set:  4 4
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 4,
+        "prefetch_buffer_size": 16,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m004_w04_p16_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=129.855, acc=0.000 (16.375 img/s).
+Finished step 2 of 5004 in epoch 0, loss=72.768, acc=0.000 (1308.570 img/s).
+Finished step 3 of 5004 in epoch 0, loss=37.742, acc=0.004 (1321.860 img/s).
+Finished step 4 of 5004 in epoch 0, loss=25.173, acc=0.000 (1330.342 img/s).
+Finished step 5 of 5004 in epoch 0, loss=15.868, acc=0.000 (1310.435 img/s).
+Finished step 6 of 5004 in epoch 0, loss=12.293, acc=0.000 (1327.136 img/s).
+Finished step 7 of 5004 in epoch 0, loss=9.745, acc=0.000 (1332.894 img/s).
+Finished step 8 of 5004 in epoch 0, loss=8.727, acc=0.004 (1331.078 img/s).
+Finished step 9 of 5004 in epoch 0, loss=7.692, acc=0.004 (1334.552 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.321, acc=0.000 (1326.919 img/s).
+Finished step 11 of 5004 in epoch 0, loss=6.845, acc=0.004 (1273.637 img/s).
+Finished step 12 of 5004 in epoch 0, loss=6.778, acc=0.012 (1316.281 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.519, acc=0.016 (1325.687 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.595, acc=0.000 (1325.964 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.587, acc=0.008 (1331.243 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.435, acc=0.000 (1322.428 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.435, acc=0.000 (1331.978 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.415, acc=0.000 (975.529 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.288, acc=0.008 (313.772 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.324, acc=0.004 (335.060 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.217, acc=0.004 (350.692 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.260, acc=0.016 (354.812 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.125, acc=0.012 (348.023 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.150, acc=0.004 (345.595 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.100, acc=0.008 (227.086 img/s).
+stop profiler
+mean image_s =  1016.73, standard deviation:   449.87
+threading set:  4 4
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 4,
+        "prefetch_buffer_size": 32,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m004_w04_p32_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=118.508, acc=0.000 (16.627 img/s).
+Finished step 2 of 5004 in epoch 0, loss=75.797, acc=0.000 (1324.755 img/s).
+Finished step 3 of 5004 in epoch 0, loss=35.980, acc=0.008 (1320.639 img/s).
+Finished step 4 of 5004 in epoch 0, loss=26.234, acc=0.000 (1320.376 img/s).
+Finished step 5 of 5004 in epoch 0, loss=18.267, acc=0.000 (1325.540 img/s).
+Finished step 6 of 5004 in epoch 0, loss=12.229, acc=0.012 (1310.453 img/s).
+Finished step 7 of 5004 in epoch 0, loss=9.793, acc=0.004 (1321.439 img/s).
+Finished step 8 of 5004 in epoch 0, loss=8.213, acc=0.000 (1318.449 img/s).
+Finished step 9 of 5004 in epoch 0, loss=7.899, acc=0.000 (1328.696 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.300, acc=0.000 (1332.973 img/s).
+Finished step 11 of 5004 in epoch 0, loss=6.949, acc=0.000 (1332.846 img/s).
+Finished step 12 of 5004 in epoch 0, loss=6.838, acc=0.000 (1330.905 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.625, acc=0.020 (1331.157 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.727, acc=0.000 (1319.489 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.626, acc=0.008 (1320.826 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.582, acc=0.008 (1333.089 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.483, acc=0.000 (1329.224 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.450, acc=0.012 (1323.716 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.341, acc=0.004 (1324.214 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.322, acc=0.008 (318.495 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.365, acc=0.000 (309.302 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.285, acc=0.000 (298.243 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.323, acc=0.012 (342.425 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.252, acc=0.012 (279.130 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.168, acc=0.016 (320.054 img/s).
+stop profiler
+mean image_s =  1071.52, standard deviation:   439.07
+threading set:  8 8
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 8,
+        "prefetch_buffer_size": 1,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m008_w08_p01_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=161.234, acc=0.000 (17.100 img/s).
+Finished step 2 of 5004 in epoch 0, loss=139.797, acc=0.000 (1269.539 img/s).
+Finished step 3 of 5004 in epoch 0, loss=75.925, acc=0.000 (457.276 img/s).
+Finished step 4 of 5004 in epoch 0, loss=44.672, acc=0.000 (399.662 img/s).
+Finished step 5 of 5004 in epoch 0, loss=32.254, acc=0.000 (411.563 img/s).
+Finished step 6 of 5004 in epoch 0, loss=23.552, acc=0.000 (354.684 img/s).
+Finished step 7 of 5004 in epoch 0, loss=15.176, acc=0.008 (428.155 img/s).
+Finished step 8 of 5004 in epoch 0, loss=12.258, acc=0.000 (440.568 img/s).
+Finished step 9 of 5004 in epoch 0, loss=9.246, acc=0.016 (494.258 img/s).
+Finished step 10 of 5004 in epoch 0, loss=8.378, acc=0.008 (399.273 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.806, acc=0.012 (412.550 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.266, acc=0.012 (454.439 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.979, acc=0.000 (438.470 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.821, acc=0.004 (422.659 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.643, acc=0.016 (407.428 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.717, acc=0.008 (456.581 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.544, acc=0.000 (423.741 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.557, acc=0.004 (402.525 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.480, acc=0.016 (386.624 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.431, acc=0.004 (432.322 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.459, acc=0.000 (414.676 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.456, acc=0.000 (361.722 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.281, acc=0.004 (383.007 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.190, acc=0.004 (423.064 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.140, acc=0.004 (419.281 img/s).
+stop profiler
+mean image_s =   453.92, standard deviation:   172.74
+threading set:  8 8
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 8,
+        "prefetch_buffer_size": 4,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m008_w08_p04_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=249.450, acc=0.000 (16.725 img/s).
+Finished step 2 of 5004 in epoch 0, loss=186.961, acc=0.008 (1279.030 img/s).
+Finished step 3 of 5004 in epoch 0, loss=151.462, acc=0.004 (1331.679 img/s).
+Finished step 4 of 5004 in epoch 0, loss=76.276, acc=0.000 (1315.070 img/s).
+Finished step 5 of 5004 in epoch 0, loss=44.393, acc=0.000 (1309.147 img/s).
+Finished step 6 of 5004 in epoch 0, loss=28.511, acc=0.000 (551.585 img/s).
+Finished step 7 of 5004 in epoch 0, loss=19.797, acc=0.004 (375.529 img/s).
+Finished step 8 of 5004 in epoch 0, loss=15.631, acc=0.008 (401.265 img/s).
+Finished step 9 of 5004 in epoch 0, loss=12.407, acc=0.004 (407.506 img/s).
+Finished step 10 of 5004 in epoch 0, loss=10.276, acc=0.000 (431.238 img/s).
+Finished step 11 of 5004 in epoch 0, loss=8.544, acc=0.012 (455.548 img/s).
+Finished step 12 of 5004 in epoch 0, loss=8.081, acc=0.008 (435.245 img/s).
+Finished step 13 of 5004 in epoch 0, loss=7.488, acc=0.004 (419.528 img/s).
+Finished step 14 of 5004 in epoch 0, loss=7.197, acc=0.004 (379.109 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.960, acc=0.004 (410.647 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.682, acc=0.008 (428.689 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.547, acc=0.012 (406.614 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.529, acc=0.004 (463.399 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.476, acc=0.004 (423.580 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.485, acc=0.016 (395.510 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.476, acc=0.004 (397.945 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.354, acc=0.008 (430.378 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.307, acc=0.027 (465.076 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.254, acc=0.008 (401.404 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.155, acc=0.004 (418.063 img/s).
+stop profiler
+mean image_s =   572.20, standard deviation:   331.27
+threading set:  8 8
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 8,
+        "prefetch_buffer_size": 8,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m008_w08_p08_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=241.667, acc=0.000 (16.174 img/s).
+Finished step 2 of 5004 in epoch 0, loss=125.107, acc=0.012 (1269.886 img/s).
+Finished step 3 of 5004 in epoch 0, loss=86.243, acc=0.008 (1316.704 img/s).
+Finished step 4 of 5004 in epoch 0, loss=47.725, acc=0.000 (1309.873 img/s).
+Finished step 5 of 5004 in epoch 0, loss=30.319, acc=0.000 (1320.797 img/s).
+Finished step 6 of 5004 in epoch 0, loss=20.452, acc=0.000 (1306.101 img/s).
+Finished step 7 of 5004 in epoch 0, loss=15.005, acc=0.000 (1320.250 img/s).
+Finished step 8 of 5004 in epoch 0, loss=11.182, acc=0.000 (1334.861 img/s).
+Finished step 9 of 5004 in epoch 0, loss=9.627, acc=0.004 (1305.663 img/s).
+Finished step 10 of 5004 in epoch 0, loss=8.521, acc=0.004 (784.286 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.746, acc=0.004 (408.197 img/s).
+Finished step 12 of 5004 in epoch 0, loss=6.963, acc=0.004 (402.954 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.929, acc=0.000 (426.497 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.820, acc=0.004 (365.842 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.822, acc=0.000 (437.871 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.652, acc=0.004 (403.035 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.652, acc=0.008 (397.347 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.513, acc=0.016 (405.863 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.392, acc=0.004 (414.330 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.429, acc=0.008 (427.889 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.496, acc=0.004 (393.186 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.372, acc=0.008 (420.215 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.356, acc=0.004 (400.879 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.271, acc=0.004 (380.423 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.277, acc=0.012 (393.066 img/s).
+stop profiler
+mean image_s =   722.75, standard deviation:   422.68
+threading set:  8 8
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 8,
+        "prefetch_buffer_size": 16,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m008_w08_p16_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=116.374, acc=0.000 (16.499 img/s).
+Finished step 2 of 5004 in epoch 0, loss=83.928, acc=0.000 (1279.573 img/s).
+Finished step 3 of 5004 in epoch 0, loss=44.942, acc=0.004 (1327.411 img/s).
+Finished step 4 of 5004 in epoch 0, loss=28.573, acc=0.000 (1307.553 img/s).
+Finished step 5 of 5004 in epoch 0, loss=20.628, acc=0.000 (1311.402 img/s).
+Finished step 6 of 5004 in epoch 0, loss=14.386, acc=0.000 (1312.914 img/s).
+Finished step 7 of 5004 in epoch 0, loss=11.581, acc=0.000 (1339.076 img/s).
+Finished step 8 of 5004 in epoch 0, loss=9.327, acc=0.012 (1323.961 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.167, acc=0.000 (1336.314 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.601, acc=0.004 (1331.907 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.189, acc=0.000 (1322.878 img/s).
+Finished step 12 of 5004 in epoch 0, loss=6.934, acc=0.004 (1248.425 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.717, acc=0.008 (1323.596 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.663, acc=0.012 (1312.157 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.626, acc=0.008 (1321.509 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.501, acc=0.000 (1327.420 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.504, acc=0.004 (1324.303 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.433, acc=0.008 (1321.702 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.506, acc=0.004 (603.941 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.360, acc=0.012 (419.425 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.332, acc=0.008 (389.928 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.371, acc=0.004 (389.484 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.156, acc=0.012 (382.612 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.234, acc=0.004 (396.871 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.125, acc=0.020 (363.777 img/s).
+stop profiler
+mean image_s =  1054.92, standard deviation:   409.35
+threading set:  8 8
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 8,
+        "prefetch_buffer_size": 32,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m008_w08_p32_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=142.718, acc=0.000 (15.913 img/s).
+Finished step 2 of 5004 in epoch 0, loss=104.041, acc=0.000 (1300.859 img/s).
+Finished step 3 of 5004 in epoch 0, loss=60.519, acc=0.012 (1327.474 img/s).
+Finished step 4 of 5004 in epoch 0, loss=38.843, acc=0.000 (1321.450 img/s).
+Finished step 5 of 5004 in epoch 0, loss=24.542, acc=0.000 (1198.525 img/s).
+Finished step 6 of 5004 in epoch 0, loss=16.036, acc=0.000 (1318.690 img/s).
+Finished step 7 of 5004 in epoch 0, loss=11.948, acc=0.004 (1328.949 img/s).
+Finished step 8 of 5004 in epoch 0, loss=9.789, acc=0.004 (1325.684 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.498, acc=0.012 (1327.136 img/s).
+Finished step 10 of 5004 in epoch 0, loss=8.150, acc=0.016 (1317.711 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.334, acc=0.004 (1348.385 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.098, acc=0.008 (1321.041 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.986, acc=0.008 (1329.310 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.852, acc=0.012 (1296.823 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.802, acc=0.000 (1280.861 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.609, acc=0.004 (1321.093 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.571, acc=0.000 (1238.322 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.514, acc=0.016 (1315.754 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.573, acc=0.000 (1334.462 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.412, acc=0.012 (1324.036 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.443, acc=0.008 (1313.931 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.424, acc=0.004 (1325.543 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.395, acc=0.004 (1324.734 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.337, acc=0.004 (626.830 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.255, acc=0.020 (405.370 img/s).
+stop profiler
+mean image_s =  1244.71, standard deviation:   224.19
+threading set:  16 16
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 16,
+        "prefetch_buffer_size": 1,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m016_w16_p01_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=124.287, acc=0.000 (17.051 img/s).
+Finished step 2 of 5004 in epoch 0, loss=85.943, acc=0.000 (1281.307 img/s).
+Finished step 3 of 5004 in epoch 0, loss=45.274, acc=0.000 (566.960 img/s).
+Finished step 4 of 5004 in epoch 0, loss=27.848, acc=0.004 (524.062 img/s).
+Finished step 5 of 5004 in epoch 0, loss=18.327, acc=0.004 (573.778 img/s).
+Finished step 6 of 5004 in epoch 0, loss=12.889, acc=0.000 (524.809 img/s).
+Finished step 7 of 5004 in epoch 0, loss=10.673, acc=0.000 (519.006 img/s).
+Finished step 8 of 5004 in epoch 0, loss=8.792, acc=0.000 (547.895 img/s).
+Finished step 9 of 5004 in epoch 0, loss=7.827, acc=0.000 (563.144 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.515, acc=0.000 (506.978 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.082, acc=0.000 (550.648 img/s).
+Finished step 12 of 5004 in epoch 0, loss=6.890, acc=0.000 (520.349 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.611, acc=0.012 (549.579 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.597, acc=0.008 (532.004 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.547, acc=0.012 (557.910 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.424, acc=0.004 (559.444 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.472, acc=0.008 (496.921 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.441, acc=0.000 (526.301 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.297, acc=0.000 (558.351 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.301, acc=0.004 (524.488 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.242, acc=0.004 (532.634 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.213, acc=0.004 (513.330 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.095, acc=0.008 (561.262 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.147, acc=0.008 (514.066 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.018, acc=0.008 (453.998 img/s).
+stop profiler
+mean image_s =   564.97, standard deviation:   151.70
+threading set:  16 16
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 16,
+        "prefetch_buffer_size": 4,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m016_w16_p04_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=127.905, acc=0.000 (16.729 img/s).
+Finished step 2 of 5004 in epoch 0, loss=84.100, acc=0.008 (1248.036 img/s).
+Finished step 3 of 5004 in epoch 0, loss=49.010, acc=0.000 (1273.381 img/s).
+Finished step 4 of 5004 in epoch 0, loss=27.077, acc=0.000 (1284.723 img/s).
+Finished step 5 of 5004 in epoch 0, loss=18.551, acc=0.012 (1271.454 img/s).
+Finished step 6 of 5004 in epoch 0, loss=13.994, acc=0.004 (835.425 img/s).
+Finished step 7 of 5004 in epoch 0, loss=10.113, acc=0.004 (519.343 img/s).
+Finished step 8 of 5004 in epoch 0, loss=8.686, acc=0.008 (532.840 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.049, acc=0.008 (577.302 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.527, acc=0.004 (583.515 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.335, acc=0.004 (565.083 img/s).
+Finished step 12 of 5004 in epoch 0, loss=6.791, acc=0.000 (510.295 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.677, acc=0.004 (479.366 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.700, acc=0.004 (524.260 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.641, acc=0.004 (548.064 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.567, acc=0.000 (500.701 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.360, acc=0.012 (522.348 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.363, acc=0.012 (556.948 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.354, acc=0.008 (558.223 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.354, acc=0.000 (488.936 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.285, acc=0.008 (565.315 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.247, acc=0.008 (536.747 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.250, acc=0.008 (536.963 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.157, acc=0.004 (492.258 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.051, acc=0.016 (566.028 img/s).
+stop profiler
+mean image_s =   669.90, standard deviation:   276.06
+threading set:  16 16
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 16,
+        "prefetch_buffer_size": 8,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m016_w16_p08_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=122.311, acc=0.000 (15.713 img/s).
+Finished step 2 of 5004 in epoch 0, loss=76.617, acc=0.000 (1216.276 img/s).
+Finished step 3 of 5004 in epoch 0, loss=62.062, acc=0.000 (1288.876 img/s).
+Finished step 4 of 5004 in epoch 0, loss=33.800, acc=0.000 (1289.571 img/s).
+Finished step 5 of 5004 in epoch 0, loss=22.051, acc=0.004 (1281.001 img/s).
+Finished step 6 of 5004 in epoch 0, loss=14.423, acc=0.000 (1290.048 img/s).
+Finished step 7 of 5004 in epoch 0, loss=11.643, acc=0.000 (1293.949 img/s).
+Finished step 8 of 5004 in epoch 0, loss=9.905, acc=0.000 (1183.052 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.542, acc=0.000 (1272.155 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.896, acc=0.004 (1260.044 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.359, acc=0.004 (708.771 img/s).
+Finished step 12 of 5004 in epoch 0, loss=6.975, acc=0.008 (543.646 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.882, acc=0.000 (557.485 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.900, acc=0.004 (572.913 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.739, acc=0.004 (580.072 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.710, acc=0.004 (543.915 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.538, acc=0.000 (531.528 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.576, acc=0.004 (490.767 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.443, acc=0.008 (523.376 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.466, acc=0.004 (485.203 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.472, acc=0.008 (543.042 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.394, acc=0.004 (574.381 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.421, acc=0.000 (514.216 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.265, acc=0.004 (606.030 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.325, acc=0.008 (535.262 img/s).
+stop profiler
+mean image_s =   820.23, standard deviation:   346.83
+threading set:  16 16
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 16,
+        "prefetch_buffer_size": 16,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m016_w16_p16_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=143.555, acc=0.000 (15.830 img/s).
+Finished step 2 of 5004 in epoch 0, loss=53.638, acc=0.000 (1239.145 img/s).
+Finished step 3 of 5004 in epoch 0, loss=37.051, acc=0.000 (1265.426 img/s).
+Finished step 4 of 5004 in epoch 0, loss=21.632, acc=0.000 (1306.508 img/s).
+Finished step 5 of 5004 in epoch 0, loss=15.101, acc=0.000 (1292.590 img/s).
+Finished step 6 of 5004 in epoch 0, loss=11.953, acc=0.000 (1271.299 img/s).
+Finished step 7 of 5004 in epoch 0, loss=9.407, acc=0.012 (1273.709 img/s).
+Finished step 8 of 5004 in epoch 0, loss=8.052, acc=0.008 (1207.871 img/s).
+Finished step 9 of 5004 in epoch 0, loss=7.431, acc=0.020 (1291.971 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.206, acc=0.008 (1230.159 img/s).
+Finished step 11 of 5004 in epoch 0, loss=6.863, acc=0.000 (1299.060 img/s).
+Finished step 12 of 5004 in epoch 0, loss=6.669, acc=0.012 (1260.943 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.699, acc=0.008 (1230.253 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.460, acc=0.008 (1296.644 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.523, acc=0.016 (1262.967 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.516, acc=0.004 (1332.340 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.412, acc=0.020 (1291.017 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.388, acc=0.004 (1291.198 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.288, acc=0.004 (1266.035 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.264, acc=0.016 (961.121 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.137, acc=0.016 (528.503 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.281, acc=0.004 (507.742 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.218, acc=0.004 (456.866 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.184, acc=0.004 (543.287 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.074, acc=0.020 (523.269 img/s).
+stop profiler
+mean image_s =  1101.25, standard deviation:   310.01
+threading set:  16 16
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 16,
+        "prefetch_buffer_size": 32,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m016_w16_p32_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=161.882, acc=0.000 (15.304 img/s).
+Finished step 2 of 5004 in epoch 0, loss=90.286, acc=0.000 (1252.985 img/s).
+Finished step 3 of 5004 in epoch 0, loss=52.474, acc=0.004 (1304.758 img/s).
+Finished step 4 of 5004 in epoch 0, loss=30.913, acc=0.000 (1268.536 img/s).
+Finished step 5 of 5004 in epoch 0, loss=19.726, acc=0.000 (1257.975 img/s).
+Finished step 6 of 5004 in epoch 0, loss=13.001, acc=0.000 (1287.388 img/s).
+Finished step 7 of 5004 in epoch 0, loss=10.979, acc=0.004 (1279.562 img/s).
+Finished step 8 of 5004 in epoch 0, loss=9.405, acc=0.004 (1185.998 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.412, acc=0.004 (1298.174 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.803, acc=0.000 (1248.928 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.170, acc=0.004 (1295.780 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.023, acc=0.004 (1304.987 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.863, acc=0.000 (1305.272 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.641, acc=0.000 (1209.393 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.583, acc=0.004 (1314.383 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.531, acc=0.004 (1310.776 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.655, acc=0.000 (1290.609 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.575, acc=0.012 (1284.534 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.486, acc=0.004 (1309.936 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.418, acc=0.000 (1297.520 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.442, acc=0.004 (1200.759 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.320, acc=0.008 (1261.707 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.254, acc=0.016 (1296.372 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.208, acc=0.000 (1288.997 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.239, acc=0.008 (1279.137 img/s).
+stop profiler
+mean image_s =  1276.44, standard deviation:    34.62
+threading set:  32 32
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 32,
+        "prefetch_buffer_size": 1,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m032_w32_p01_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=184.948, acc=0.008 (17.390 img/s).
+Finished step 2 of 5004 in epoch 0, loss=79.843, acc=0.000 (1148.462 img/s).
+Finished step 3 of 5004 in epoch 0, loss=48.443, acc=0.000 (770.315 img/s).
+Finished step 4 of 5004 in epoch 0, loss=30.104, acc=0.012 (670.030 img/s).
+Finished step 5 of 5004 in epoch 0, loss=20.452, acc=0.000 (743.907 img/s).
+Finished step 6 of 5004 in epoch 0, loss=15.349, acc=0.004 (651.886 img/s).
+Finished step 7 of 5004 in epoch 0, loss=12.313, acc=0.000 (713.951 img/s).
+Finished step 8 of 5004 in epoch 0, loss=10.571, acc=0.000 (722.930 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.544, acc=0.012 (754.289 img/s).
+Finished step 10 of 5004 in epoch 0, loss=8.003, acc=0.008 (743.584 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.280, acc=0.008 (717.733 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.120, acc=0.008 (614.541 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.900, acc=0.004 (718.029 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.779, acc=0.000 (731.194 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.693, acc=0.000 (726.693 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.601, acc=0.000 (597.606 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.563, acc=0.000 (753.742 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.583, acc=0.004 (689.948 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.563, acc=0.008 (753.788 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.503, acc=0.004 (579.880 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.462, acc=0.016 (746.997 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.455, acc=0.004 (730.089 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.437, acc=0.012 (771.817 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.449, acc=0.004 (498.647 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.304, acc=0.000 (699.638 img/s).
+stop profiler
+mean image_s =   718.74, standard deviation:   111.35
+threading set:  32 32
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 32,
+        "prefetch_buffer_size": 4,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m032_w32_p04_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=294.625, acc=0.000 (16.663 img/s).
+Finished step 2 of 5004 in epoch 0, loss=137.213, acc=0.000 (1250.684 img/s).
+Finished step 3 of 5004 in epoch 0, loss=76.419, acc=0.000 (1198.956 img/s).
+Finished step 4 of 5004 in epoch 0, loss=44.266, acc=0.000 (1252.678 img/s).
+Finished step 5 of 5004 in epoch 0, loss=26.972, acc=0.016 (1229.394 img/s).
+Finished step 6 of 5004 in epoch 0, loss=20.386, acc=0.000 (1110.965 img/s).
+Finished step 7 of 5004 in epoch 0, loss=13.960, acc=0.008 (733.213 img/s).
+Finished step 8 of 5004 in epoch 0, loss=11.431, acc=0.012 (715.892 img/s).
+Finished step 9 of 5004 in epoch 0, loss=9.859, acc=0.000 (783.120 img/s).
+Finished step 10 of 5004 in epoch 0, loss=8.360, acc=0.000 (759.439 img/s).
+Finished step 11 of 5004 in epoch 0, loss=8.316, acc=0.000 (702.965 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.665, acc=0.004 (687.915 img/s).
+Finished step 13 of 5004 in epoch 0, loss=7.162, acc=0.008 (663.570 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.947, acc=0.008 (712.237 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.805, acc=0.012 (643.216 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.739, acc=0.020 (740.193 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.629, acc=0.008 (692.099 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.564, acc=0.016 (699.701 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.546, acc=0.008 (727.284 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.448, acc=0.020 (688.439 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.490, acc=0.016 (729.888 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.457, acc=0.000 (688.073 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.351, acc=0.004 (682.283 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.281, acc=0.023 (709.731 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.328, acc=0.023 (709.113 img/s).
+stop profiler
+mean image_s =   812.96, standard deviation:   206.29
+threading set:  32 32
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 32,
+        "prefetch_buffer_size": 8,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m032_w32_p08_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=157.696, acc=0.012 (16.066 img/s).
+Finished step 2 of 5004 in epoch 0, loss=106.810, acc=0.000 (1152.088 img/s).
+Finished step 3 of 5004 in epoch 0, loss=67.087, acc=0.000 (1174.578 img/s).
+Finished step 4 of 5004 in epoch 0, loss=41.581, acc=0.000 (1227.466 img/s).
+Finished step 5 of 5004 in epoch 0, loss=26.047, acc=0.000 (1220.867 img/s).
+Finished step 6 of 5004 in epoch 0, loss=18.144, acc=0.000 (1267.727 img/s).
+Finished step 7 of 5004 in epoch 0, loss=12.957, acc=0.020 (1161.949 img/s).
+Finished step 8 of 5004 in epoch 0, loss=10.764, acc=0.000 (1203.852 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.967, acc=0.000 (1151.847 img/s).
+Finished step 10 of 5004 in epoch 0, loss=8.186, acc=0.000 (1253.661 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.428, acc=0.000 (1258.099 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.069, acc=0.004 (858.067 img/s).
+Finished step 13 of 5004 in epoch 0, loss=7.032, acc=0.012 (666.901 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.885, acc=0.012 (702.088 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.782, acc=0.004 (705.860 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.743, acc=0.000 (736.282 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.676, acc=0.012 (686.996 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.656, acc=0.000 (693.452 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.631, acc=0.004 (713.970 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.476, acc=0.008 (675.437 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.434, acc=0.012 (689.425 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.481, acc=0.004 (700.887 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.581, acc=0.008 (776.985 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.333, acc=0.008 (652.377 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.320, acc=0.000 (749.242 img/s).
+stop profiler
+mean image_s =   920.00, standard deviation:   247.35
+threading set:  32 32
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 32,
+        "prefetch_buffer_size": 16,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m032_w32_p16_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=198.003, acc=0.000 (14.772 img/s).
+Finished step 2 of 5004 in epoch 0, loss=100.392, acc=0.000 (1182.109 img/s).
+Finished step 3 of 5004 in epoch 0, loss=64.173, acc=0.004 (1201.215 img/s).
+Finished step 4 of 5004 in epoch 0, loss=42.609, acc=0.000 (1238.247 img/s).
+Finished step 5 of 5004 in epoch 0, loss=28.390, acc=0.000 (1201.013 img/s).
+Finished step 6 of 5004 in epoch 0, loss=17.988, acc=0.008 (1276.925 img/s).
+Finished step 7 of 5004 in epoch 0, loss=13.201, acc=0.004 (1237.636 img/s).
+Finished step 8 of 5004 in epoch 0, loss=11.101, acc=0.012 (1197.122 img/s).
+Finished step 9 of 5004 in epoch 0, loss=9.403, acc=0.000 (1135.863 img/s).
+Finished step 10 of 5004 in epoch 0, loss=8.469, acc=0.008 (1170.404 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.455, acc=0.012 (1290.474 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.228, acc=0.012 (1200.840 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.960, acc=0.004 (1157.683 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.821, acc=0.012 (1089.130 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.694, acc=0.000 (1085.951 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.659, acc=0.004 (1083.266 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.485, acc=0.016 (950.946 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.442, acc=0.008 (1254.001 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.526, acc=0.008 (1185.492 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.412, acc=0.004 (1181.910 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.416, acc=0.004 (1207.274 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.326, acc=0.012 (1265.059 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.301, acc=0.008 (1255.137 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.256, acc=0.004 (1050.119 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.262, acc=0.008 (723.112 img/s).
+stop profiler
+mean image_s =  1159.21, standard deviation:   120.03
+threading set:  32 32
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 32,
+        "prefetch_buffer_size": 32,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m032_w32_p32_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=137.117, acc=0.000 (12.082 img/s).
+Finished step 2 of 5004 in epoch 0, loss=96.109, acc=0.000 (488.074 img/s).
+Finished step 3 of 5004 in epoch 0, loss=53.787, acc=0.000 (1247.442 img/s).
+Finished step 4 of 5004 in epoch 0, loss=36.368, acc=0.000 (1162.180 img/s).
+Finished step 5 of 5004 in epoch 0, loss=26.016, acc=0.004 (1136.519 img/s).
+Finished step 6 of 5004 in epoch 0, loss=17.436, acc=0.008 (1225.691 img/s).
+Finished step 7 of 5004 in epoch 0, loss=13.048, acc=0.000 (1299.486 img/s).
+Finished step 8 of 5004 in epoch 0, loss=9.717, acc=0.004 (1195.574 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.437, acc=0.000 (1124.245 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.829, acc=0.000 (1284.039 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.106, acc=0.004 (1246.075 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.046, acc=0.004 (1248.997 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.809, acc=0.004 (1137.956 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.739, acc=0.012 (1247.409 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.723, acc=0.012 (1295.414 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.558, acc=0.008 (1224.653 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.518, acc=0.020 (1237.843 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.510, acc=0.008 (1272.904 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.445, acc=0.008 (1251.996 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.470, acc=0.004 (1216.357 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.452, acc=0.004 (1275.807 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.349, acc=0.008 (1195.032 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.344, acc=0.004 (1259.641 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.216, acc=0.004 (1198.100 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.216, acc=0.012 (1256.584 img/s).
+stop profiler
+mean image_s =  1197.00, standard deviation:   155.50
+threading set:  128 128
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 128,
+        "prefetch_buffer_size": 1,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m128_w128_p01_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=162.535, acc=0.000 (17.481 img/s).
+Finished step 2 of 5004 in epoch 0, loss=91.086, acc=0.000 (1056.685 img/s).
+Finished step 3 of 5004 in epoch 0, loss=53.349, acc=0.000 (854.752 img/s).
+Finished step 4 of 5004 in epoch 0, loss=34.020, acc=0.000 (733.403 img/s).
+Finished step 5 of 5004 in epoch 0, loss=25.491, acc=0.004 (898.515 img/s).
+Finished step 6 of 5004 in epoch 0, loss=17.075, acc=0.008 (810.729 img/s).
+Finished step 7 of 5004 in epoch 0, loss=13.371, acc=0.000 (922.770 img/s).
+Finished step 8 of 5004 in epoch 0, loss=10.047, acc=0.004 (657.879 img/s).
+Finished step 9 of 5004 in epoch 0, loss=9.200, acc=0.000 (1024.776 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.739, acc=0.000 (778.179 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.361, acc=0.000 (1071.468 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.190, acc=0.000 (825.336 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.846, acc=0.004 (838.089 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.771, acc=0.004 (818.223 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.573, acc=0.008 (964.988 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.692, acc=0.000 (858.875 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.574, acc=0.000 (762.740 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.540, acc=0.016 (931.048 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.476, acc=0.004 (782.049 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.474, acc=0.012 (796.987 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.395, acc=0.016 (1027.889 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.510, acc=0.012 (860.666 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.426, acc=0.004 (677.866 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.247, acc=0.000 (893.837 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.310, acc=0.008 (728.424 img/s).
+stop profiler
+mean image_s =   857.34, standard deviation:   111.93
+threading set:  128 128
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 128,
+        "prefetch_buffer_size": 4,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m128_w128_p04_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=179.537, acc=0.000 (16.596 img/s).
+Finished step 2 of 5004 in epoch 0, loss=110.862, acc=0.000 (1015.147 img/s).
+Finished step 3 of 5004 in epoch 0, loss=73.972, acc=0.000 (957.874 img/s).
+Finished step 4 of 5004 in epoch 0, loss=52.408, acc=0.008 (1066.261 img/s).
+Finished step 5 of 5004 in epoch 0, loss=38.676, acc=0.004 (979.483 img/s).
+Finished step 6 of 5004 in epoch 0, loss=24.901, acc=0.016 (818.004 img/s).
+Finished step 7 of 5004 in epoch 0, loss=20.282, acc=0.008 (1089.368 img/s).
+Finished step 8 of 5004 in epoch 0, loss=13.911, acc=0.000 (821.773 img/s).
+Finished step 9 of 5004 in epoch 0, loss=11.319, acc=0.000 (1012.442 img/s).
+Finished step 10 of 5004 in epoch 0, loss=9.663, acc=0.008 (931.549 img/s).
+Finished step 11 of 5004 in epoch 0, loss=8.837, acc=0.000 (912.073 img/s).
+Finished step 12 of 5004 in epoch 0, loss=8.205, acc=0.004 (1008.236 img/s).
+Finished step 13 of 5004 in epoch 0, loss=7.505, acc=0.000 (924.984 img/s).
+Finished step 14 of 5004 in epoch 0, loss=7.101, acc=0.004 (961.190 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.947, acc=0.000 (1113.544 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.932, acc=0.000 (950.006 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.639, acc=0.000 (944.116 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.587, acc=0.004 (908.331 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.486, acc=0.004 (912.811 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.376, acc=0.004 (668.759 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.384, acc=0.004 (853.016 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.429, acc=0.008 (785.247 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.340, acc=0.004 (936.653 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.265, acc=0.004 (781.336 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.325, acc=0.008 (1111.437 img/s).
+stop profiler
+mean image_s =   935.99, standard deviation:   107.49
+threading set:  128 128
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 128,
+        "prefetch_buffer_size": 8,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m128_w128_p08_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=231.101, acc=0.008 (15.961 img/s).
+Finished step 2 of 5004 in epoch 0, loss=99.984, acc=0.000 (759.068 img/s).
+Finished step 3 of 5004 in epoch 0, loss=60.274, acc=0.016 (906.354 img/s).
+Finished step 4 of 5004 in epoch 0, loss=32.580, acc=0.000 (929.504 img/s).
+Finished step 5 of 5004 in epoch 0, loss=21.194, acc=0.000 (1030.785 img/s).
+Finished step 6 of 5004 in epoch 0, loss=14.460, acc=0.008 (1015.798 img/s).
+Finished step 7 of 5004 in epoch 0, loss=11.334, acc=0.000 (917.410 img/s).
+Finished step 8 of 5004 in epoch 0, loss=9.595, acc=0.016 (1001.738 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.301, acc=0.004 (985.382 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.669, acc=0.004 (1015.679 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.112, acc=0.000 (968.578 img/s).
+Finished step 12 of 5004 in epoch 0, loss=6.869, acc=0.000 (1058.924 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.906, acc=0.000 (977.642 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.698, acc=0.012 (795.377 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.610, acc=0.004 (1000.398 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.701, acc=0.000 (990.200 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.533, acc=0.008 (888.720 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.436, acc=0.000 (904.844 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.504, acc=0.020 (880.450 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.432, acc=0.000 (907.782 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.432, acc=0.008 (958.193 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.332, acc=0.016 (1082.572 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.388, acc=0.004 (925.647 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.257, acc=0.008 (1025.266 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.190, acc=0.004 (980.694 img/s).
+stop profiler
+mean image_s =   954.46, standard deviation:    75.49
+threading set:  128 128
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 128,
+        "prefetch_buffer_size": 16,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m128_w128_p16_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=205.223, acc=0.000 (14.572 img/s).
+Finished step 2 of 5004 in epoch 0, loss=143.735, acc=0.004 (994.867 img/s).
+Finished step 3 of 5004 in epoch 0, loss=75.346, acc=0.000 (1026.539 img/s).
+Finished step 4 of 5004 in epoch 0, loss=50.642, acc=0.000 (1047.014 img/s).
+Finished step 5 of 5004 in epoch 0, loss=33.728, acc=0.000 (1079.048 img/s).
+Finished step 6 of 5004 in epoch 0, loss=22.218, acc=0.000 (1087.116 img/s).
+Finished step 7 of 5004 in epoch 0, loss=16.265, acc=0.000 (1078.202 img/s).
+Finished step 8 of 5004 in epoch 0, loss=12.752, acc=0.000 (1019.328 img/s).
+Finished step 9 of 5004 in epoch 0, loss=10.161, acc=0.000 (1075.782 img/s).
+Finished step 10 of 5004 in epoch 0, loss=9.273, acc=0.000 (1038.319 img/s).
+Finished step 11 of 5004 in epoch 0, loss=8.497, acc=0.012 (1028.068 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.961, acc=0.004 (990.569 img/s).
+Finished step 13 of 5004 in epoch 0, loss=7.507, acc=0.000 (1060.525 img/s).
+Finished step 14 of 5004 in epoch 0, loss=7.143, acc=0.012 (1005.072 img/s).
+Finished step 15 of 5004 in epoch 0, loss=7.017, acc=0.000 (1059.390 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.697, acc=0.000 (972.016 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.490, acc=0.008 (1024.305 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.549, acc=0.000 (1015.184 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.521, acc=0.004 (1097.303 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.560, acc=0.000 (1040.009 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.375, acc=0.004 (797.916 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.454, acc=0.000 (857.140 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.439, acc=0.008 (1071.305 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.370, acc=0.004 (882.430 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.325, acc=0.008 (857.281 img/s).
+stop profiler
+mean image_s =  1008.53, standard deviation:    79.06
+threading set:  128 128
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 128,
+        "prefetch_buffer_size": 32,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m128_w128_p32_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=194.046, acc=0.008 (11.556 img/s).
+Finished step 2 of 5004 in epoch 0, loss=104.576, acc=0.008 (939.840 img/s).
+Finished step 3 of 5004 in epoch 0, loss=57.085, acc=0.000 (960.557 img/s).
+Finished step 4 of 5004 in epoch 0, loss=38.635, acc=0.000 (939.071 img/s).
+Finished step 5 of 5004 in epoch 0, loss=22.337, acc=0.000 (1010.717 img/s).
+Finished step 6 of 5004 in epoch 0, loss=16.179, acc=0.000 (1005.276 img/s).
+Finished step 7 of 5004 in epoch 0, loss=12.649, acc=0.004 (1016.131 img/s).
+Finished step 8 of 5004 in epoch 0, loss=10.813, acc=0.008 (968.371 img/s).
+Finished step 9 of 5004 in epoch 0, loss=9.078, acc=0.004 (952.322 img/s).
+Finished step 10 of 5004 in epoch 0, loss=8.244, acc=0.000 (837.739 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.845, acc=0.004 (941.895 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.541, acc=0.004 (964.142 img/s).
+Finished step 13 of 5004 in epoch 0, loss=7.211, acc=0.000 (980.476 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.916, acc=0.008 (898.110 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.890, acc=0.004 (961.326 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.739, acc=0.000 (949.444 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.659, acc=0.000 (1005.964 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.663, acc=0.000 (1035.607 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.583, acc=0.008 (1114.280 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.532, acc=0.008 (947.681 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.458, acc=0.008 (1124.865 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.443, acc=0.004 (1013.022 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.411, acc=0.012 (1022.740 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.371, acc=0.020 (815.318 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.349, acc=0.008 (808.882 img/s).
+stop profiler
+mean image_s =   967.24, standard deviation:    75.45
+threading set:  256 256
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 256,
+        "prefetch_buffer_size": 1,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m256_w256_p01_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=143.020, acc=0.012 (17.080 img/s).
+Finished step 2 of 5004 in epoch 0, loss=100.609, acc=0.000 (803.345 img/s).
+Finished step 3 of 5004 in epoch 0, loss=70.814, acc=0.000 (758.671 img/s).
+Finished step 4 of 5004 in epoch 0, loss=37.980, acc=0.000 (721.080 img/s).
+Finished step 5 of 5004 in epoch 0, loss=24.690, acc=0.008 (807.255 img/s).
+Finished step 6 of 5004 in epoch 0, loss=19.322, acc=0.000 (757.476 img/s).
+Finished step 7 of 5004 in epoch 0, loss=14.204, acc=0.000 (754.893 img/s).
+Finished step 8 of 5004 in epoch 0, loss=11.185, acc=0.000 (743.894 img/s).
+Finished step 9 of 5004 in epoch 0, loss=9.385, acc=0.000 (731.706 img/s).
+Finished step 10 of 5004 in epoch 0, loss=8.358, acc=0.000 (821.369 img/s).
+Finished step 11 of 5004 in epoch 0, loss=8.177, acc=0.000 (824.481 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.339, acc=0.000 (751.674 img/s).
+Finished step 13 of 5004 in epoch 0, loss=7.022, acc=0.000 (791.589 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.799, acc=0.004 (777.197 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.830, acc=0.000 (723.118 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.723, acc=0.012 (755.111 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.617, acc=0.016 (849.982 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.604, acc=0.000 (819.443 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.569, acc=0.008 (749.947 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.421, acc=0.000 (713.888 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.504, acc=0.023 (775.241 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.419, acc=0.000 (779.170 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.382, acc=0.008 (784.400 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.181, acc=0.012 (780.866 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.262, acc=0.016 (913.235 img/s).
+stop profiler
+mean image_s =   778.71, standard deviation:    44.70
+threading set:  256 256
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 256,
+        "prefetch_buffer_size": 4,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m256_w256_p04_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=107.370, acc=0.000 (15.771 img/s).
+Finished step 2 of 5004 in epoch 0, loss=71.417, acc=0.008 (789.232 img/s).
+Finished step 3 of 5004 in epoch 0, loss=43.110, acc=0.000 (857.287 img/s).
+Finished step 4 of 5004 in epoch 0, loss=25.080, acc=0.000 (852.744 img/s).
+Finished step 5 of 5004 in epoch 0, loss=16.773, acc=0.008 (742.746 img/s).
+Finished step 6 of 5004 in epoch 0, loss=11.363, acc=0.008 (745.959 img/s).
+Finished step 7 of 5004 in epoch 0, loss=9.707, acc=0.004 (749.339 img/s).
+Finished step 8 of 5004 in epoch 0, loss=8.153, acc=0.008 (739.741 img/s).
+Finished step 9 of 5004 in epoch 0, loss=7.373, acc=0.012 (810.757 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.158, acc=0.023 (793.937 img/s).
+Finished step 11 of 5004 in epoch 0, loss=6.973, acc=0.000 (794.134 img/s).
+Finished step 12 of 5004 in epoch 0, loss=6.946, acc=0.004 (779.178 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.591, acc=0.012 (878.207 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.606, acc=0.000 (833.775 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.615, acc=0.008 (756.497 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.571, acc=0.008 (785.892 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.512, acc=0.027 (764.577 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.459, acc=0.012 (776.768 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.393, acc=0.008 (828.241 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.427, acc=0.008 (789.920 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.373, acc=0.004 (824.996 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.241, acc=0.012 (593.247 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.134, acc=0.004 (736.316 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.257, acc=0.004 (772.725 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.164, acc=0.004 (769.936 img/s).
+stop profiler
+mean image_s =   781.92, standard deviation:    54.95
+threading set:  256 256
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 256,
+        "prefetch_buffer_size": 8,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m256_w256_p08_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=140.553, acc=0.000 (15.861 img/s).
+Finished step 2 of 5004 in epoch 0, loss=103.862, acc=0.000 (633.403 img/s).
+Finished step 3 of 5004 in epoch 0, loss=71.642, acc=0.000 (678.864 img/s).
+Finished step 4 of 5004 in epoch 0, loss=44.942, acc=0.004 (833.781 img/s).
+Finished step 5 of 5004 in epoch 0, loss=33.180, acc=0.004 (815.895 img/s).
+Finished step 6 of 5004 in epoch 0, loss=23.730, acc=0.000 (790.632 img/s).
+Finished step 7 of 5004 in epoch 0, loss=16.813, acc=0.000 (776.329 img/s).
+Finished step 8 of 5004 in epoch 0, loss=13.801, acc=0.000 (752.366 img/s).
+Finished step 9 of 5004 in epoch 0, loss=10.961, acc=0.000 (752.137 img/s).
+Finished step 10 of 5004 in epoch 0, loss=9.829, acc=0.000 (768.805 img/s).
+Finished step 11 of 5004 in epoch 0, loss=8.060, acc=0.016 (770.556 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.570, acc=0.012 (915.058 img/s).
+Finished step 13 of 5004 in epoch 0, loss=7.480, acc=0.000 (745.964 img/s).
+Finished step 14 of 5004 in epoch 0, loss=7.005, acc=0.004 (729.291 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.824, acc=0.000 (768.005 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.750, acc=0.008 (834.217 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.582, acc=0.000 (745.800 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.501, acc=0.004 (780.139 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.504, acc=0.008 (747.119 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.478, acc=0.008 (781.566 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.324, acc=0.016 (753.511 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.325, acc=0.008 (777.026 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.311, acc=0.004 (807.014 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.351, acc=0.012 (753.818 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.301, acc=0.004 (792.553 img/s).
+stop profiler
+mean image_s =   770.99, standard deviation:    52.21
+threading set:  256 256
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 256,
+        "prefetch_buffer_size": 16,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m256_w256_p16_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=110.118, acc=0.000 (14.673 img/s).
+Finished step 2 of 5004 in epoch 0, loss=75.780, acc=0.000 (737.757 img/s).
+Finished step 3 of 5004 in epoch 0, loss=56.168, acc=0.000 (856.474 img/s).
+Finished step 4 of 5004 in epoch 0, loss=28.740, acc=0.000 (778.804 img/s).
+Finished step 5 of 5004 in epoch 0, loss=18.611, acc=0.012 (756.773 img/s).
+Finished step 6 of 5004 in epoch 0, loss=14.847, acc=0.000 (753.895 img/s).
+Finished step 7 of 5004 in epoch 0, loss=11.862, acc=0.008 (877.872 img/s).
+Finished step 8 of 5004 in epoch 0, loss=10.182, acc=0.000 (840.599 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.535, acc=0.000 (913.973 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.771, acc=0.012 (831.248 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.303, acc=0.008 (770.350 img/s).
+Finished step 12 of 5004 in epoch 0, loss=6.874, acc=0.012 (798.493 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.696, acc=0.008 (780.313 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.603, acc=0.004 (777.570 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.603, acc=0.004 (736.471 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.555, acc=0.008 (875.620 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.517, acc=0.000 (785.854 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.429, acc=0.008 (783.683 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.363, acc=0.000 (787.683 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.395, acc=0.000 (570.226 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.326, acc=0.004 (680.761 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.333, acc=0.008 (618.862 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.261, acc=0.004 (708.180 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.134, acc=0.008 (778.905 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.094, acc=0.008 (749.598 img/s).
+stop profiler
+mean image_s =   772.92, standard deviation:    76.09
+threading set:  256 256
+Parameters set, preparing dataloading
+{
+    "data": {
+        "handler": "ilsvrc_dataset",
+        "batch_size": 256,
+        "train_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt",
+        "test_filelist": "/lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt",
+        "shuffle_buffer": 200000,
+        "reshuffle_each_iteration": true,
+        "num_parallel_readers": 256,
+        "prefetch_buffer_size": 32,
+        "crop_image_size": [
+            256,
+            256
+        ],
+        "num_classes": 1000,
+        "num_channels": 3
+    }
+}
+num labels: 1000
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_train_filelist.txt
+input filelist contains 1281167 files, estimated batches per rank 5004
+build dataset /lus/grand/projects/ALCFAITP/ilsvrc_val_filelist.txt
+input filelist contains 50000 files, estimated batches per rank 195
+Datasets ready, creating network.
+Initial Image size:  (256, 256, 256, 3)
+output shape: (256, 1000)
+Model: "res_net34"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ sequential (Sequential)     (256, 64, 64, 64)         9664      
+                                                                 
+ sequential_1 (Sequential)   (256, 64, 64, 64)         223104    
+                                                                 
+ residual_downsample (Residu  multiple                 230784    
+ alDownsample)                                                   
+                                                                 
+ sequential_2 (Sequential)   (256, 32, 32, 128)        888576    
+                                                                 
+ residual_downsample_1 (Resi  multiple                 920320    
+ dualDownsample)                                                 
+                                                                 
+ sequential_3 (Sequential)   (256, 16, 16, 256)        5911040   
+                                                                 
+ residual_downsample_2 (Resi  multiple                 3675648   
+ dualDownsample)                                                 
+                                                                 
+ sequential_4 (Sequential)   (256, 8, 8, 512)          9447424   
+                                                                 
+ average_pooling2d (AverageP  multiple                 0         
+ ooling2D)                                                       
+                                                                 
+ flatten (Flatten)           multiple                  0         
+                                                                 
+ dense (Dense)               multiple                  513000    
+                                                                 
+=================================================================
+Total params: 21,819,560
+Trainable params: 21,804,328
+Non-trainable params: 15,232
+_________________________________________________________________
+None
+start profiler
+Profiling to logdir/m256_w256_p32_nsingle/
+Finished step 1 of 5004 in epoch 0, loss=114.525, acc=0.000 (12.254 img/s).
+Finished step 2 of 5004 in epoch 0, loss=98.851, acc=0.000 (724.466 img/s).
+Finished step 3 of 5004 in epoch 0, loss=57.299, acc=0.004 (737.045 img/s).
+Finished step 4 of 5004 in epoch 0, loss=34.902, acc=0.023 (759.954 img/s).
+Finished step 5 of 5004 in epoch 0, loss=19.917, acc=0.000 (775.519 img/s).
+Finished step 6 of 5004 in epoch 0, loss=14.850, acc=0.012 (901.244 img/s).
+Finished step 7 of 5004 in epoch 0, loss=11.117, acc=0.000 (346.506 img/s).
+Finished step 8 of 5004 in epoch 0, loss=9.640, acc=0.008 (765.548 img/s).
+Finished step 9 of 5004 in epoch 0, loss=8.400, acc=0.004 (768.315 img/s).
+Finished step 10 of 5004 in epoch 0, loss=7.788, acc=0.000 (752.919 img/s).
+Finished step 11 of 5004 in epoch 0, loss=7.319, acc=0.004 (807.082 img/s).
+Finished step 12 of 5004 in epoch 0, loss=7.122, acc=0.004 (906.627 img/s).
+Finished step 13 of 5004 in epoch 0, loss=6.810, acc=0.004 (780.801 img/s).
+Finished step 14 of 5004 in epoch 0, loss=6.593, acc=0.023 (810.142 img/s).
+Finished step 15 of 5004 in epoch 0, loss=6.656, acc=0.004 (781.934 img/s).
+Finished step 16 of 5004 in epoch 0, loss=6.627, acc=0.008 (779.350 img/s).
+Finished step 17 of 5004 in epoch 0, loss=6.568, acc=0.008 (749.728 img/s).
+Finished step 18 of 5004 in epoch 0, loss=6.483, acc=0.008 (843.324 img/s).
+Finished step 19 of 5004 in epoch 0, loss=6.443, acc=0.004 (768.437 img/s).
+Finished step 20 of 5004 in epoch 0, loss=6.488, acc=0.012 (747.203 img/s).
+Finished step 21 of 5004 in epoch 0, loss=6.388, acc=0.004 (776.375 img/s).
+Finished step 22 of 5004 in epoch 0, loss=6.306, acc=0.004 (761.333 img/s).
+Finished step 23 of 5004 in epoch 0, loss=6.233, acc=0.016 (809.614 img/s).
+Finished step 24 of 5004 in epoch 0, loss=6.195, acc=0.008 (893.719 img/s).
+Finished step 25 of 5004 in epoch 0, loss=6.261, acc=0.008 (796.962 img/s).
+stop profiler
+mean image_s =   772.67, standard deviation:   101.25
