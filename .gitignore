@@ -97,7 +97,7 @@ scratch/
 04_modern_neural_networks/04_homework/resnet34*/
 04_modern_neural_networks/04_homework/core
 04_modern_neural_networks/04_homework/*.png
-!04_modern_neural_networks/04_homework/2022_10_14_13_58_45_epoch_0_resnet34_bs_256_e_1_lr_0.00010_plot
+!04_modern_neural_networks/04_homework/2022_10_14_13_58_45_epoch_0_resnet34_bs_256_e_1_lr_0.00010_plot.png
 !05_dataPipelines/05_homework/10111420.output
 !05_dataPipelines/05_homework/10111422.output
 06_distributedTraining/homework/checkpoints/
