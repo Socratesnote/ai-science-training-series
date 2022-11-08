@@ -1,0 +1,22 @@
+qsub-gpu -q single-gpu -t 60 -I -n 1 -A ALCFAITP --attrs filesystems=home,grand
+
+/lus/theta-fs0/software/datascience/conda/2022-07-01/mconda3/bin/python
+
+
+Bethany's talk
+
+We've seen mainly classification models so far. There are also regression models (for predicting a real number), or clustering models. Reinforcement learning is useful for 'delayed reward' schemes.
+
+AI goals:
+searching, reasoning, language processing, perception, dimensionality reduction, anamoly detection.
+
+Types:
+recurrent neural network layer (see bonusmaterial 04 image time series
+"Transformer" models.
+
+physics-inspired (see bonusmaterial 07 inspired AI)
+
+Generative adverserial networks
+Diffusion models
+
+Auto-encoders.
